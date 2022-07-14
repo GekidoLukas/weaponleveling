@@ -1,0 +1,9 @@
+{
+  "weaponleveling.tooltip.weaponlevel": "Waffenlevel",
+  "weaponleveling.tooltip.level": "Level ",
+  "weaponleveling.tooltip.levelprogress": "Fortschritt ",
+  "weaponleveling.tooltip.pressshift": "Drücke [Umschalt] um das Level zu sehen",
+  "weaponleveling.tooltip.maxlevel": "Maximallevel",
+  "weaponleveling.tooltip.overmaxlevel": "Warte, das ist illegal",
+  "weaponleveling.actionbar.levelup": " stieg auf zu dem Level "
+}
