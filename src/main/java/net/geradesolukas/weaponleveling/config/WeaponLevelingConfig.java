@@ -1,6 +1,9 @@
 package net.geradesolukas.weaponleveling.config;
 
+import net.geradesolukas.weaponleveling.server.ModLists;
 import net.minecraftforge.common.ForgeConfigSpec;
+
+import java.util.List;
 
 public class WeaponLevelingConfig {
 
@@ -16,6 +19,8 @@ public class WeaponLevelingConfig {
     public static final ForgeConfigSpec.ConfigValue<Integer> value_kill_miniboss;
     public static final ForgeConfigSpec.ConfigValue<Integer> value_kill_boss;
     public static final ForgeConfigSpec.ConfigValue<Integer> value_max_level;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist_items;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> added_items;
 
 
     static {
@@ -35,6 +40,13 @@ public class WeaponLevelingConfig {
 
 
 
-        SPEC = BUILDER.build();
+
+        BUILDER.comment("Item Config").push("item");
+        blacklist_items = BUILDER.comment("Blacklisted Items").defineList("blacklist_items", ModLists.DEFAULT_ITEM_BLACKLIST, o -> o instanceof String);
+        added_items = BUILDER.comment("Extra Items, that are not extending the AxeItem or SwordItem Class").defineList("whitelisted_items", ModLists.DEFAULT_ITEM_WHITELIST, o -> o instanceof String);
+
+                SPEC = BUILDER.build();
+
+
     }
 }
