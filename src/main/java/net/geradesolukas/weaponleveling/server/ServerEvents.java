@@ -7,11 +7,6 @@ import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.WaterAnimal;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -20,6 +15,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 
@@ -69,15 +65,17 @@ public class ServerEvents {
 
         if(killer instanceof Player player) {
 
+            String name = ForgeRegistries.ENTITIES.getKey(dyingEntity.getType()).toString();
+
             int xpamount = WeaponLevelingConfig.value_kill_generic.get();
-            if(dyingEntity instanceof WitherBoss) {
+            if(WeaponLevelingConfig.entities_miniboss.get().contains(name)) {
                 xpamount = WeaponLevelingConfig.value_kill_miniboss.get();
-            } else if(dyingEntity instanceof EnderDragon) {
+            } else if(WeaponLevelingConfig.entities_boss.get().contains(name)) {
                 xpamount = WeaponLevelingConfig.value_kill_boss.get();
-            } else if(dyingEntity instanceof Animal || dyingEntity instanceof WaterAnimal) {
+            } else if(WeaponLevelingConfig.entities_animal.get().contains(name)) {
                 xpamount = WeaponLevelingConfig.value_kill_animal.get();
-            }   else if(dyingEntity instanceof Monster) {
-                xpamount = WeaponLevelingConfig.value_kill_mob.get();
+            }   else if(WeaponLevelingConfig.entities_monster.get().contains(name)) {
+                xpamount = WeaponLevelingConfig.value_kill_monster.get();
             }
 
             ItemStack hand = player.getMainHandItem();
@@ -116,7 +114,7 @@ public class ServerEvents {
                 int level = nbttag.getInt("level") ;
                 float damage = event.getAmount();
                 double extradamage = level;
-                extradamage /= 10;
+                extradamage *= WeaponLevelingConfig.value_damage_per_level.get();
                 event.setAmount(damage + (float)extradamage);
 
                 //player.sendMessage(new TextComponent("Damage is: " + extradamage), player.getUUID());

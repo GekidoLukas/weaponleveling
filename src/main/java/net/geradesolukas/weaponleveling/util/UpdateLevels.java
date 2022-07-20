@@ -11,6 +11,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class UpdateLevels {
 
@@ -61,17 +62,21 @@ public class UpdateLevels {
 
     public static int getMaxLevel(int currentlevel) {
         int maxlevel;
+        int levelmodifier = WeaponLevelingConfig.value_level_modifier.get();
+        int startinglevel = WeaponLevelingConfig.value_starting_level_amount.get();
+
         if (currentlevel != 0) {
-              maxlevel = ((currentlevel - 1) + currentlevel) * 80 + 100;
+              maxlevel = ((currentlevel - 1) + currentlevel) * levelmodifier + 100;
         } else {
-            maxlevel = 50;
+            maxlevel = startinglevel;
         }
         return maxlevel;
     }
 
 
     public static boolean isAcceptedItem(ItemStack stack) {
-        return stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem;
+        String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+        return (stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem || WeaponLevelingConfig.added_items.get().contains(name)) && !WeaponLevelingConfig.blacklist_items.get().contains(name) ;
     }
 
 
