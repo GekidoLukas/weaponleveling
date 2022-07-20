@@ -1,5 +1,6 @@
 package net.geradesolukas.weaponleveling.mixin;
 
+import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +20,7 @@ public abstract class MixinItemStack {
     protected double injectedDamage(double bonus) {
         double weaponlevelamount = this.getOrCreateTag().getInt("level");
 
-            weaponlevelamount /= 10;
+            weaponlevelamount *= WeaponLevelingConfig.value_damage_per_level.get();
         bonus += weaponlevelamount;
         return bonus;
     }

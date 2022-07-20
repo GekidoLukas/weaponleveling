@@ -1,6 +1,7 @@
 {
   "weaponleveling.tooltip.weaponlevel": "Waffenlevel",
   "weaponleveling.tooltip.level": "Level ",
+  "weaponleveling.tooltip.projectile_weapon_level": "Extra Schaden ",
   "weaponleveling.tooltip.levelprogress": "Fortschritt ",
   "weaponleveling.tooltip.pressshift": "Drücke [Umschalt] um das Level zu sehen",
   "weaponleveling.tooltip.maxlevel": "Maximallevel",

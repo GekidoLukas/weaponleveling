@@ -5,11 +5,15 @@ import net.geradesolukas.weaponleveling.WeaponLeveling;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -40,6 +44,7 @@ public class ServerEvents {
                 if (UpdateLevels.isAcceptedItem(hand) && player.getAttackStrengthScale(0.0F) == 1.0f) {
 
 
+
                     UpdateLevels updateLevels = new UpdateLevels();
                     Random random = new Random();
                     int damageamount = 0;
@@ -54,7 +59,10 @@ public class ServerEvents {
             }
         }
     }
+    @SubscribeEvent
+    public static void onProjectile(ProjectileImpactEvent event) {
 
+    }
 
     @SubscribeEvent
     public static void onKillEntity(LivingDeathEvent event) {
@@ -88,6 +96,7 @@ public class ServerEvents {
     }
 
 
+
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
         Entity source = event.getSource().getEntity();
@@ -115,6 +124,11 @@ public class ServerEvents {
                 float damage = event.getAmount();
                 double extradamage = level;
                 extradamage *= WeaponLevelingConfig.value_damage_per_level.get();
+
+                //if (hand.getItem() instanceof ProjectileWeaponItem) {
+                //
+                //}
+                //extradamage *= player.getAttackStrengthScale(0.0F);
                 event.setAmount(damage + (float)extradamage);
 
                 //player.sendMessage(new TextComponent("Damage is: " + extradamage), player.getUUID());

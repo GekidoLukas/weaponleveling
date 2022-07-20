@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -62,6 +63,14 @@ public class ClientEvents {
                 }else {
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.overmaxlevel").setStyle(VALUES))
+                    );
+                }
+
+                if (stack.getItem() instanceof ProjectileWeaponItem) {
+                    double extradamage = level * WeaponLevelingConfig.value_damage_per_level.get();
+                    tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
+                            .append(new TranslatableComponent("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))
+                            .append(new TextComponent("" + extradamage ).setStyle(VALUES))
                     );
                 }
 
