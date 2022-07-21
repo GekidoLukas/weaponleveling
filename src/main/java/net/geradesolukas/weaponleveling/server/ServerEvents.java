@@ -5,13 +5,10 @@ import net.geradesolukas.weaponleveling.WeaponLeveling;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -68,6 +65,7 @@ public class ServerEvents {
     public static void onKillEntity(LivingDeathEvent event) {
         Entity killer = event.getSource().getEntity();
         Entity dyingEntity = event.getEntity();
+
 
 
 
