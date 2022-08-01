@@ -20,7 +20,7 @@ public abstract class MixinItemStack {
     protected double injectedDamage(double bonus) {
         double weaponlevelamount = this.getOrCreateTag().getInt("level");
 
-            weaponlevelamount *= WeaponLevelingConfig.value_damage_per_level.get();
+            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
         bonus += weaponlevelamount;
         return bonus;
     }

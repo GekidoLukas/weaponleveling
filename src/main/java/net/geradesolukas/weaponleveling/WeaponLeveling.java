@@ -13,7 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-// The value here should match an entry in the META-INF/mods.toml file
+
 @Mod(WeaponLeveling.MODID)
 public class WeaponLeveling
 {
@@ -33,7 +33,7 @@ public class WeaponLeveling
         eventBus.addListener(this::doClientStuff);
 
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WeaponLevelingConfig.SPEC, "weaponleveling-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, WeaponLevelingConfig.Server.SPEC, "weaponleveling-server.toml");
 
 
 

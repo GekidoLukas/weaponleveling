@@ -49,14 +49,14 @@ public class ClientEvents {
                         );
 
 
-                if (level < WeaponLevelingConfig.value_max_level.get()) {
+                if (level < WeaponLevelingConfig.Server.value_max_level.get()) {
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
                             .append(new TextComponent("" + levelprogress).setStyle(VALUES))
                             .append(new TextComponent("/").setStyle(TEXT))
                             .append(new TextComponent("" + maxlevelprogress).setStyle(VALUES))
                     );
-                } else if(level == WeaponLevelingConfig.value_max_level.get()) {
+                } else if(level == WeaponLevelingConfig.Server.value_max_level.get()) {
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.maxlevel").setStyle(VALUES))
                     );
@@ -67,7 +67,7 @@ public class ClientEvents {
                 }
 
                 if (stack.getItem() instanceof ProjectileWeaponItem) {
-                    double extradamage = level * WeaponLevelingConfig.value_damage_per_level.get();
+                    double extradamage = level * WeaponLevelingConfig.Server.value_damage_per_level.get();
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))
                             .append(new TextComponent("" + extradamage ).setStyle(VALUES))

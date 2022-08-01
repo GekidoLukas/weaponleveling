@@ -23,7 +23,7 @@ public class UpdateLevels {
 
         int maxprogress = getMaxLevel(currentlevel);
 
-        if (currentlevel < WeaponLevelingConfig.value_max_level.get()) {
+        if (currentlevel < WeaponLevelingConfig.Server.value_max_level.get()) {
             //Leveling up
             if (currentprogress >= maxprogress) {
                 int levelupamount = currentprogress /= maxprogress;
@@ -62,8 +62,8 @@ public class UpdateLevels {
 
     public static int getMaxLevel(int currentlevel) {
         int maxlevel;
-        int levelmodifier = WeaponLevelingConfig.value_level_modifier.get();
-        int startinglevel = WeaponLevelingConfig.value_starting_level_amount.get();
+        int levelmodifier = WeaponLevelingConfig.Server.value_level_modifier.get();
+        int startinglevel = WeaponLevelingConfig.Server.value_starting_level_amount.get();
 
         if (currentlevel != 0) {
               maxlevel = ((currentlevel - 1) + currentlevel) * levelmodifier + 100;
@@ -76,7 +76,7 @@ public class UpdateLevels {
 
     public static boolean isAcceptedItem(ItemStack stack) {
         String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-        return (stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem || WeaponLevelingConfig.added_items.get().contains(name)) && !WeaponLevelingConfig.blacklist_items.get().contains(name) ;
+        return (stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem || WeaponLevelingConfig.Server.added_items.get().contains(name)) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name) ;
     }
 
 

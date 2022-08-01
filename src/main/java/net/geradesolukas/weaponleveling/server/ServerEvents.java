@@ -5,11 +5,13 @@ import net.geradesolukas.weaponleveling.WeaponLeveling;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -45,8 +47,8 @@ public class ServerEvents {
                     UpdateLevels updateLevels = new UpdateLevels();
                     Random random = new Random();
                     int damageamount = 0;
-                    int chance = 100/WeaponLevelingConfig.value_hit_percentage.get() - 1;
-                    int amount = WeaponLevelingConfig.value_hit_xp_amount.get();
+                    int chance = 100/WeaponLevelingConfig.Server.value_hit_percentage.get() - 1;
+                    int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
 
                     if (random.nextInt(chance) == 0) {damageamount = amount;}
                     updateLevels.updateProgress(player,hand,damageamount);
@@ -73,15 +75,15 @@ public class ServerEvents {
 
             String name = ForgeRegistries.ENTITIES.getKey(dyingEntity.getType()).toString();
 
-            int xpamount = WeaponLevelingConfig.value_kill_generic.get();
-            if(WeaponLevelingConfig.entities_miniboss.get().contains(name)) {
-                xpamount = WeaponLevelingConfig.value_kill_miniboss.get();
-            } else if(WeaponLevelingConfig.entities_boss.get().contains(name)) {
-                xpamount = WeaponLevelingConfig.value_kill_boss.get();
-            } else if(WeaponLevelingConfig.entities_animal.get().contains(name)) {
-                xpamount = WeaponLevelingConfig.value_kill_animal.get();
-            }   else if(WeaponLevelingConfig.entities_monster.get().contains(name)) {
-                xpamount = WeaponLevelingConfig.value_kill_monster.get();
+            int xpamount = WeaponLevelingConfig.Server.value_kill_generic.get();
+            if(WeaponLevelingConfig.Server.entities_miniboss.get().contains(name)) {
+                xpamount = WeaponLevelingConfig.Server.value_kill_miniboss.get();
+            } else if(WeaponLevelingConfig.Server.entities_boss.get().contains(name)) {
+                xpamount = WeaponLevelingConfig.Server.value_kill_boss.get();
+            } else if(WeaponLevelingConfig.Server.entities_animal.get().contains(name)) {
+                xpamount = WeaponLevelingConfig.Server.value_kill_animal.get();
+            }   else if(WeaponLevelingConfig.Server.entities_monster.get().contains(name)) {
+                xpamount = WeaponLevelingConfig.Server.value_kill_monster.get();
             }
 
             ItemStack hand = player.getMainHandItem();
@@ -121,7 +123,7 @@ public class ServerEvents {
                 int level = nbttag.getInt("level") ;
                 float damage = event.getAmount();
                 double extradamage = level;
-                extradamage *= WeaponLevelingConfig.value_damage_per_level.get();
+                extradamage *= WeaponLevelingConfig.Server.value_damage_per_level.get();
 
                 //if (hand.getItem() instanceof ProjectileWeaponItem) {
                 //
@@ -133,6 +135,14 @@ public class ServerEvents {
 
 
             }
+
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLogin(EntityJoinWorldEvent event) {
+        if(event.getEntity() instanceof ServerPlayer) {
+            ServerPlayer player = (ServerPlayer) event.getEntity();
 
         }
     }
