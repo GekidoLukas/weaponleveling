@@ -9,8 +9,6 @@ The mod's tooltip
 How the mod works
 Every level up will increase the weapon's overall damage by 0.1 Attack Damage. Killing different mobs will give you weapon XP(Default: Animals=2; Monsters=10; Mini Bosses=50; Boss=100). Hitting Entities will also give you 1 XP point occasionally (Default: 20% Chance). Many of the Values can be adjusted via the mod's config.
 
-IMPORTANT NOTE:
-The Mod is currently in Development and will allow further customization via configs and datapacks. The wither is currently considered a Mini Boss as a placeholder. This will later be changed to be a list.
 
 
 
