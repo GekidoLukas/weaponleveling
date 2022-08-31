@@ -1,6 +1,7 @@
 package net.geradesolukas.weaponleveling;
 
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
+import net.geradesolukas.weaponleveling.networking.Networking;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -43,7 +44,7 @@ public class WeaponLeveling
 
     private void setup(final FMLCommonSetupEvent event)
     {
-
+        Networking.registerMessages();
 
     }
 

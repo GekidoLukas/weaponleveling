@@ -1,10 +1,12 @@
 {
   "weaponleveling.tooltip.weaponlevel": "Waffenlevel",
+  "weaponleveling.tooltip.armorlevel": "Rüstungslevel",
   "weaponleveling.tooltip.level": "Level ",
+  "weaponleveling.tooltip.reduction": "Schadensverringerung ",
   "weaponleveling.tooltip.projectile_weapon_level": "Extra Schaden ",
   "weaponleveling.tooltip.levelprogress": "Fortschritt ",
   "weaponleveling.tooltip.pressshift": "Drücke [Umschalt] um das Level zu sehen",
   "weaponleveling.tooltip.maxlevel": "Maximallevel",
   "weaponleveling.tooltip.overmaxlevel": "Warte, das ist illegal",
-  "weaponleveling.actionbar.levelup": " stieg auf zu dem Level "
+  "weaponleveling.levelup": "erreichte das Level "
 }

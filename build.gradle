@@ -5,6 +5,10 @@ buildscript {
         maven { url = 'https://repo.spongepowered.org/maven' }
         mavenCentral()
     }
+    configurations {
+        shade
+        implementation.extendsFrom shade
+    }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
@@ -14,12 +18,13 @@ buildscript {
 plugins {
     id 'eclipse'
     id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '1.18.2-1.1'
+version = '1.18.2-1.2'
 group = 'net.geradesolukas.weaponleveling' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'weaponleveling'
 
@@ -144,6 +149,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven { url = 'https://jitpack.io' }
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
 
@@ -158,9 +164,10 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.54'
-
-
+    minecraftLibrary(annotationProcessor(shade("com.github.LlamaLad7:MixinExtras:0.1.0-rc3")))
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+
 
 
 
@@ -179,6 +186,7 @@ dependencies {
 
 // Example for how to get properties into the manifest for reading at runtime.
 jar {
+    archiveClassifier = 'slim'
     manifest {
         attributes([
                 "Specification-Title"     : "weaponleveling",
@@ -193,6 +201,17 @@ jar {
                 "MixinConfigs" : "weaponleveling.mixin.json"
         ])
     }
+}
+shadowJar {
+    archiveClassifier = ''
+    configurations = [project.configurations.shade]
+    finalizedBy 'reobfShadowJar'
+}
+
+assemble.dependsOn shadowJar
+
+reobf {
+    shadowJar {}
 }
 
 // Example configuration to allow publishing using the maven-publish plugin

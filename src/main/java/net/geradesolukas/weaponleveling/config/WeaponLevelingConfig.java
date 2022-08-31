@@ -6,6 +6,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.util.List;
 
 public class WeaponLevelingConfig {
+
+
     public static class Server {
 
         public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -25,6 +27,10 @@ public class WeaponLevelingConfig {
         public static final ForgeConfigSpec.ConfigValue<Double> value_damage_per_level;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist_items;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> added_items;
+        public static final ForgeConfigSpec.ConfigValue<List<? extends String>> no_melee_fallback;
+
+
+        public static final ForgeConfigSpec.ConfigValue<Double> value_max_damage_reduction;
 
 
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entities_animal;
@@ -32,6 +38,9 @@ public class WeaponLevelingConfig {
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entities_miniboss;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entities_boss;
 
+
+        public static final ForgeConfigSpec.EnumValue<LevelUpType> levelup_type;
+        public enum LevelUpType {ACTIONBAR, TOAST}
 
         static {
             BUILDER.comment("Server Config").push("server");
@@ -47,12 +56,17 @@ public class WeaponLevelingConfig {
             value_damage_per_level= BUILDER.comment("The Extra Damage a weapon gets for each level (Default = 0.1)").defineInRange("weaponDamagePerLevel",0.1d, 0, 100);
 
 
+            value_max_damage_reduction = BUILDER.comment("The Max Percentage an Armor Part can reduce").defineInRange("weaponMaxReduction",75.0, 0, 100);
+
 
 
             BUILDER.comment("Item Config").push("item");
             blacklist_items = BUILDER.comment("Blacklisted Items").defineList("blacklist_items", ModLists.DEFAULT_ITEM_BLACKLIST, o -> o instanceof String);
             added_items = BUILDER.comment("Extra Items, that are not extending the AxeItem or SwordItem Class").defineList("whitelisted_items", ModLists.DEFAULT_ITEM_WHITELIST, o -> o instanceof String);
-
+            no_melee_fallback = BUILDER.comment("Items, that should be levelable, but should not cause melee damage (only use if it the mod does not already cover this)").defineList("no_melee_items", ModLists.DEFAULT_NO_MELEE, o -> o instanceof String);
+            levelup_type = BUILDER.comment("How the player is notified about the item's Level Up",
+                    "ACTIONBAR: Will display the Level Up in the Actionbar",
+                    "TOAST: Will display the Level Up in the Actionbar").defineEnum("levelUpDisplayType", LevelUpType.TOAST);
 
             BUILDER.pop();
 

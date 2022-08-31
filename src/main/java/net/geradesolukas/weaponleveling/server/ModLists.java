@@ -10,7 +10,8 @@ public class ModLists {
     private static final String ALEXMOBSID = "alexsmobs:";
 
     public static final List<String> DEFAULT_ITEM_BLACKLIST = ImmutableList.of();
-    public static final List<String> DEFAULT_ITEM_WHITELIST = ImmutableList.of(MCID +"trident",MCID +"bow");
+    public static final List<String> DEFAULT_NO_MELEE = ImmutableList.of();
+    public static final List<String> DEFAULT_ITEM_WHITELIST = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow");
 
 
 
