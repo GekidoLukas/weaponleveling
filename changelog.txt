@@ -1,3 +1,7 @@
+Version 1.3
+- Updated German translation
+
+
 Version 1.2
 - Added Armor Support for Leveling
 - Added TOAST Option as a Level Up Notification
