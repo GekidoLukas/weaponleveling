@@ -1,7 +1,7 @@
 Version 1.2.1
 - Updated German translation
 - Fixed Hit XP not applying when killing a mob
-- Fixed Critical Server Crash 
+- Fixed Critical Server Crash
 
 Version 1.2
 - Added Armor Support for Leveling
