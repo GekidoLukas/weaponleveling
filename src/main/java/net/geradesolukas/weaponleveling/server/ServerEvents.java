@@ -6,6 +6,7 @@ import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.server.command.ItemLevelCommand;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -104,7 +105,7 @@ public class ServerEvents {
             return;
         }
         ItemStack hand = player.getMainHandItem();
-
+        //source.sendMessage(new TextComponent("The damage is " + event.getAmount()), source.getUUID());
 
 
         //Apply Damage
@@ -128,14 +129,16 @@ public class ServerEvents {
                     if (event.getSource().getDirectEntity() instanceof AbstractArrow) {
                         return;
                     } else {
-                        event.setAmount(damage + (float)extradamage);
+                        //For guns
+                        //event.setAmount(damage + (float)extradamage);
                     }
 
 
                 } else if(event.getSource().isMagic()|| event.getSource().isExplosion() || hand.getItem() instanceof ProjectileWeaponItem || UpdateLevels.isNoMelee(hand)){
                     return;
                 } else  {
-                    event.setAmount(damage + (float)extradamage);
+                    //event.setAmount(damage + (float)extradamage);
+
                 }
 
 

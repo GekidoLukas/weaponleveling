@@ -7,7 +7,9 @@
     "MixinItemStack",
     "MixinBowItem",
     "MixinCrossbowItem",
-    "MixinThrownTrident"
+    "MixinThrownTrident",
+    "MixinEnchantmentHelper",
+    "MixinPlayer"
   ],
   "plugin": "net.geradesolukas.weaponleveling.mixin.MixinConfigPlugin",
   "injectors": {

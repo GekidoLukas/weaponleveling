@@ -1,3 +1,7 @@
+Version 1.2.2
+- Fixed Bows doing too much damage
+- Fixed Tooltip not being correct when playing with the epic fight mod
+
 Version 1.2.1
 - Updated German translation
 - Fixed Hit XP not applying when killing a mob

@@ -32,6 +32,7 @@ public class ClientEvents {
 
 
     }
+
     @SubscribeEvent
     public static void onTooltipRender(ItemTooltipEvent event) {
 

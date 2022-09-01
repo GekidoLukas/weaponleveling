@@ -30,7 +30,7 @@ public abstract class MixinBowItem {
     private void injectedDamage(ItemStack stack, Level level, LivingEntity entity, int i1, CallbackInfo ci, Player player, boolean flag, ItemStack itemstack, int i, float f, boolean flag1, ArrowItem arrowitem, AbstractArrow abstractarrow) {
         if(UpdateLevels.isAcceptedWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
+            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get() /2;
             abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
         }
     }

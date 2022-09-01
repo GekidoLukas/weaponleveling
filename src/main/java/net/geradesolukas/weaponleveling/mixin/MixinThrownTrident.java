@@ -27,24 +27,24 @@ public abstract class MixinThrownTrident {
     @Shadow
     private ItemStack tridentItem;
 
-    @ModifyVariable(
-            method = "onHitEntity",
-            slice = @Slice(
-                    from = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/EntityHitResult;getEntity()Lnet/minecraft/world/entity/Entity;"),
-                    to = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F")
-            ),
-            at = @At(value = "STORE", ordinal = 0),
-            ordinal = 0
-    )
-    private float getAttackDamage(float f, EntityHitResult result) {
-        //return baseDamage + BetterImpaling.getAttackDamage(this.tridentStack, result.getEntity());
-        if(UpdateLevels.isAcceptedWeapon(tridentItem)) {
-            double weaponlevelamount = tridentItem.getOrCreateTag().getInt("level");
-            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
-            return f += weaponlevelamount;
-        } else return f;
-
-    }
+    //@ModifyVariable(
+    //        method = "onHitEntity",
+    //        slice = @Slice(
+    //                from = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/EntityHitResult;getEntity()Lnet/minecraft/world/entity/Entity;"),
+    //                to = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F")
+    //        ),
+    //        at = @At(value = "STORE", ordinal = 0),
+    //        ordinal = 0
+    //)
+    //private float getAttackDamage(float f, EntityHitResult result) {
+    //    //return baseDamage + BetterImpaling.getAttackDamage(this.tridentStack, result.getEntity());
+    //    if(UpdateLevels.isAcceptedWeapon(tridentItem)) {
+    //        double weaponlevelamount = tridentItem.getOrCreateTag().getInt("level");
+    //        weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
+    //        return f += weaponlevelamount;
+    //    } else return f;
+//
+    //}
 
 
     @Inject(

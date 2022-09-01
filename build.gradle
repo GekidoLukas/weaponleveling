@@ -24,7 +24,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '1.18.2-1.2.1'
+version = '1.18.2-1.2.2'
 group = 'net.geradesolukas.weaponleveling' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'weaponleveling'
 

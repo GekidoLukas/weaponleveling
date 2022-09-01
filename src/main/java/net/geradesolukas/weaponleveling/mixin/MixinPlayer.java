@@ -32,18 +32,17 @@ public class MixinPlayer {
     //    return bonus;
     //}
 
-    @WrapOperation(
-            method = "attack",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F"))
-    private float injectedDamage(ItemStack stack, MobType type, Operation<Float> original) {
-
-        float weaponlevelamount = 0;
-        if (UpdateLevels.isAcceptedWeapon(stack) && !(stack.getItem() instanceof ProjectileWeaponItem || UpdateLevels.isNoMelee(stack))) {
-            weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
-        }
-        return original.call(stack, type) + weaponlevelamount;
-    }
+    //@WrapOperation(
+    //        method = "attack",
+    //        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F"))
+    //private float injectedDamage(ItemStack stack, MobType type, Operation<Float> original) {
+    //    float weaponlevelamount = 0;
+    //    if (UpdateLevels.isAcceptedWeapon(stack) && !(stack.getItem() instanceof ProjectileWeaponItem || UpdateLevels.isNoMelee(stack))) {
+    //        weaponlevelamount = stack.getOrCreateTag().getInt("level");
+    //        weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
+    //    }
+    //    return original.call(stack, type) + weaponlevelamount;
+    //}
 
     @Inject(
             method = "attack",
