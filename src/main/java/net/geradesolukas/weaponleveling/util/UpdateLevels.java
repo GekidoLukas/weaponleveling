@@ -18,29 +18,34 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class UpdateLevels {
-    public static void applyXPOnAttack(ItemStack stack, Player player, Entity target) {
+    public static void applyXPOnItemStack(ItemStack stack, Player player, Entity target) {
         if(!player.getLevel().isClientSide) {
+            int xpamounthit = UpdateLevels.getXPForHit();
+            int xpamount = 0;
             if (!target.isAlive()) {
-                String name = ForgeRegistries.ENTITIES.getKey(target.getType()).toString();
-                int xpamounthit = 0;
-                int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
-                if (shouldGiveHitXP(WeaponLevelingConfig.Server.value_hit_percentage.get())) {xpamounthit = amount;}
-
-                int xpamount = WeaponLevelingConfig.Server.value_kill_generic.get();
-                if(WeaponLevelingConfig.Server.entities_miniboss.get().contains(name)) {
-                    xpamount = WeaponLevelingConfig.Server.value_kill_miniboss.get();
-                } else if(WeaponLevelingConfig.Server.entities_boss.get().contains(name)) {
-                    xpamount = WeaponLevelingConfig.Server.value_kill_boss.get();
-                } else if(WeaponLevelingConfig.Server.entities_animal.get().contains(name)) {
-                    xpamount = WeaponLevelingConfig.Server.value_kill_animal.get();
-                }   else if(WeaponLevelingConfig.Server.entities_monster.get().contains(name)) {
-                    xpamount = WeaponLevelingConfig.Server.value_kill_monster.get();
-                }
-                updateProgressItem(player,stack,xpamount+xpamounthit);
+                xpamount = UpdateLevels.getXPForEntity(target);
             }
-
+            updateProgressItem(player,stack,xpamount+xpamounthit);
         }
 
+    }
+
+    public static void applyXPForArmor(Player player, int value) {
+        if(!player.getLevel().isClientSide) {
+
+            player.sendMessage(new TextComponent("It works"), player.getUUID());
+            if (player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY ) {
+                ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+                ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
+                ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
+                ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
+                if (isAcceptedArmor(helmet)) {updateProgressItem(player,helmet,value);}
+                if (isAcceptedArmor(chestplate)) {updateProgressItem(player,chestplate,value);}
+                if (isAcceptedArmor(leggings)) {updateProgressItem(player,leggings,value);}
+                if (isAcceptedArmor(feet)) {updateProgressItem(player,feet,value);}
+
+            }
+        }
     }
 
     public static void applyExperience(Player player, int xpamount) {
@@ -105,7 +110,27 @@ public class UpdateLevels {
         }
         return maxlevel;
     }
+    public static int getXPForEntity(Entity entity) {
+        String name = ForgeRegistries.ENTITIES.getKey(entity.getType()).toString();
+        int xpamount = WeaponLevelingConfig.Server.value_kill_generic.get();
+        if(WeaponLevelingConfig.Server.entities_miniboss.get().contains(name)) {
+            xpamount = WeaponLevelingConfig.Server.value_kill_miniboss.get();
+        } else if(WeaponLevelingConfig.Server.entities_boss.get().contains(name)) {
+            xpamount = WeaponLevelingConfig.Server.value_kill_boss.get();
+        } else if(WeaponLevelingConfig.Server.entities_animal.get().contains(name)) {
+            xpamount = WeaponLevelingConfig.Server.value_kill_animal.get();
+        }   else if(WeaponLevelingConfig.Server.entities_monster.get().contains(name)) {
+            xpamount = WeaponLevelingConfig.Server.value_kill_monster.get();
+        }
+        return xpamount;
+    }
 
+    public static int getXPForHit() {
+        int xpamount = 0;
+        int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
+        if (shouldGiveHitXP(WeaponLevelingConfig.Server.value_hit_percentage.get())) {xpamount = amount;}
+        return xpamount;
+    }
 
     public static boolean isAcceptedWeapon(ItemStack stack) {
         String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
@@ -166,7 +191,6 @@ public class UpdateLevels {
     }
 
     public static float getReduction(int level) {
-
         double maxdamagereduction = WeaponLevelingConfig.Server.value_max_damage_reduction.get();
         return (float) maxdamagereduction * ((float) level/WeaponLevelingConfig.Server.value_max_level.get());
     }
