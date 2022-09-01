@@ -4,19 +4,18 @@ import net.geradesolukas.weaponleveling.WeaponLeveling;
 import net.geradesolukas.weaponleveling.networking.message.PacketSendToast;
 import net.geradesolukas.weaponleveling.util.CustomToast;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.toasts.AdvancementToast;
-import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-import java.awt.*;
 import java.util.function.Supplier;
 
 public class Networking {
@@ -53,8 +52,8 @@ public class Networking {
 
 
 
-
-    public static void handleSyncLeveling(PacketSendToast packet, Supplier<NetworkEvent.Context> ctx) {
+@OnlyIn(Dist.CLIENT)
+    public static void handleSendToast(PacketSendToast packet, Supplier<NetworkEvent.Context> ctx) {
         NetworkEvent.Context context = ctx.get();
         Player player = Minecraft.getInstance().player;
         ItemStack stack = packet.stack;

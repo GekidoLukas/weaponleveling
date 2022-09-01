@@ -8,7 +8,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
-import java.util.UUID;
 import java.util.function.Supplier;
 
 public class PacketSendToast {
@@ -37,6 +36,6 @@ public class PacketSendToast {
         NetworkEvent.Context context = ctx.get();
         if (packet == null) return;
         context.enqueueWork(() ->
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> Networking.handleSyncLeveling(packet, ctx)));
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> Networking.handleSendToast(packet, ctx)));
     }
 }
