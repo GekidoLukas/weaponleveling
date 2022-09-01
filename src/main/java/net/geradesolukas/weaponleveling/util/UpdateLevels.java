@@ -32,8 +32,6 @@ public class UpdateLevels {
 
     public static void applyXPForArmor(Player player, int value) {
         if(!player.getLevel().isClientSide) {
-
-            player.sendMessage(new TextComponent("It works"), player.getUUID());
             if (player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY ) {
                 ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
                 ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
