@@ -1,16 +1,13 @@
 package net.geradesolukas.weaponleveling.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,7 +52,7 @@ public abstract class MixinThrownTrident {
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/ThrownTrident;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedDamage(EntityHitResult result, CallbackInfo ci, Entity entity, float f, Entity entity1, DamageSource damagesource, SoundEvent soundevent, float f1) {
         if(UpdateLevels.isAcceptedWeapon(tridentItem)) {
-            UpdateLevels.applyXPForTrident(tridentItem, (Player) entity1, entity);
+            UpdateLevels.applyXPOnAttack(tridentItem, (Player) entity1, entity);
         }
     }
 

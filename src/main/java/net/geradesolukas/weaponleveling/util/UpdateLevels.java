@@ -16,19 +16,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class UpdateLevels {
-    public static void applyXPForTrident(ItemStack stack, Player player, Entity target) {
+    public static void applyXPOnAttack(ItemStack stack, Player player, Entity target) {
         if(!player.getLevel().isClientSide) {
-            if (target.isAlive()) {
-                int xpamount = 0;
-                int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
-                if (shouldGiveHitXP(WeaponLevelingConfig.Server.value_hit_percentage.get())) {xpamount = amount;}
-                updateProgressItem(player,stack,xpamount);
-            } else {
+            if (!target.isAlive()) {
                 String name = ForgeRegistries.ENTITIES.getKey(target.getType()).toString();
+                int xpamounthit = 0;
+                int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
+                if (shouldGiveHitXP(WeaponLevelingConfig.Server.value_hit_percentage.get())) {xpamounthit = amount;}
 
                 int xpamount = WeaponLevelingConfig.Server.value_kill_generic.get();
                 if(WeaponLevelingConfig.Server.entities_miniboss.get().contains(name)) {
@@ -40,7 +36,7 @@ public class UpdateLevels {
                 }   else if(WeaponLevelingConfig.Server.entities_monster.get().contains(name)) {
                     xpamount = WeaponLevelingConfig.Server.value_kill_monster.get();
                 }
-                updateProgressItem(player,stack,xpamount);
+                updateProgressItem(player,stack,xpamount+xpamounthit);
             }
 
         }

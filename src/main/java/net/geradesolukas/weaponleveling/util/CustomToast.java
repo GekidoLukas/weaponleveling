@@ -15,9 +15,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
-
+@OnlyIn(Dist.CLIENT)
 public class CustomToast extends X11.Drawable implements Toast {
     ItemStack stack;
     int level;

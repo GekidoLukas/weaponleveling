@@ -47,6 +47,7 @@ public class ServerEvents {
 
                 UpdateLevels updateLevels = new UpdateLevels();
                 if ((UpdateLevels.isAcceptedWeapon(hand) && player.getAttackStrengthScale(0.0F) == 1.0f)|| player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY ) {
+
                     int xpamount = 0;
                     int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
                     if (updateLevels.shouldGiveHitXP(WeaponLevelingConfig.Server.value_hit_percentage.get())) {xpamount = amount;}
@@ -102,11 +103,12 @@ public class ServerEvents {
         if (!(source instanceof Player player)) {
             return;
         }
+        ItemStack hand = player.getMainHandItem();
 
 
 
         //Apply Damage
-        ItemStack hand = player.getMainHandItem();
+
         if(UpdateLevels.isAcceptedWeapon(hand)) {
 
             CompoundTag nbttag = hand.getOrCreateTag();
@@ -119,6 +121,8 @@ public class ServerEvents {
 
 
                 if (event.getSource().isProjectile()) {
+                    //This is supposed to add the XP to bows and crossbows again
+                    //UpdateLevels.applyXPOnAttack(hand, player, event.getEntity());
 
                     
                     if (event.getSource().getDirectEntity() instanceof AbstractArrow) {
@@ -137,6 +141,12 @@ public class ServerEvents {
 
             }
 
+        }
+
+        if (event.getSource().isProjectile()) {
+            //if ((UpdateLevels.isAcceptedWeapon(hand) || player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY)) {
+            //
+            //}
         }
     }
     @SubscribeEvent
