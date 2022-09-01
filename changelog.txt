@@ -1,6 +1,5 @@
-Version 1.3
+Version 1.2.1
 - Updated German translation
-
 - Fixed Hit XP not applying when killing a mob
 
 Version 1.2
