@@ -35,6 +35,7 @@ public class WeaponLeveling
 
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, WeaponLevelingConfig.Server.SPEC, "weaponleveling-server.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, WeaponLevelingConfig.Client.SPEC, "weaponleveling-client.toml");
 
 
 

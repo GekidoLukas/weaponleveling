@@ -26,12 +26,16 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = WeaponLeveling.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientEvents {
 
+    private static boolean shouldExtendTooltip() {
+        boolean needshift = WeaponLevelingConfig.Client.holdshift_for_tooltip.get();
 
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-
-
+        if (needshift) {
+            return Screen.hasShiftDown();
+        } else {
+            return true;
+        }
     }
+
 
     @SubscribeEvent
     public static void onTooltipRender(ItemTooltipEvent event) {
@@ -49,7 +53,7 @@ public class ClientEvents {
         Style SHIFT = Style.EMPTY.withColor(12517240);
 
         if (UpdateLevels.isAcceptedWeapon(stack)) {
-            if (Screen.hasShiftDown()) {
+            if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
                 int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
                 int maxlevelprogress = UpdateLevels.getMaxLevel(level);
@@ -99,7 +103,7 @@ public class ClientEvents {
         }
 
         if (UpdateLevels.isAcceptedArmor(stack)) {
-            if (Screen.hasShiftDown()) {
+            if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
                 int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
                 int maxlevelprogress = UpdateLevels.getMaxLevel(level);

@@ -7,7 +7,23 @@ import java.util.List;
 
 public class WeaponLevelingConfig {
 
+    public static class Client {
+        public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+        public static final ForgeConfigSpec SPEC;
 
+
+        public static final ForgeConfigSpec.ConfigValue<Boolean> holdshift_for_tooltip;
+        static {
+            BUILDER.comment("Client Config").push("client");
+
+            holdshift_for_tooltip = BUILDER.comment("Whether the extended tooltip should be rendered when shift is pressed or not").define("shift_for_tooltip",false);
+
+
+
+            SPEC = BUILDER.build();
+        }
+
+    }
     public static class Server {
 
         public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
