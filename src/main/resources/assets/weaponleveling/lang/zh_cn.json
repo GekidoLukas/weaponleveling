@@ -14,3 +14,4 @@
   "weaponleveling.command.exception.novalidweapon": "%s 不是一件有效的物品",
   "weaponleveling.command.exception.outofbounds": "%s 超过了能设置的最大值"
 }
+
