@@ -1,6 +1,12 @@
+Version 1.2.3
+
 Version 1.2.2
+- Added config option for making the tooltip only render when shift is pressed
+- Added Compatibility to Better Combat by Daedelus
+
+- Changed the default for the tooltip to not require shift
+
 - Fixed Bows doing too much damage
-- Fixed Tooltip not being correct when playing with the epic fight mod
 
 Version 1.2.1
 - Updated German translation

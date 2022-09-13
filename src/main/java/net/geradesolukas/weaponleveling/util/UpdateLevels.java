@@ -10,10 +10,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -141,7 +138,7 @@ public class UpdateLevels {
 
     public static boolean isNoMelee(ItemStack stack) {
         String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-        return (WeaponLevelingConfig.Server.no_melee_fallback.get().contains(name));
+        return stack.getItem() instanceof ProjectileWeaponItem || (WeaponLevelingConfig.Server.no_melee_fallback.get().contains(name));
     }
 
     public static void sendLevelUpNotification(Player player,ItemStack stack, int level) {

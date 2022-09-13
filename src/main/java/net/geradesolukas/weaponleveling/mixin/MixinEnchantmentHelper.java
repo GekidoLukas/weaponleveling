@@ -1,6 +1,7 @@
 package net.geradesolukas.weaponleveling.mixin;
 
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
+import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -20,6 +21,8 @@ public class MixinEnchantmentHelper {
     private static void injectedDamage(ItemStack stack, MobType p_44835_, CallbackInfoReturnable<Float> cir, MutableFloat mutablefloat) {
          float weaponlevelamount = stack.getOrCreateTag().getInt("level");
         weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
-         mutablefloat.add(weaponlevelamount);
+        if(!UpdateLevels.isNoMelee(stack)) {
+            mutablefloat.add(weaponlevelamount);
+        }
     }
 }

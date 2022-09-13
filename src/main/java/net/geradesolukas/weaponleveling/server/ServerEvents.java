@@ -89,7 +89,7 @@ public class ServerEvents {
                         return;
                     } else {
                         //For guns
-                        event.setAmount(damage + (float)extradamage);
+                        //event.setAmount(damage + (float)extradamage);
                     }
                 } else  {
                     return;
