@@ -1,4 +1,8 @@
 Version 1.2.3
+- Added Chinese Translation (zh_cn) by Kzeroko (Was not in the last update by mistake)
+- Added Russian Translation (ru_ru) by The_Same_Cat
+- Fixed Drowned crashing the game when throwing trident
+- Fixed Bows and Crossbows doing Melee Damage
 
 Version 1.2.2
 - Added config option for making the tooltip only render when shift is pressed
