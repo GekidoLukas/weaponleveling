@@ -13,6 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UpdateLevels {
     public static void applyXPOnItemStack(ItemStack stack, Player player, Entity target) {
@@ -105,10 +107,11 @@ public class UpdateLevels {
         }
         return maxlevel;
     }
+    private static final Logger LOGGER = LogManager.getLogger();
     public static int getXPForEntity(Entity entity) {
         String name = ForgeRegistries.ENTITIES.getKey(entity.getType()).toString();
         int xpamount = WeaponLevelingConfig.Server.value_kill_generic.get();
-        if(WeaponLevelingConfig.Server.entities_miniboss.get().contains(name)) {
+        if(WeaponLevelingConfig.Server.entities_miniboss.get().contains(name) || isCustomMiniBoss(entity)) {
             xpamount = WeaponLevelingConfig.Server.value_kill_miniboss.get();
         } else if(WeaponLevelingConfig.Server.entities_boss.get().contains(name)) {
             xpamount = WeaponLevelingConfig.Server.value_kill_boss.get();
@@ -117,8 +120,28 @@ public class UpdateLevels {
         }   else if(WeaponLevelingConfig.Server.entities_monster.get().contains(name)) {
             xpamount = WeaponLevelingConfig.Server.value_kill_monster.get();
         }
+        //LOGGER.info("Lefthanded Stuff "+ entity.getEntityData().get());
+        // entity.getPersistentData().getBoolean("LeftHanded")
+
         return xpamount;
     }
+
+    private static boolean isCustomMiniBoss(Entity entity) {
+        if (entity.getTags().contains("wl_miniboss")) {
+            return true;
+        }
+
+        return false;
+    }
+    private static boolean isCustomBoss(Entity entity) {
+        if (entity.getTags().contains("wl_boss")) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 
     public static int getXPForHit() {
         int xpamount = 0;
