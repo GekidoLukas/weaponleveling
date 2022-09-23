@@ -1,7 +1,6 @@
 package net.geradesolukas.weaponleveling.server;
 
 import com.google.common.collect.ImmutableList;
-import org.lwjgl.openal.AL;
 
 import java.util.List;
 
@@ -10,9 +9,10 @@ public class ModLists {
     private static final String ALEXMOBSID = "alexsmobs:";
 
     public static final List<String> DEFAULT_ITEM_BLACKLIST = ImmutableList.of();
-    public static final List<String> DEFAULT_NO_MELEE = ImmutableList.of();
-    public static final List<String> DEFAULT_ITEM_WHITELIST = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow");
+    //public static final List<String> DEFAULT_NO_MELEE = ImmutableList.of();
+    public static final List<String> DEFAULT_MELEE_ITEMS = ImmutableList.of(MCID +"trident");
 
+    public static final List<String> DEFAULT_PROJECTILE_ITEMS = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow");
 
 
     public static final List<String> DEFAULT_ANIMALS = ImmutableList.of(MCID +"pig",MCID +"cow",MCID +"sheep",MCID +"chicken",MCID +"mooshroom",

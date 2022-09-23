@@ -42,8 +42,9 @@ public class WeaponLevelingConfig {
         public static final ForgeConfigSpec.ConfigValue<Integer> value_starting_level_amount;
         public static final ForgeConfigSpec.ConfigValue<Double> value_damage_per_level;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist_items;
-        public static final ForgeConfigSpec.ConfigValue<List<? extends String>> added_items;
-        public static final ForgeConfigSpec.ConfigValue<List<? extends String>> no_melee_fallback;
+        public static final ForgeConfigSpec.ConfigValue<List<? extends String>> melee_items;
+        public static final ForgeConfigSpec.ConfigValue<List<? extends String>> projectile_items;
+        //public static final ForgeConfigSpec.ConfigValue<List<? extends String>> no_melee_fallback;
 
 
         public static final ForgeConfigSpec.ConfigValue<Double> value_max_damage_reduction;
@@ -78,8 +79,8 @@ public class WeaponLevelingConfig {
 
             BUILDER.comment("Item Config").push("item");
             blacklist_items = BUILDER.comment("Blacklisted Items").defineList("blacklist_items", ModLists.DEFAULT_ITEM_BLACKLIST, o -> o instanceof String);
-            added_items = BUILDER.comment("Extra Items, that are not extending the AxeItem or SwordItem Class").defineList("whitelisted_items", ModLists.DEFAULT_ITEM_WHITELIST, o -> o instanceof String);
-            no_melee_fallback = BUILDER.comment("Items, that should be levelable, but should not cause melee damage (only use if it the mod does not already cover this)").defineList("no_melee_items", ModLists.DEFAULT_NO_MELEE, o -> o instanceof String);
+            melee_items = BUILDER.comment("Melee Weapons, that are not extending the AxeItem or SwordItem Class").defineList("whitelisted_items", ModLists.DEFAULT_MELEE_ITEMS, o -> o instanceof String);
+            projectile_items = BUILDER.comment("Projectile Weapons, that are not extending the AxeItem or SwordItem Class").defineList("whitelisted_items", ModLists.DEFAULT_PROJECTILE_ITEMS, o -> o instanceof String);
             levelup_type = BUILDER.comment("How the player is notified about the item's Level Up",
                     "ACTIONBAR: Will display the Level Up in the Actionbar",
                     "TOAST: Will display the Level Up in the Actionbar").defineEnum("levelUpDisplayType", LevelUpType.TOAST);

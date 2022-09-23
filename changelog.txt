@@ -1,3 +1,5 @@
+Version 1.2.4
+
 Version 1.2.3
 - Added Chinese Translation (zh_cn) by Kzeroko (Was not in the last update by mistake)
 - Added Russian Translation (ru_ru) by The_Same_Cat
