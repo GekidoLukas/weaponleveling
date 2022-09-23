@@ -21,7 +21,7 @@ public abstract class MixinCrossbowItem {
             method = "getArrow",
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private static void injectedDamage(Level p_40915_, LivingEntity p_40916_, ItemStack stack, ItemStack p_40918_, CallbackInfoReturnable<AbstractArrow> cir, ArrowItem arrowitem, AbstractArrow abstractarrow) {
-        if(UpdateLevels.isAcceptedWeapon(stack)) {
+        if(UpdateLevels.isAcceptedMeleeWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
             weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
             abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);

@@ -53,7 +53,7 @@ public class UpdateLevels {
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
 
-        if(UpdateLevels.isAcceptedWeapon(hand)) {
+        if(UpdateLevels.isAcceptedMeleeWeapon(hand)) {
             updateLevels.updateProgressItem(player,hand,xpamount);
         }
         if(UpdateLevels.isAcceptedArmor(helmet) && player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY) {
@@ -113,7 +113,7 @@ public class UpdateLevels {
         int xpamount = WeaponLevelingConfig.Server.value_kill_generic.get();
         if(WeaponLevelingConfig.Server.entities_miniboss.get().contains(name) || isCustomMiniBoss(entity)) {
             xpamount = WeaponLevelingConfig.Server.value_kill_miniboss.get();
-        } else if(WeaponLevelingConfig.Server.entities_boss.get().contains(name)) {
+        } else if(WeaponLevelingConfig.Server.entities_boss.get().contains(name)|| isCustomBoss(entity)) {
             xpamount = WeaponLevelingConfig.Server.value_kill_boss.get();
         } else if(WeaponLevelingConfig.Server.entities_animal.get().contains(name)) {
             xpamount = WeaponLevelingConfig.Server.value_kill_animal.get();
@@ -150,18 +150,19 @@ public class UpdateLevels {
         return xpamount;
     }
 
-    public static boolean isAcceptedWeapon(ItemStack stack) {
+    public static boolean isAcceptedMeleeWeapon(ItemStack stack) {
         String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
         return (stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem || WeaponLevelingConfig.Server.melee_items.get().contains(name)) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name) ;
     }
 
     public static boolean isAcceptedArmor(ItemStack stack) {
-        return (stack.getItem() instanceof ArmorItem);
+        String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+        return (stack.getItem() instanceof ArmorItem) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name);
     }
 
-    public static boolean isNoMelee(ItemStack stack) {
+    public static boolean isAcceptedProjectileWeapon(ItemStack stack) {
         String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-        return stack.getItem() instanceof ProjectileWeaponItem || (WeaponLevelingConfig.Server.no_melee_fallback.get().contains(name));
+        return stack.getItem() instanceof ProjectileWeaponItem || (WeaponLevelingConfig.Server.projectile_items.get().contains(name));
     }
 
     public static void sendLevelUpNotification(Player player,ItemStack stack, int level) {

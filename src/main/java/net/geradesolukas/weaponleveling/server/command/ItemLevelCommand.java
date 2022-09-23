@@ -5,7 +5,6 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.commands.CommandSourceStack;
@@ -44,7 +43,7 @@ public class ItemLevelCommand {
 
     private int setLevelCommand(CommandSourceStack source, ServerPlayer player, int level, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ItemStack stack = player.getMainHandItem();
-        if (UpdateLevels.isAcceptedWeapon(stack) || UpdateLevels.isAcceptedArmor(stack)) {
+        if (UpdateLevels.isAcceptedMeleeWeapon(stack) || UpdateLevels.isAcceptedArmor(stack)) {
             if(level <= WeaponLevelingConfig.Server.value_max_level.get()) {
                 stack.getOrCreateTag().putInt("level", level);
                 source.sendSuccess(new TranslatableComponent("weaponleveling.command.setlevel",stack.getHoverName(),level),true);
@@ -63,7 +62,7 @@ public class ItemLevelCommand {
         ItemStack stack = player.getMainHandItem();
         int level = stack.getOrCreateTag().getInt("levelprogress");
         int maxprogress = UpdateLevels.getMaxLevel(level);
-        if (UpdateLevels.isAcceptedWeapon(stack) || UpdateLevels.isAcceptedArmor(stack)) {
+        if (UpdateLevels.isAcceptedMeleeWeapon(stack) || UpdateLevels.isAcceptedArmor(stack)) {
             if(points <= maxprogress) {
                 stack.getOrCreateTag().putInt("levelprogress", points);
                 source.sendSuccess(new TranslatableComponent("weaponleveling.command.setpoints",stack.getHoverName(),points),true);
