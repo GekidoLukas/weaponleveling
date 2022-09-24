@@ -178,8 +178,8 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 
-    implementation fg.deobf("curse.maven:tetra-289712:3844400") //Tetra
-    implementation fg.deobf("curse.maven:tetra-351914:3788376") //mutil
+    compileOnly fg.deobf("curse.maven:tetra-289712:3844400") //Tetra
+    compileOnly fg.deobf("curse.maven:tetra-351914:3788376") //mutil
 
 
     // Real mod deobf dependency examples - these get remapped to your current mappings

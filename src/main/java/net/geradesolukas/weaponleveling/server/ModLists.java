@@ -7,12 +7,16 @@ import java.util.List;
 public class ModLists {
     private static final String MCID = "minecraft:";
     private static final String ALEXMOBSID = "alexsmobs:";
+    private static final String TETRAID = "tetra:";
 
     public static final List<String> DEFAULT_ITEM_BLACKLIST = ImmutableList.of();
     //public static final List<String> DEFAULT_NO_MELEE = ImmutableList.of();
-    public static final List<String> DEFAULT_MELEE_ITEMS = ImmutableList.of(MCID +"trident");
+    public static final List<String> DEFAULT_MELEE_ITEMS = ImmutableList.of(MCID +"trident", TETRAID + "modular_sword", TETRAID + "modular_double");
 
-    public static final List<String> DEFAULT_PROJECTILE_ITEMS = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow");
+    public static final List<String> DEFAULT_PROJECTILE_ITEMS = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow",
+            TETRAID + "modular_crossbow", TETRAID + "modular_bow"
+
+    );
 
 
     public static final List<String> DEFAULT_ANIMALS = ImmutableList.of(MCID +"pig",MCID +"cow",MCID +"sheep",MCID +"chicken",MCID +"mooshroom",

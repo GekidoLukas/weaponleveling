@@ -1,5 +1,6 @@
 package net.geradesolukas.weaponleveling;
 
+import net.geradesolukas.weaponleveling.compat.tetra.TetraCompat;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.networking.Networking;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,6 +47,7 @@ public class WeaponLeveling
     private void setup(final FMLCommonSetupEvent event)
     {
         Networking.registerMessages();
+        TetraCompat.init();
 
     }
 
