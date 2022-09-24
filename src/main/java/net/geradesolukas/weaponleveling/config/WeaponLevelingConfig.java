@@ -79,8 +79,8 @@ public class WeaponLevelingConfig {
 
             BUILDER.comment("Item Config").push("item");
             blacklist_items = BUILDER.comment("Blacklisted Items").defineList("blacklist_items", ModLists.DEFAULT_ITEM_BLACKLIST, o -> o instanceof String);
-            melee_items = BUILDER.comment("Melee Weapons, that are not extending the AxeItem or SwordItem Class").defineList("whitelisted_items", ModLists.DEFAULT_MELEE_ITEMS, o -> o instanceof String);
-            projectile_items = BUILDER.comment("Projectile Weapons, that are not extending the AxeItem or SwordItem Class").defineList("whitelisted_items", ModLists.DEFAULT_PROJECTILE_ITEMS, o -> o instanceof String);
+            melee_items = BUILDER.comment("Melee Weapons, that are not extending the AxeItem or SwordItem Class").defineList("melee_items", ModLists.DEFAULT_MELEE_ITEMS, o -> o instanceof String);
+            projectile_items = BUILDER.comment("Projectile Weapons, that are not extending the AxeItem or SwordItem Class").defineList("projectile_items", ModLists.DEFAULT_PROJECTILE_ITEMS, o -> o instanceof String);
             levelup_type = BUILDER.comment("How the player is notified about the item's Level Up",
                     "ACTIONBAR: Will display the Level Up in the Actionbar",
                     "TOAST: Will display the Level Up in the Actionbar").defineEnum("levelUpDisplayType", LevelUpType.TOAST);

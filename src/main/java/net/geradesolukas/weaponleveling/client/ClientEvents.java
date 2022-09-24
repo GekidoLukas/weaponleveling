@@ -48,7 +48,7 @@ public class ClientEvents {
         Style VALUES = Style.EMPTY.withColor(15422034);
         Style SHIFT = Style.EMPTY.withColor(12517240);
 
-        if (UpdateLevels.isAcceptedMeleeWeapon(stack)) {
+        if (UpdateLevels.isAcceptedMeleeWeapon(stack) || UpdateLevels.isAcceptedProjectileWeapon(stack)) {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
                 int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
@@ -80,7 +80,7 @@ public class ClientEvents {
                     );
                 }
 
-                if (stack.getItem() instanceof ProjectileWeaponItem) {
+                if (UpdateLevels.isAcceptedProjectileWeapon(stack) && !UpdateLevels.isAcceptedMeleeWeapon(stack)) {
                     double extradamage = level * WeaponLevelingConfig.Server.value_damage_per_level.get();
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))

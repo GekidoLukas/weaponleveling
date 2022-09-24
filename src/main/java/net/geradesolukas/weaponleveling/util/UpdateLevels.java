@@ -162,7 +162,7 @@ public class UpdateLevels {
 
     public static boolean isAcceptedProjectileWeapon(ItemStack stack) {
         String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-        return stack.getItem() instanceof ProjectileWeaponItem || (WeaponLevelingConfig.Server.projectile_items.get().contains(name));
+        return (stack.getItem() instanceof ProjectileWeaponItem || (WeaponLevelingConfig.Server.projectile_items.get().contains(name))) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name);
     }
 
     public static void sendLevelUpNotification(Player player,ItemStack stack, int level) {

@@ -67,7 +67,7 @@ public class ServerEvents {
         }
         UpdateLevels.applyXPForArmor(player,UpdateLevels.getXPForHit());
         //Apply Damage + Bow XP
-        if(UpdateLevels.isAcceptedMeleeWeapon(hand)) {
+        if(UpdateLevels.isAcceptedMeleeWeapon(hand) || UpdateLevels.isAcceptedProjectileWeapon(hand)) {
             if(event.getSource().isProjectile()) {
                 int xpamount = 0;
                 int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();

@@ -21,7 +21,7 @@ public class MixinEnchantmentHelper {
     private static void injectedDamage(ItemStack stack, MobType p_44835_, CallbackInfoReturnable<Float> cir, MutableFloat mutablefloat) {
          float weaponlevelamount = stack.getOrCreateTag().getInt("level");
         weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
-        if(!UpdateLevels.isAcceptedProjectileWeapon(stack)) {
+        if(UpdateLevels.isAcceptedMeleeWeapon(stack)) {
             mutablefloat.add(weaponlevelamount);
         }
     }
