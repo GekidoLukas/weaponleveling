@@ -9,7 +9,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,7 +47,7 @@ public class ClientEvents {
         Style VALUES = Style.EMPTY.withColor(15422034);
         Style SHIFT = Style.EMPTY.withColor(12517240);
 
-        if (UpdateLevels.isAcceptedMeleeWeapon(stack) || UpdateLevels.isAcceptedProjectileWeapon(stack)) {
+        if (UpdateLevels.isAcceptedMeleeWeaponStack(stack) || UpdateLevels.isAcceptedProjectileWeapon(stack)) {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
                 int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
@@ -80,7 +79,7 @@ public class ClientEvents {
                     );
                 }
 
-                if (UpdateLevels.isAcceptedProjectileWeapon(stack) && !UpdateLevels.isAcceptedMeleeWeapon(stack)) {
+                if (UpdateLevels.isAcceptedProjectileWeapon(stack) && !UpdateLevels.isAcceptedMeleeWeaponStack(stack)) {
                     double extradamage = level * WeaponLevelingConfig.Server.value_damage_per_level.get();
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))

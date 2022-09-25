@@ -8,10 +8,16 @@ public class ModLists {
     private static final String MCID = "minecraft:";
     private static final String ALEXMOBSID = "alexsmobs:";
     private static final String TETRAID = "tetra:";
+    private static final String TINKERSID = "tconstruct:";
 
     public static final List<String> DEFAULT_ITEM_BLACKLIST = ImmutableList.of();
     //public static final List<String> DEFAULT_NO_MELEE = ImmutableList.of();
-    public static final List<String> DEFAULT_MELEE_ITEMS = ImmutableList.of(MCID +"trident", TETRAID + "modular_sword", TETRAID + "modular_double");
+    public static final List<String> DEFAULT_MELEE_ITEMS = ImmutableList.of(MCID +"trident",
+            TETRAID + "modular_sword", TETRAID + "modular_double",
+            TINKERSID + "dagger", TINKERSID + "sword", TINKERSID + "cleaver", TINKERSID + "scythe", TINKERSID + "broad_axe", TINKERSID + "hand_axe",
+            TINKERSID + "sledge_hammer", TINKERSID + "mattock"
+
+    );
 
     public static final List<String> DEFAULT_PROJECTILE_ITEMS = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow",
             TETRAID + "modular_crossbow", TETRAID + "modular_bow"

@@ -53,7 +53,7 @@ public class UpdateLevels {
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
 
-        if(UpdateLevels.isAcceptedMeleeWeapon(hand)) {
+        if(UpdateLevels.isAcceptedMeleeWeaponStack(hand)) {
             updateLevels.updateProgressItem(player,hand,xpamount);
         }
         if(UpdateLevels.isAcceptedArmor(helmet) && player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY) {
@@ -150,10 +150,15 @@ public class UpdateLevels {
         return xpamount;
     }
 
-    public static boolean isAcceptedMeleeWeapon(ItemStack stack) {
+    public static boolean isAcceptedMeleeWeaponStack(ItemStack stack) {
         String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
         return (stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem || WeaponLevelingConfig.Server.melee_items.get().contains(name)) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name) ;
     }
+    public static boolean isAcceptedMeleeWeaponItem(Item item) {
+        String name = ForgeRegistries.ITEMS.getKey(item).toString();
+        return (item instanceof SwordItem || item instanceof AxeItem || WeaponLevelingConfig.Server.melee_items.get().contains(name)) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name) ;
+    }
+
 
     public static boolean isAcceptedArmor(ItemStack stack) {
         String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();

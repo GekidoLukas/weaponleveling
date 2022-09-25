@@ -21,6 +21,8 @@ public class WeaponLeveling
 {
     public static final String MODID = "weaponleveling";
 
+    public static final String DAMAGEUUID = "0ce9c087-c72d-499c-9dce-01c8e1264a6d";
+
 
     public WeaponLeveling()
     {

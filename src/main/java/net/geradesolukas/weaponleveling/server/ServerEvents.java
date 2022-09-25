@@ -2,25 +2,49 @@ package net.geradesolukas.weaponleveling.server;
 
 
 import net.geradesolukas.weaponleveling.WeaponLeveling;
+import net.geradesolukas.weaponleveling.compat.tconstruct.TinkersCompat;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.server.command.ItemLevelCommand;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = WeaponLeveling.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ServerEvents {
 
 
+    @SubscribeEvent
+    public static void onAttribute(ItemAttributeModifierEvent event) {
+        ItemStack stack = event.getItemStack();
+
+        EquipmentSlot slot = event.getSlotType();
+        double extradamage = stack.getOrCreateTag().getInt("level") * WeaponLevelingConfig.Server.value_damage_per_level.get();
+        if (TinkersCompat.isTinkersItem(stack)) {
+            if (event.getSlotType() == EquipmentSlot.MAINHAND) {
+                event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(UUID.fromString(WeaponLeveling.DAMAGEUUID),"leveldamage", extradamage, AttributeModifier.Operation.ADDITION));
+            }
+        }
+    }
     @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {
         new ItemLevelCommand(event.getDispatcher());
@@ -67,7 +91,7 @@ public class ServerEvents {
         }
         UpdateLevels.applyXPForArmor(player,UpdateLevels.getXPForHit());
         //Apply Damage + Bow XP
-        if(UpdateLevels.isAcceptedMeleeWeapon(hand) || UpdateLevels.isAcceptedProjectileWeapon(hand)) {
+        if(UpdateLevels.isAcceptedMeleeWeaponStack(hand) || UpdateLevels.isAcceptedProjectileWeapon(hand)) {
             if(event.getSource().isProjectile()) {
                 int xpamount = 0;
                 int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();

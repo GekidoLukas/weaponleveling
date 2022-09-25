@@ -179,7 +179,10 @@ dependencies {
 
 
     compileOnly fg.deobf("curse.maven:tetra-289712:3844400") //Tetra
-    compileOnly fg.deobf("curse.maven:tetra-351914:3788376") //mutil
+    compileOnly fg.deobf("curse.maven:mutil-351914:3788376") //mutil
+
+    implementation fg.deobf("curse.maven:tinkers-74072:3998764") //Tinkers
+    implementation fg.deobf("curse.maven:mantle-74924:3829975") //Mantle
 
 
     // Real mod deobf dependency examples - these get remapped to your current mappings

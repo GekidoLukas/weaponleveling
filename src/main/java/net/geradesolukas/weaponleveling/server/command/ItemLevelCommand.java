@@ -43,7 +43,7 @@ public class ItemLevelCommand {
 
     private int setLevelCommand(CommandSourceStack source, ServerPlayer player, int level, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ItemStack stack = player.getMainHandItem();
-        if (UpdateLevels.isAcceptedMeleeWeapon(stack) || UpdateLevels.isAcceptedArmor(stack)|| UpdateLevels.isAcceptedProjectileWeapon(stack)) {
+        if (UpdateLevels.isAcceptedMeleeWeaponStack(stack) || UpdateLevels.isAcceptedArmor(stack)|| UpdateLevels.isAcceptedProjectileWeapon(stack)) {
             if(level <= WeaponLevelingConfig.Server.value_max_level.get()) {
                 stack.getOrCreateTag().putInt("level", level);
                 source.sendSuccess(new TranslatableComponent("weaponleveling.command.setlevel",stack.getHoverName(),level),true);
@@ -62,7 +62,7 @@ public class ItemLevelCommand {
         ItemStack stack = player.getMainHandItem();
         int level = stack.getOrCreateTag().getInt("levelprogress");
         int maxprogress = UpdateLevels.getMaxLevel(level);
-        if (UpdateLevels.isAcceptedMeleeWeapon(stack) || UpdateLevels.isAcceptedArmor(stack)) {
+        if (UpdateLevels.isAcceptedMeleeWeaponStack(stack) || UpdateLevels.isAcceptedArmor(stack)) {
             if(points <= maxprogress) {
                 stack.getOrCreateTag().putInt("levelprogress", points);
                 source.sendSuccess(new TranslatableComponent("weaponleveling.command.setpoints",stack.getHoverName(),points),true);
