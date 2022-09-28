@@ -12,5 +12,6 @@
   "weaponleveling.command.setlevel": "Set the Level of %s to %s",
   "weaponleveling.command.setpoints": "Set the XP Points of %s to %s",
   "weaponleveling.command.exception.novalidweapon": "%s is not a valid item",
-  "weaponleveling.command.exception.outofbounds": "%s is higher than the Maximum Value"
+  "weaponleveling.command.exception.outofbounds": "%s is higher than the Maximum Value",
+  "weaponleveling.tooltip.broken": "Broken"
 }

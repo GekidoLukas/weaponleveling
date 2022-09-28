@@ -44,7 +44,6 @@ public class WeaponLevelingConfig {
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist_items;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> melee_items;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> projectile_items;
-        //public static final ForgeConfigSpec.ConfigValue<List<? extends String>> no_melee_fallback;
 
 
         public static final ForgeConfigSpec.ConfigValue<Double> value_max_damage_reduction;
@@ -55,6 +54,7 @@ public class WeaponLevelingConfig {
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entities_miniboss;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entities_boss;
 
+        public static final ForgeConfigSpec.ConfigValue<Boolean> broken_items_wont_vanish;
 
         public static final ForgeConfigSpec.EnumValue<LevelUpType> levelup_type;
         public enum LevelUpType {ACTIONBAR, TOAST}
@@ -84,6 +84,9 @@ public class WeaponLevelingConfig {
             levelup_type = BUILDER.comment("How the player is notified about the item's Level Up",
                     "ACTIONBAR: Will display the Level Up in the Actionbar",
                     "TOAST: Will display the Level Up in the Actionbar").defineEnum("levelUpDisplayType", LevelUpType.TOAST);
+
+            broken_items_wont_vanish = BUILDER.comment("If set to true, items will not vanish when broken, but rather have a useless version").define("broken_items_wont_vanish", true);
+
 
             BUILDER.pop();
 

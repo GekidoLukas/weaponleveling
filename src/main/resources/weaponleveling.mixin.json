@@ -3,6 +3,11 @@
   "package": "net.geradesolukas.weaponleveling.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8.5",
+  "client": [
+    "MixinGui",
+    "MixinItemRenderer",
+    "MixinAbstractContainerScreen"
+  ],
   "mixins": [
     "MixinBowItem",
     "MixinCrossbowItem",
@@ -10,7 +15,10 @@
     "MixinEnchantmentHelper",
     "MixinPlayer",
     "MixinModularBowItem",
-    "MixinModularCrossbowItem"
+    "MixinModularCrossbowItem",
+    "MixinItemStack",
+    "MixinForgeHooks",
+    "MixinInventory"
   ],
   "plugin": "net.geradesolukas.weaponleveling.mixin.MixinConfigPlugin",
   "injectors": {

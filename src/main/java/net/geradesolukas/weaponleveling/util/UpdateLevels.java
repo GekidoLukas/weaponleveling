@@ -201,6 +201,11 @@ public class UpdateLevels {
         int leggingslevel = leggings.getOrCreateTag().getInt("level");
         int bootslevel = boots.getOrCreateTag().getInt("level");
 
+        if (ItemUtils.isBroken(helmet)) helmetlevel = 0;
+        if (ItemUtils.isBroken(chestplate)) chestplatelevel = 0;
+        if (ItemUtils.isBroken(leggings)) leggingslevel = 0;
+        if (ItemUtils.isBroken(boots)) bootslevel = 0;
+
         double maxdamagereduction = WeaponLevelingConfig.Server.value_max_damage_reduction.get() / 100;
 
         double maxlevel = WeaponLevelingConfig.Server.value_max_level.get();
@@ -210,6 +215,7 @@ public class UpdateLevels {
         double chestplatedamage = partdamage - (partdamage * (maxdamagereduction * (chestplatelevel/maxlevel)));
         double leggingsdamage = partdamage - (partdamage * (maxdamagereduction * (leggingslevel/maxlevel)));
         double bootsdamage = partdamage - (partdamage * (maxdamagereduction * (bootslevel/maxlevel)));
+
 
         return (float) (helmetdamage + chestplatedamage + leggingsdamage + bootsdamage);
     }

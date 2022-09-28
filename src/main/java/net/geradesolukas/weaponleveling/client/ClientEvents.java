@@ -2,7 +2,9 @@ package net.geradesolukas.weaponleveling.client;
 
 import net.geradesolukas.weaponleveling.WeaponLeveling;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
+import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -10,6 +12,8 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderArmEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -46,6 +50,8 @@ public class ClientEvents {
         Style TEXT = Style.EMPTY.withColor(9736850);
         Style VALUES = Style.EMPTY.withColor(15422034);
         Style SHIFT = Style.EMPTY.withColor(12517240);
+
+
 
         if (UpdateLevels.isAcceptedMeleeWeaponStack(stack) || UpdateLevels.isAcceptedProjectileWeapon(stack)) {
             if (shouldExtendTooltip()) {
@@ -93,8 +99,6 @@ public class ClientEvents {
                 tooltip.add(new TranslatableComponent("weaponleveling.tooltip.pressshift").setStyle(SHIFT));
             }
 
-
-            full_tooltip.addAll(1,tooltip);
         }
 
         if (UpdateLevels.isAcceptedArmor(stack)) {
@@ -134,14 +138,16 @@ public class ClientEvents {
                         .append(new TextComponent( fourDecimalFormat.format(UpdateLevels.getReduction(level))+ "%").setStyle(VALUES))
                 );
 
-
-
             } else {
                 tooltip.add(new TranslatableComponent("weaponleveling.tooltip.pressshift").setStyle(SHIFT));
             }
-
-
-            full_tooltip.addAll(1,tooltip);
         }
+        if(stack.isDamageableItem()) {
+            if (!event.getFlags().isAdvanced() && ItemUtils.isBroken(stack)) {
+                tooltip.add(new TranslatableComponent("weaponleveling.tooltip.broken").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+            }
+        }
+
+        full_tooltip.addAll(1,tooltip);
     }
 }

@@ -2,6 +2,7 @@ buildscript {
     repositories {
         // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://maven.parchmentmc.org' }
         maven { url = 'https://repo.spongepowered.org/maven' }
 
         mavenCentral()
@@ -12,6 +13,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.parchmentmc:librarian:1.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
@@ -22,6 +24,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 
 
@@ -47,7 +50,7 @@ minecraft {
     //
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'parchment', version: '2022.09.04-1.18.2'
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -181,8 +184,9 @@ dependencies {
     compileOnly fg.deobf("curse.maven:tetra-289712:3844400") //Tetra
     compileOnly fg.deobf("curse.maven:mutil-351914:3788376") //mutil
 
-    implementation fg.deobf("curse.maven:tinkers-74072:3998764") //Tinkers
-    implementation fg.deobf("curse.maven:mantle-74924:3829975") //Mantle
+    compileOnly fg.deobf("curse.maven:tinkers-74072:3998764") //Tinkers
+    compileOnly fg.deobf("curse.maven:mantle-74924:3829975") //Mantle
+
 
 
     // Real mod deobf dependency examples - these get remapped to your current mappings

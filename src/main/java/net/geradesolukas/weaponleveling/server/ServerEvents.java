@@ -21,6 +21,7 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.checkerframework.checker.units.qual.A;
@@ -28,6 +29,8 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static net.geradesolukas.weaponleveling.util.UpdateLevels.updateProgressItem;
 
 @Mod.EventBusSubscriber(modid = WeaponLeveling.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ServerEvents {
@@ -46,6 +49,18 @@ public class ServerEvents {
         }
     }
     @SubscribeEvent
+    public static void onAttackEntity(AttackEntityEvent event) {
+        if (event.getEntity() instanceof  Player player) {
+            Entity target = event.getTarget();
+            ItemStack stack = player.getMainHandItem();
+            if(UpdateLevels.isAcceptedMeleeWeaponStack(stack) && TinkersCompat.isTinkersItem(stack)) {
+                UpdateLevels.applyXPOnItemStack(stack,  player, target);
+            }
+        }
+
+    }
+
+    @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {
         new ItemLevelCommand(event.getDispatcher());
     }
@@ -56,11 +71,18 @@ public class ServerEvents {
         Entity dyingEntity = event.getEntity();
         if (event.getSource().isExplosion()) return;
         if (event.getSource().isMagic()) return;
+
+
         if(killer instanceof Player player) {
+            ItemStack stack = player.getMainHandItem();
+            if(UpdateLevels.isAcceptedMeleeWeaponStack(stack) && TinkersCompat.isTinkersItem(stack)) {
+                int xpamount = UpdateLevels.getXPForEntity(dyingEntity);
+                updateProgressItem(player,stack,xpamount);
+            }
+
             int xpamount = UpdateLevels.getXPForEntity(dyingEntity);
             if (event.getSource().isProjectile()) {
-                ItemStack stack = player.getMainHandItem();
-                UpdateLevels.updateProgressItem(player, stack, xpamount);
+                updateProgressItem(player, stack, xpamount);
             }
             UpdateLevels.applyXPForArmor(player,xpamount);
         }
@@ -96,7 +118,7 @@ public class ServerEvents {
                 int xpamount = 0;
                 int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
                 if (UpdateLevels.shouldGiveHitXP(WeaponLevelingConfig.Server.value_hit_percentage.get())) {xpamount = amount;}
-                UpdateLevels.updateProgressItem(player, hand, xpamount);
+                updateProgressItem(player, hand, xpamount);
             }
 
             CompoundTag nbttag = hand.getOrCreateTag();
