@@ -58,9 +58,6 @@ public class Networking {
         Player player = Minecraft.getInstance().player;
         ItemStack stack = packet.stack;
         int level = packet.level;
-        //net.minecraft.network.chat.Component component2 = new net.minecraft.network.chat.TextComponent("Ayo");
-        //net.minecraft.network.chat.Component component3 = new net.minecraft.network.chat.TextComponent("This is cool");
-        //new SystemToast(SystemToast.SystemToastIds.WORLD_BACKUP, component2, component3)
         Minecraft.getInstance().getToasts().addToast(new CustomToast(stack, level));
 
     }

@@ -2,7 +2,6 @@ package net.geradesolukas.weaponleveling.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.sun.jna.platform.unix.X11;
 import net.geradesolukas.weaponleveling.WeaponLeveling;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -20,14 +19,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 @OnlyIn(Dist.CLIENT)
-public class CustomToast extends X11.Drawable implements Toast {
+public class CustomToast implements Toast {
     ItemStack stack;
     int level;
     public CustomToast(ItemStack stack, int level) {
         this.stack = stack;
         this.level = level;
     }
-
+    @OnlyIn(Dist.CLIENT)
     @Override
     public Toast.Visibility render(PoseStack poseStack, ToastComponent component, long visibilityTime) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

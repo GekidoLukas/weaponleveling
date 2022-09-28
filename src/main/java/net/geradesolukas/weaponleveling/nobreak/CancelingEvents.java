@@ -4,29 +4,24 @@ import net.geradesolukas.weaponleveling.WeaponLeveling;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.antlr.v4.runtime.misc.MultiMap;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = WeaponLeveling.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CancelingEvents {
@@ -35,6 +30,7 @@ public class CancelingEvents {
         return stack.getDamageValue() >= (stack.getMaxDamage() + 1);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
         ItemStack stack = event.getItemStack();
@@ -53,18 +49,6 @@ public class CancelingEvents {
                 removeAttributeModifer(event,armor);
                 removeAttributeModifer(event,armorToughness);
                 removeAttributeModifer(event,knockbackResistanceesistance);
-                //if (event.getModifiers().get(armor).stream().findFirst().isPresent()) {
-                //    AttributeModifier modifier = event.getModifiers().get(armor).stream().findFirst().get();
-                //    event.removeModifier(armor,modifier);
-                //}
-                //if (event.getModifiers().get(armorToughness).stream().findFirst().isPresent()) {
-                //    AttributeModifier modifier = event.getModifiers().get(armorToughness).stream().findFirst().get();
-                //    event.removeModifier(armorToughness,modifier);
-                //}
-                //if (event.getModifiers().get(knockbackResistanceesistance).stream().findFirst().isPresent()) {
-                //    AttributeModifier modifier = event.getModifiers().get(knockbackResistanceesistance).stream().findFirst().get();
-                //    event.removeModifier(knockbackResistanceesistance,modifier);
-                //}
             }
         }
     }
@@ -87,9 +71,6 @@ public class CancelingEvents {
             }
         }
     }
-
-
-
     @SubscribeEvent
     public static void onAttackEntity(AttackEntityEvent event) {
         if (!event.getPlayer().isCreative() && isBroken(event.getPlayer().getMainHandItem())) {
@@ -105,7 +86,6 @@ public class CancelingEvents {
         }
 
     }
-
     @SubscribeEvent
     public static void onBreakBlock(BlockEvent.BreakEvent event) {
         if (!event.getPlayer().isCreative() && isBroken(event.getPlayer().getMainHandItem())) {
@@ -113,14 +93,12 @@ public class CancelingEvents {
         }
 
     }
-
     @SubscribeEvent
     public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
         if (!event.getPlayer().isCreative() && isBroken(event.getPlayer().getMainHandItem())) {
             event.setCanceled(true);
         }
     }
-
     @SubscribeEvent
     public static void onUseItem(LivingEntityUseItemEvent.Start event) {
         if(event.getEntityLiving() instanceof Player player) {
@@ -129,14 +107,10 @@ public class CancelingEvents {
             }
         }
     }
-
     @SubscribeEvent
     public static void onBlockModify(BlockEvent.BlockToolModificationEvent event) {
         if (!event.getPlayer().isCreative() && isBroken(event.getPlayer().getMainHandItem())) {
             event.setCanceled(true);
         }
     }
-
-
-
 }
