@@ -54,7 +54,7 @@ public class ServerEvents {
             Entity target = event.getTarget();
             ItemStack stack = player.getMainHandItem();
             if(UpdateLevels.isAcceptedMeleeWeaponStack(stack) && TinkersCompat.isTinkersItem(stack)) {
-                UpdateLevels.applyXPOnItemStack(stack,  player, target);
+                UpdateLevels.applyXPOnItemStack(stack,  player, target, false);
             }
         }
 
@@ -111,6 +111,7 @@ public class ServerEvents {
         if (event.getSource().isMagic()|| event.getSource().isExplosion() ) {
             return;
         }
+
         UpdateLevels.applyXPForArmor(player,UpdateLevels.getXPForHit());
         //Apply Damage + Bow XP
         if(UpdateLevels.isAcceptedMeleeWeaponStack(hand) || UpdateLevels.isAcceptedProjectileWeapon(hand)) {

@@ -17,14 +17,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UpdateLevels {
-    public static void applyXPOnItemStack(ItemStack stack, Player player, Entity target) {
+    public static void applyXPOnItemStack(ItemStack stack, Player player, Entity target, Boolean critical) {
         if(!player.getLevel().isClientSide) {
+            int xpamountcrit = 0;
             int xpamounthit = UpdateLevels.getXPForHit();
             int xpamount = 0;
             if (!target.isAlive()) {
                 xpamount = UpdateLevels.getXPForEntity(target);
             }
-            updateProgressItem(player,stack,xpamount+xpamounthit);
+            if (critical) {
+                xpamountcrit = UpdateLevels.getXPForCrit();
+            }
+            updateProgressItem(player,stack,xpamount+xpamounthit+xpamountcrit);
         }
 
     }
@@ -147,6 +151,13 @@ public class UpdateLevels {
         int xpamount = 0;
         int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
         if (shouldGiveHitXP(WeaponLevelingConfig.Server.value_hit_percentage.get())) {xpamount = amount;}
+        return xpamount;
+    }
+
+    public static int getXPForCrit() {
+        int xpamount = 0;
+        int amount = WeaponLevelingConfig.Server.value_crit_xp_amount.get();
+        if (shouldGiveHitXP(WeaponLevelingConfig.Server.value_crit_percentage.get())) {xpamount = amount;}
         return xpamount;
     }
 

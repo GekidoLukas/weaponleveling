@@ -32,6 +32,9 @@ public class WeaponLevelingConfig {
 
         public static final ForgeConfigSpec.ConfigValue<Integer> value_hit_xp_amount;
         public static final ForgeConfigSpec.ConfigValue<Integer> value_hit_percentage;
+
+        public static final ForgeConfigSpec.ConfigValue<Integer> value_crit_xp_amount;
+        public static final ForgeConfigSpec.ConfigValue<Integer> value_crit_percentage;
         public static final ForgeConfigSpec.ConfigValue<Integer> value_kill_generic;
         public static final ForgeConfigSpec.ConfigValue<Integer> value_kill_monster;
         public static final ForgeConfigSpec.ConfigValue<Integer> value_kill_animal;
@@ -63,6 +66,9 @@ public class WeaponLevelingConfig {
             BUILDER.comment("Server Config").push("server");
             value_hit_xp_amount = BUILDER.comment("The amount of Weapon XP a player gains when hitting a mob").defineInRange("hittingXPAmount",1, 0, 10000);
             value_hit_percentage = BUILDER.comment("The chance of a hit giving you xp").defineInRange("hittingChance",20, 0, 100);
+
+            value_crit_xp_amount = BUILDER.comment("The amount of Weapon XP a player gains when critting a mob").defineInRange("value_crit_xp_amount",2, 0, 10000);
+            value_crit_percentage = BUILDER.comment("The chance of a crit giving you xp").defineInRange("value_crit_percentage",80, 0, 100);
 
 
 

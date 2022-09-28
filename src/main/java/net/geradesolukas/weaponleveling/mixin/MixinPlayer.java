@@ -32,7 +32,9 @@ public abstract class MixinPlayer {
     private void injectedDamage(Entity target, CallbackInfo ci, float f, float f1, float f2, boolean flag, boolean flag1, float i, boolean flag2, CriticalHitEvent hitResult, boolean flag3, double d0, float f4, boolean flag4, int j, Vec3 vec3, boolean flag5, ItemStack stack, Entity entity) {
         if(UpdateLevels.isAcceptedMeleeWeaponStack(stack)) {
             var player = ((Player) ((Object)this) );
-            UpdateLevels.applyXPOnItemStack(stack,  player, target);
+            UpdateLevels.applyXPOnItemStack(stack,  player, target, flag2);
+            if (flag2) {UpdateLevels.applyXPForArmor(player,UpdateLevels.getXPForCrit());}
+
         }
     }
 

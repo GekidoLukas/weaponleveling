@@ -1,6 +1,12 @@
-Version 1.2.4
+Version 1.3
 - Added config projectile_items option to add Projectile Weapons separately
-- Added builtin support for the tetra mod
+- Added builtin support for Tetra mod
+- Added builtin support for Tinker's Construct mod
+- Added items not vanishing when broken mechanic
+- Added Config option to toggle item vanishing feature
+- Added Critical Damage XP for Melee Weapons and Armor
+- Added Config options to tweak crit xp and percentage
+- Added "weaponleveling.tooltip.broken" translation for en_us and de_de
 
 - Changed config option added_items to melee_items
 
