@@ -13,6 +13,6 @@
   "weaponleveling.command.setpoints": "设置 %s 的经验值至 %s",
   "weaponleveling.command.exception.novalidweapon": "%s 不是一件有效的物品",
   "weaponleveling.command.exception.outofbounds": "%s 超过了能设置的最大值",
-  "weaponleveling.tooltip.broken": "Broken"
+  "weaponleveling.tooltip.broken": "损坏"
 }
 
