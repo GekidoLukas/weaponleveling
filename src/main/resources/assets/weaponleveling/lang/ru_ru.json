@@ -13,6 +13,6 @@
   "weaponleveling.command.setpoints": "Установлены очки опыта %s на %s",
   "weaponleveling.command.exception.novalidweapon": "%s не является допустимым элементом",
   "weaponleveling.command.exception.outofbounds": "%s выше максимального значения",
-  "weaponleveling.tooltip.broken": "Broken"
+  "weaponleveling.tooltip.broken": "Сломанный"
 }
 
