@@ -60,6 +60,7 @@ public class ServerEvents {
         new ItemLevelCommand(event.getDispatcher());
     }
 
+    //This is not Just Forge
     @SubscribeEvent
     public static void onKillEntity(LivingDeathEvent event) {
         Entity killer = event.getSource().getEntity();
