@@ -1,0 +1,17 @@
+{
+  "weaponleveling.tooltip.weaponlevel": "Weapon Level",
+  "weaponleveling.tooltip.armorlevel": "Armor Level",
+  "weaponleveling.tooltip.level": "Level ",
+  "weaponleveling.tooltip.reduction": "Damage Reduction ",
+  "weaponleveling.tooltip.projectile_weapon_level": "Extra Damage ",
+  "weaponleveling.tooltip.levelprogress": "Progress ",
+  "weaponleveling.tooltip.pressshift": "Press [Shift] to see the Level",
+  "weaponleveling.tooltip.maxlevel": "Max Level",
+  "weaponleveling.tooltip.overmaxlevel": "Wait, this is illegal",
+  "weaponleveling.levelup": "reached level ",
+  "weaponleveling.command.setlevel": "Set the Level of %s to %s",
+  "weaponleveling.command.setpoints": "Set the XP Points of %s to %s",
+  "weaponleveling.command.exception.novalidweapon": "%s is not a valid item",
+  "weaponleveling.command.exception.outofbounds": "%s is higher than the Maximum Value",
+  "weaponleveling.tooltip.broken": "Broken"
+}
