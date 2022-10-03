@@ -1,0 +1,18 @@
+{
+  "weaponleveling.tooltip.weaponlevel": "Рівень зброї",
+  "weaponleveling.tooltip.armorlevel": "Рівень броні",
+  "weaponleveling.tooltip.level": "Рівень ",
+  "weaponleveling.tooltip.reduction": "Зниження шкоди ",
+  "weaponleveling.tooltip.projectile_weapon_level": "Додаткова шкода ",
+  "weaponleveling.tooltip.levelprogress": "Прогрес ",
+  "weaponleveling.tooltip.pressshift": "Нажміть [Shift] щоб побачити рівень",
+  "weaponleveling.tooltip.maxlevel": "Максимальний рівень",
+  "weaponleveling.tooltip.overmaxlevel": "Зачекайте, це не законно",
+  "weaponleveling.levelup": "Досягнув рівня ",
+  "weaponleveling.command.setlevel": "Встановлений рівень %s на %s",
+  "weaponleveling.command.setpoints": "Встановлені очки досвіду %s на %s",
+  "weaponleveling.command.exception.novalidweapon": "%s не є доступним елементом",
+  "weaponleveling.command.exception.outofbounds": "%s більше максимального значення",
+  "weaponleveling.tooltip.broken": "Зломаний"
+}
+
