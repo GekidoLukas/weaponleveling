@@ -28,7 +28,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '1.18.2-1.3.2'
+version = '1.18.2-1.3.4'
 group = 'net.geradesolukas.weaponleveling' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'weaponleveling'
 
@@ -186,6 +186,10 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:tinkers-74072:3998764") //Tinkers
     compileOnly fg.deobf("curse.maven:mantle-74924:3829975") //Mantle
+
+    compileOnly fg.deobf("curse.maven:bettercombat-639842:4015126") //Better Combat
+    compileOnly fg.deobf("curse.maven:playeranim-658587:3955875") //PlayerAnimator
+    compileOnly fg.deobf("curse.maven:clothconfig-348521:3972426") //ClothConfigApi
 
 
 
