@@ -44,7 +44,7 @@ public abstract class MixinPlayer {
     }
 
     @WrapOperation(
-            method = "hurtCurrentlyUsedShield",
+            method = "Lnet/minecraft/world/entity/player/Player;hurtCurrentlyUsedShield(F)V",
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/player/Player;setItemSlot(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)V", ordinal = 0))
     private void wrapReplaceShield1(Player instance, EquipmentSlot slot, ItemStack emptystack, Operation<Void> original, float pDamage) {
         if (!WeaponLevelingConfig.Server.broken_items_wont_vanish.get()) {
@@ -57,7 +57,7 @@ public abstract class MixinPlayer {
     }
 
     @WrapOperation(
-            method = "hurtCurrentlyUsedShield",
+            method = "Lnet/minecraft/world/entity/player/Player;hurtCurrentlyUsedShield(F)V",
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/player/Player;setItemSlot(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)V", ordinal = 1))
     private void wrapReplaceShield2(Player instance, EquipmentSlot slot, ItemStack emptystack, Operation<Void> original, float pDamage) {
         if (!WeaponLevelingConfig.Server.broken_items_wont_vanish.get()) {

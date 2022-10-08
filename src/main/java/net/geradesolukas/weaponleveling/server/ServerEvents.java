@@ -36,8 +36,8 @@ public class ServerEvents {
         ItemStack stack = event.getItemStack();
 
         EquipmentSlot slot = event.getSlotType();
-        double extradamage = stack.getOrCreateTag().getInt("level") * WeaponLevelingConfig.Server.value_damage_per_level.get();
         if (TinkersCompat.isTinkersItem(stack)) {
+            double extradamage = stack.getOrCreateTag().getInt("level") * WeaponLevelingConfig.Server.value_damage_per_level.get();
             if (event.getSlotType() == EquipmentSlot.MAINHAND) {
                 event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(UUID.fromString(WeaponLeveling.DAMAGEUUID),"leveldamage", extradamage, AttributeModifier.Operation.ADDITION));
             }

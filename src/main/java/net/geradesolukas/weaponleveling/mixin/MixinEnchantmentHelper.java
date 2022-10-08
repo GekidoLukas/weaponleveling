@@ -20,9 +20,9 @@ public class MixinEnchantmentHelper {
             method = "getDamageBonus",
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;runIterationOnItem(Lnet/minecraft/world/item/enchantment/EnchantmentHelper$EnchantmentVisitor;Lnet/minecraft/world/item/ItemStack;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private static void injectedDamage(ItemStack stack, MobType p_44835_, CallbackInfoReturnable<Float> cir, MutableFloat mutablefloat) {
-         float weaponlevelamount = stack.getOrCreateTag().getInt("level");
-        weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
         if(UpdateLevels.isAcceptedMeleeWeaponStack(stack) && !TinkersCompat.isTinkersItem(stack)) {
+            float weaponlevelamount = stack.getOrCreateTag().getInt("level");
+            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
             mutablefloat.add(weaponlevelamount);
         }
     }

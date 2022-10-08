@@ -28,7 +28,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '1.18.2-1.3.4'
+version = '1.18.2-1.3.5'
 group = 'net.geradesolukas.weaponleveling' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'weaponleveling'
 
@@ -189,9 +189,13 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:bettercombat-639842:4015126") //Better Combat
     compileOnly fg.deobf("curse.maven:playeranim-658587:3955875") //PlayerAnimator
+
+
+
+
     compileOnly fg.deobf("curse.maven:clothconfig-348521:3972426") //ClothConfigApi
 
-
+    //compileOnly fg.deobf("curse.maven:debugify-596224:3812301") //Debugify
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
@@ -227,6 +231,7 @@ jar {
 shadowJar {
     archiveClassifier = ''
     configurations = [project.configurations.shade]
+    relocate("com.llamalad7.mixinextras", "net.geradesolukas.mixinextras")
     finalizedBy 'reobfShadowJar'
 }
 
