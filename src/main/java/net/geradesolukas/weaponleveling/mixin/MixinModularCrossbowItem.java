@@ -26,7 +26,7 @@ public abstract class MixinModularCrossbowItem {
 
         if(UpdateLevels.isAcceptedProjectileWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get() /2;
+            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get() * WeaponLevelingConfig.Server.value_bowlike_damage_modifier.get();
             abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
         }
     }

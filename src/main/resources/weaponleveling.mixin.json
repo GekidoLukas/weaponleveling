@@ -16,9 +16,12 @@
     "MixinPlayer",
     "MixinModularBowItem",
     "MixinModularCrossbowItem",
+    "MixinGun",
+    "MixinGunItem",
     "MixinItemStack",
     "MixinForgeHooks",
-    "MixinInventory"
+    "MixinInventory",
+    "MixinHumanoidArmorLayer"
   ],
   "plugin": "net.geradesolukas.weaponleveling.mixin.MixinConfigPlugin",
   "injectors": {

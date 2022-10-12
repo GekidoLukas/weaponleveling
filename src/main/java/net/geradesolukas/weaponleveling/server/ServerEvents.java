@@ -76,7 +76,7 @@ public class ServerEvents {
             }
 
             int xpamount = UpdateLevels.getXPForEntity(dyingEntity);
-            if (event.getSource().isProjectile()) {
+            if (event.getSource().isProjectile() && UpdateLevels.isAcceptedProjectileWeapon(stack)) {
                 updateProgressItem(player, stack, xpamount);
             }
             UpdateLevels.applyXPForArmor(player,xpamount);
@@ -126,16 +126,16 @@ public class ServerEvents {
                 extradamage *= WeaponLevelingConfig.Server.value_damage_per_level.get();
 
 
-                if (event.getSource().isProjectile()) {
-                    if (event.getSource().getDirectEntity() instanceof AbstractArrow) {
-                        return;
-                    } else {
-                        //For guns
-                        event.setAmount(damage + (float)extradamage);
-                    }
-                } else  {
-                    return;
-                }
+                //if (event.getSource().isProjectile()) {
+                //    if (event.getSource().getDirectEntity() instanceof AbstractArrow) {
+                //        return;
+                //    } else {
+                //        //For guns
+                //        //event.setAmount(damage + (float)extradamage);
+                //    }
+                //} else  {
+                //    return;
+                //}
 
             }
 

@@ -109,8 +109,10 @@ public class CancelingEvents {
     }
     @SubscribeEvent
     public static void onBlockModify(BlockEvent.BlockToolModificationEvent event) {
-        if (!event.getPlayer().isCreative() && isBroken(event.getPlayer().getMainHandItem())) {
-            event.setCanceled(true);
+        if( event.getPlayer() != null) {
+            if (!event.getPlayer().isCreative() && isBroken(event.getPlayer().getMainHandItem())) {
+                event.setCanceled(true);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package net.geradesolukas.weaponleveling.compat.tconstruct;
+package net.geradesolukas.weaponleveling.compat.cgm;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModList;
@@ -6,14 +6,14 @@ import net.minecraftforge.fml.ModList;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class TinkersCompat {
+public class CGMCompat {
 
-    public static final String modId = "tconstruct";
+    public static final String modId = "cgm";
     public static final Boolean isLoaded = ModList.get().isLoaded(modId);
 
-    public static boolean isTinkersItem(ItemStack stack) {
+    public static boolean isGunItem(ItemStack stack) {
         if(isLoaded) {
-            return TinkersChecks.isTinkersItem(stack);
+            return CGMChecks.isGunItem(stack);
         }
         return false;
     }

@@ -10,6 +10,9 @@ public class ModLists {
     private static final String TETRAID = "tetra:";
     private static final String TINKERSID = "tconstruct:";
 
+    private static final String CGMID = "cgm:";
+
+
     public static final List<String> DEFAULT_ITEM_BLACKLIST = ImmutableList.of();
     //public static final List<String> DEFAULT_NO_MELEE = ImmutableList.of();
     public static final List<String> DEFAULT_MELEE_ITEMS = ImmutableList.of(MCID +"trident",
@@ -20,7 +23,8 @@ public class ModLists {
     );
 
     public static final List<String> DEFAULT_PROJECTILE_ITEMS = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow",
-            TETRAID + "modular_crossbow", TETRAID + "modular_bow"
+            TETRAID + "modular_crossbow", TETRAID + "modular_bow",
+            CGMID + "pistol", CGMID + "shotgun", CGMID + "mini_gun", CGMID + "assault_rifle", CGMID + "machine_pistol", CGMID + "heavy_rifle", CGMID + "grenade_launcher", CGMID + "bazooka"
 
     );
 

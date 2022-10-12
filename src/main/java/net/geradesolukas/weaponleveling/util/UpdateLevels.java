@@ -79,7 +79,7 @@ public class UpdateLevels {
         int currentlevel = stack.getOrCreateTag().getInt("level");
         int currentprogress = stack.getOrCreateTag().getInt("levelprogress");
         currentprogress += updateamount;
-        if (currentlevel < WeaponLevelingConfig.Server.value_max_level.get()) {
+        if (currentlevel < WeaponLevelingConfig.Server.value_max_level.get() && !ItemUtils.isBroken(stack)) {
             updateItem(player,stack,currentlevel,currentprogress);
         }
     }

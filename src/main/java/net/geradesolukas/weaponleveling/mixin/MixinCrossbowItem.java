@@ -23,7 +23,7 @@ public abstract class MixinCrossbowItem {
     private static void injectedDamage(Level p_40915_, LivingEntity p_40916_, ItemStack stack, ItemStack p_40918_, CallbackInfoReturnable<AbstractArrow> cir, ArrowItem arrowitem, AbstractArrow abstractarrow) {
         if(UpdateLevels.isAcceptedProjectileWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
+            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get() * WeaponLevelingConfig.Server.value_bowlike_damage_modifier.get();
             abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
         }
     }

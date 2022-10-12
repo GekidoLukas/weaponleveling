@@ -1,6 +1,7 @@
 package net.geradesolukas.weaponleveling.client;
 
 import net.geradesolukas.weaponleveling.WeaponLeveling;
+import net.geradesolukas.weaponleveling.compat.cgm.CGMCompat;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
@@ -85,7 +86,7 @@ public class ClientEvents {
                     );
                 }
 
-                if (UpdateLevels.isAcceptedProjectileWeapon(stack) && !UpdateLevels.isAcceptedMeleeWeaponStack(stack)) {
+                if (UpdateLevels.isAcceptedProjectileWeapon(stack) && !(UpdateLevels.isAcceptedMeleeWeaponStack(stack) || CGMCompat.isGunItem(stack))) {
                     double extradamage = level * WeaponLevelingConfig.Server.value_damage_per_level.get();
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))

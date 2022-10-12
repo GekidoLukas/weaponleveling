@@ -26,7 +26,7 @@ public abstract class MixinModularBowItem {
     private void injectedDamage(ItemStack stack, Level world, LivingEntity entity, int timeLeft, CallbackInfo ci, Player player, ItemStack ammoStack, boolean playerInfinite, int drawProgress, double strength, float velocityBonus, int suspendLevel, float projectileVelocity, ArrowItem ammoItem, boolean infiniteAmmo, int count, double spread, int powerLevel, int punchLevel, int flameLevel, int piercingLevel, int i, double yaw, AbstractArrow abstractarrow) {
         if(UpdateLevels.isAcceptedProjectileWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get() /2;
+            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get() * WeaponLevelingConfig.Server.value_bowlike_damage_modifier.get();
             abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
         }
     }
