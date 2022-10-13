@@ -1,4 +1,20 @@
 Version 1.3.4
+- Added builtin MrCrayfish's Gun Mod Compat
+- Added Armor not rendering when broken
+- Added Projectile Damage Multiplier Config Option
+
+- Updated min forge version to 40.1.54
+
+- Fixed issue where broken items could still be leveled
+- Fixed issue where breaking/attacking or something similar makes the item not stackable with other items of the same id
+- Fixed issue where using bone meal on a flower crashes the game
+- Fixed issue where Bows and Crossbows did too much damage
+- Fixed issue where breaking items would post a debug message in chat (again, yeah idk how)
+- Fixed issue where Parry This!'s Spears would be duped on throw (Potentially fixes similar issues
+
+- Removed old Gun Fallback System
+
+Version 1.3.4
 - Fixed issue where blocks and other items became broken (again)
 
 Version 1.3.3

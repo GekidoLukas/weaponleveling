@@ -192,9 +192,10 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:clothconfig-348521:3972426") //ClothConfigApi
 
-    implementation fg.deobf("curse.maven:crayfishgun-289479:3961690") //MrCrayfish's Gun Mod
-    implementation fg.deobf("curse.maven:framework-549225:3926054") //Framework
+    compileOnly fg.deobf("curse.maven:crayfishgun-289479:3961690") //MrCrayfish's Gun Mod
+    compileOnly fg.deobf("curse.maven:framework-549225:3926054") //Framework
 
+    implementation fg.deobf("curse.maven:parrythis-479996:3910075") //Parry This!
 
 
 

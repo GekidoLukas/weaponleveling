@@ -21,7 +21,10 @@
     "MixinItemStack",
     "MixinForgeHooks",
     "MixinInventory",
-    "MixinHumanoidArmorLayer"
+    "MixinHumanoidArmorLayer",
+    "MixinArmorPenetrationMechanic",
+    "MixinSpearEntity",
+    "MixinDaggerEntity"
   ],
   "plugin": "net.geradesolukas.weaponleveling.mixin.MixinConfigPlugin",
   "injectors": {

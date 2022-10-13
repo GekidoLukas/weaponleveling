@@ -9,8 +9,9 @@ public class ModLists {
     private static final String ALEXMOBSID = "alexsmobs:";
     private static final String TETRAID = "tetra:";
     private static final String TINKERSID = "tconstruct:";
-
     private static final String CGMID = "cgm:";
+
+    private static final String PARRYTHISID = "parrying:";
 
 
     public static final List<String> DEFAULT_ITEM_BLACKLIST = ImmutableList.of();
@@ -18,14 +19,20 @@ public class ModLists {
     public static final List<String> DEFAULT_MELEE_ITEMS = ImmutableList.of(MCID +"trident",
             TETRAID + "modular_sword", TETRAID + "modular_double",
             TINKERSID + "dagger", TINKERSID + "sword", TINKERSID + "cleaver", TINKERSID + "scythe", TINKERSID + "broad_axe", TINKERSID + "hand_axe",
-            TINKERSID + "sledge_hammer", TINKERSID + "mattock"
+            TINKERSID + "sledge_hammer", TINKERSID + "mattock",
 
-    );
+            PARRYTHISID + "wooden_mace", PARRYTHISID + "stone_mace", PARRYTHISID + "iron_mace",PARRYTHISID + "golden_mace", PARRYTHISID + "diamond_mace",PARRYTHISID + "netherite_mace",
+            PARRYTHISID + "wooden_spear", PARRYTHISID + "stone_spear", PARRYTHISID + "iron_spear",PARRYTHISID + "golden_spear", PARRYTHISID + "diamond_spear",PARRYTHISID + "netherite_spear",
+            PARRYTHISID + "wooden_dagger", PARRYTHISID + "stone_dagger", PARRYTHISID + "iron_dagger",PARRYTHISID + "golden_dagger", PARRYTHISID + "diamond_dagger",PARRYTHISID + "netherite_dagger",
+            PARRYTHISID + "wooden_flail", PARRYTHISID + "stone_flail", PARRYTHISID + "iron_flail",PARRYTHISID + "golden_flail", PARRYTHISID + "diamond_flail",PARRYTHISID + "netherite_flail",
+            PARRYTHISID + "wooden_hammer", PARRYTHISID + "stone_hammer", PARRYTHISID + "iron_hammer",PARRYTHISID + "golden_hammer", PARRYTHISID + "diamond_hammer",PARRYTHISID + "netherite_hammer"
+            );
 
     public static final List<String> DEFAULT_PROJECTILE_ITEMS = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow",
             TETRAID + "modular_crossbow", TETRAID + "modular_bow",
-            CGMID + "pistol", CGMID + "shotgun", CGMID + "mini_gun", CGMID + "assault_rifle", CGMID + "machine_pistol", CGMID + "heavy_rifle", CGMID + "grenade_launcher", CGMID + "bazooka"
-
+            CGMID + "pistol", CGMID + "shotgun", CGMID + "mini_gun", CGMID + "assault_rifle", CGMID + "machine_pistol", CGMID + "heavy_rifle", CGMID + "grenade_launcher", CGMID + "bazooka",
+            PARRYTHISID + "wooden_spear", PARRYTHISID + "stone_spear", PARRYTHISID + "iron_spear",PARRYTHISID + "golden_spear", PARRYTHISID + "diamond_spear",PARRYTHISID + "netherite_spear",
+            PARRYTHISID + "wooden_dagger", PARRYTHISID + "stone_dagger", PARRYTHISID + "iron_dagger",PARRYTHISID + "golden_dagger", PARRYTHISID + "diamond_dagger",PARRYTHISID + "netherite_dagger"
     );
 
 

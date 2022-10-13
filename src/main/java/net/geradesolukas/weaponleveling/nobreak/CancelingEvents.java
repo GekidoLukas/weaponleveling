@@ -62,12 +62,12 @@ public class CancelingEvents {
 
     @SubscribeEvent
     public static void onItemDestroy(PlayerDestroyItemEvent event) {
-        if (!event.getPlayer().isCreative() && WeaponLevelingConfig.Server.broken_items_wont_vanish.get() && event.getOriginal().isDamageableItem()) {
+        if (!event.getPlayer().isCreative() && WeaponLevelingConfig.Server.broken_items_wont_vanish.get() && event.getOriginal().isDamageableItem() && event.getOriginal().getDamageValue() >= (event.getOriginal().getMaxDamage())) {
             ItemStack stack = event.getOriginal().copy();
             stack.setDamageValue(stack.getMaxDamage() + 1);
             if (event.getHand() != null) {
                 event.getPlayer().setItemInHand(event.getHand(), stack);
-                event.getPlayer().sendMessage(new TextComponent("This is the item" + stack),event.getPlayer().getUUID());
+                //event.getPlayer().sendMessage(new TextComponent("This is the item" + stack),event.getPlayer().getUUID());
             }
         }
     }
