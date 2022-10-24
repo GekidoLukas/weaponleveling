@@ -1,6 +1,7 @@
 package net.geradesolukas.weaponleveling.mixin;
 
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
+import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -24,9 +25,9 @@ public abstract class MixinModularCrossbowItem {
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedDamage(Level world, ItemStack stack, ItemStack ammoStack, Player player, double yaw, boolean isDupe, CallbackInfo ci, double strength, float velocityBonus, float projectileVelocity, ArrowItem ammoItem, AbstractArrow abstractarrow) {
 
-        if(UpdateLevels.isAcceptedProjectileWeapon(stack)) {
+        if(ItemUtils.isAcceptedProjectileWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get() * WeaponLevelingConfig.Server.value_bowlike_damage_modifier.get();
+            weaponlevelamount *= ItemUtils.getWeaponDamagePerLevel(stack) * ItemUtils.getBowlikeModifier(stack);
             abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
         }
     }

@@ -13,8 +13,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderArmEvent;
-import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +35,17 @@ public class ClientEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onItemColorEvent(ColorHandlerEvent.Item event) {
+        //ItemColors colors = event.getItemColors();
+        //if (ItemUtils.isBroken(event.)) {
+        //
+        //}
 
+    }
+    //private static boolean jsonitem(ItemStack stack, LevelableItemsLoader loader) {
+    //    return loader.isValid(stack.getItem());
+    //}
     @SubscribeEvent
     public static void onTooltipRender(ItemTooltipEvent event) {
 
@@ -52,13 +61,17 @@ public class ClientEvents {
         Style VALUES = Style.EMPTY.withColor(15422034);
         Style SHIFT = Style.EMPTY.withColor(12517240);
 
+        //if (ItemUtils.isLevelableItem(stack)) {
+        //    full_tooltip.add(new TextComponent("Is JsonItem").setStyle(VALUES));
+        //}
 
 
-        if (UpdateLevels.isAcceptedMeleeWeaponStack(stack) || UpdateLevels.isAcceptedProjectileWeapon(stack)) {
+
+        if (ItemUtils.isAcceptedMeleeWeaponStack(stack) || ItemUtils.isAcceptedProjectileWeapon(stack)) {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
                 int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
-                int maxlevelprogress = UpdateLevels.getMaxLevel(level);
+                int maxlevelprogress = UpdateLevels.getMaxLevel(level,stack);
 
 
                 tooltip.add(new TranslatableComponent("weaponleveling.tooltip.weaponlevel").setStyle(ARROW));
@@ -69,14 +82,14 @@ public class ClientEvents {
                         );
 
 
-                if (level < WeaponLevelingConfig.Server.value_max_level.get()) {
+                if (level < ItemUtils.getMaxLevel(stack)) {
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
                             .append(new TextComponent("" + levelprogress).setStyle(VALUES))
                             .append(new TextComponent("/").setStyle(TEXT))
                             .append(new TextComponent("" + maxlevelprogress).setStyle(VALUES))
                     );
-                } else if(level == WeaponLevelingConfig.Server.value_max_level.get()) {
+                } else if(level == ItemUtils.getMaxLevel(stack)) {
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.maxlevel").setStyle(VALUES))
                     );
@@ -86,8 +99,8 @@ public class ClientEvents {
                     );
                 }
 
-                if (UpdateLevels.isAcceptedProjectileWeapon(stack) && !(UpdateLevels.isAcceptedMeleeWeaponStack(stack) || CGMCompat.isGunItem(stack))) {
-                    double extradamage = level * WeaponLevelingConfig.Server.value_damage_per_level.get();
+                if (ItemUtils.isAcceptedProjectileWeapon(stack) && !(ItemUtils.isAcceptedMeleeWeaponStack(stack) || CGMCompat.isGunItem(stack))) {
+                    double extradamage = level * ItemUtils.getWeaponDamagePerLevel(stack);
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))
                             .append(new TextComponent("" + doubleDecimalFormat.format(extradamage)).setStyle(VALUES))
@@ -102,11 +115,11 @@ public class ClientEvents {
 
         }
 
-        if (UpdateLevels.isAcceptedArmor(stack)) {
+        if (ItemUtils.isAcceptedArmor(stack)) {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
                 int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
-                int maxlevelprogress = UpdateLevels.getMaxLevel(level);
+                int maxlevelprogress = UpdateLevels.getMaxLevel(level,stack);
 
 
                 tooltip.add(new TranslatableComponent("weaponleveling.tooltip.armorlevel").setStyle(ARROW));
@@ -117,14 +130,14 @@ public class ClientEvents {
                 );
 
 
-                if (level < WeaponLevelingConfig.Server.value_max_level.get()) {
+                if (level < ItemUtils.getMaxLevel(stack)) {
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
                             .append(new TextComponent("" + levelprogress).setStyle(VALUES))
                             .append(new TextComponent("/").setStyle(TEXT))
                             .append(new TextComponent("" + maxlevelprogress).setStyle(VALUES))
                     );
-                } else if(level == WeaponLevelingConfig.Server.value_max_level.get()) {
+                } else if(level == ItemUtils.getMaxLevel(stack)) {
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.maxlevel").setStyle(VALUES))
                     );
@@ -136,7 +149,7 @@ public class ClientEvents {
 
                 tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                         .append(new TranslatableComponent("weaponleveling.tooltip.reduction").setStyle(TEXT))
-                        .append(new TextComponent( fourDecimalFormat.format(UpdateLevels.getReduction(level))+ "%").setStyle(VALUES))
+                        .append(new TextComponent( fourDecimalFormat.format(UpdateLevels.getReduction(level, stack))+ "%").setStyle(VALUES))
                 );
 
             } else {

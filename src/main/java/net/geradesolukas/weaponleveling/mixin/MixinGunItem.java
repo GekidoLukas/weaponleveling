@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mrcrayfish.guns.common.Gun;
 import com.mrcrayfish.guns.item.GunItem;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
+import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -36,12 +37,12 @@ public abstract class MixinGunItem {
             method = "Lcom/mrcrayfish/guns/item/GunItem;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
             at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
     private boolean wrapTooltip(List<Component> instance, Object object, Operation<Boolean> original, ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flag) {
-        if(UpdateLevels.isAcceptedProjectileWeapon(stack)) {
+        if(ItemUtils.isAcceptedProjectileWeapon(stack)) {
             MutableComponent component = (MutableComponent) object;
             Style DAMAGE = Style.EMPTY.withColor(12517240);
             int level = stack.getOrCreateTag().getInt("level");
             DecimalFormat doubleDecimalFormat = new DecimalFormat("#.##");
-            double extradamage = level * WeaponLevelingConfig.Server.value_damage_per_level.get();
+            double extradamage = level * ItemUtils.getWeaponDamagePerLevel(stack);
             Component mycomponent = new TextComponent(" +" + doubleDecimalFormat.format(extradamage)).withStyle(DAMAGE);
             return original.call(instance, component.append(mycomponent));
         }

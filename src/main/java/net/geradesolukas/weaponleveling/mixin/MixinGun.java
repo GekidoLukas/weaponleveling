@@ -3,6 +3,7 @@ package net.geradesolukas.weaponleveling.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.geradesolukas.weaponleveling.compat.tconstruct.TinkersCompat;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
+import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,9 +22,9 @@ public abstract class MixinGun {
             method = "Lcom/mrcrayfish/guns/common/Gun;getAdditionalDamage(Lnet/minecraft/world/item/ItemStack;)F",
             at = @At(value = "RETURN"))
     private static float injectedDamage(float original, ItemStack stack) {
-        if(UpdateLevels.isAcceptedProjectileWeapon(stack)) {
+        if(ItemUtils.isAcceptedProjectileWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
+            weaponlevelamount *= ItemUtils.getWeaponDamagePerLevel(stack);
             return original += weaponlevelamount;
         }
         return original;
@@ -33,7 +34,7 @@ public abstract class MixinGun {
     //        method = "Lcom/mrcrayfish/guns/util/GunModifierHelper;getModifiedProjectileDamage(Lnet/minecraft/world/item/ItemStack;F)F",
     //        at = @At(value = "RETURN"))
     //private static float injectedDamage(float original, ItemStack stack, float damage) {
-    //    if(UpdateLevels.isAcceptedProjectileWeapon(stack)) {
+    //    if(ItemUtils.isAcceptedProjectileWeapon(stack)) {
     //        double weaponlevelamount = stack.getOrCreateTag().getInt("level");
     //        weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
     //        return original += weaponlevelamount;
@@ -45,7 +46,7 @@ public abstract class MixinGun {
     //        method = "Lcom/mrcrayfish/guns/util/GunModifierHelper;getModifiedProjectileDamage(Lnet/minecraft/world/item/ItemStack;F)F",
     //        at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     //private static void injectedDamage(ItemStack stack, float damage, CallbackInfoReturnable<Float> cir) {
-    //    if(UpdateLevels.isAcceptedMeleeWeaponStack(stack) && !TinkersCompat.isTinkersItem(stack)) {
+    //    if(ItemUtils.isAcceptedMeleeWeaponStack(stack) && !TinkersCompat.isTinkersItem(stack)) {
     //        float weaponlevelamount = stack.getOrCreateTag().getInt("level");
     //        weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
 //

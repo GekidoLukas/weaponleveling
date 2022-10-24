@@ -1,6 +1,7 @@
 package net.geradesolukas.weaponleveling.mixin;
 
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
+import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -30,7 +31,7 @@ public abstract class MixinSpearEntity {
             method = "Lcom/theishiopian/parrying/Entity/SpearEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
             at = @At(value = "INVOKE",  target = "Lcom/theishiopian/parrying/Entity/SpearEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedXP(EntityHitResult p_213868_1_, CallbackInfo ci, Entity entity, LivingEntity living, float damage, Entity owner, DamageSource src) {
-        if(UpdateLevels.isAcceptedProjectileWeapon(spearItem) && owner instanceof Player) {
+        if(ItemUtils.isAcceptedProjectileWeapon(spearItem) && owner instanceof Player) {
             UpdateLevels.applyXPOnItemStack(spearItem, (Player) owner, entity, false);
         }
     }
@@ -41,7 +42,7 @@ public abstract class MixinSpearEntity {
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index = 1)
     private float replaceEmpty(float pAmount) {
         double weaponlevelamount = spearItem.getOrCreateTag().getInt("level");
-        weaponlevelamount *= WeaponLevelingConfig.Server.value_damage_per_level.get();
+        weaponlevelamount *= ItemUtils.getWeaponDamagePerLevel(spearItem);
         pAmount += weaponlevelamount;
 
         return pAmount;

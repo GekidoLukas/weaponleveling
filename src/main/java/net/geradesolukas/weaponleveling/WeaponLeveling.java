@@ -15,6 +15,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 @Mod(WeaponLeveling.MODID)
@@ -23,6 +25,8 @@ public class WeaponLeveling
     public static final String MODID = "weaponleveling";
 
     public static final String DAMAGEUUID = "0ce9c087-c72d-499c-9dce-01c8e1264a6d";
+
+    public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 
     public WeaponLeveling()

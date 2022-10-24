@@ -3,6 +3,7 @@ package net.geradesolukas.weaponleveling.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
+import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -25,10 +26,10 @@ public abstract class MixinPlayer {
             method = "attack",
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/item/ItemStack;copy()Lnet/minecraft/world/item/ItemStack;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedDamage(Entity target, CallbackInfo ci, float f, float f1, float f2, boolean flag, boolean flag1, float i, boolean flag2, CriticalHitEvent hitResult, boolean flag3, double d0, float f4, boolean flag4, int j, Vec3 vec3, boolean flag5, ItemStack stack, Entity entity) {
-        if(UpdateLevels.isAcceptedMeleeWeaponStack(stack)) {
+        if(ItemUtils.isAcceptedMeleeWeaponStack(stack)) {
             var player = ((Player) ((Object)this) );
             UpdateLevels.applyXPOnItemStack(stack,  player, target, flag2);
-            if (flag2) {UpdateLevels.applyXPForArmor(player,UpdateLevels.getXPForCrit());}
+            if (flag2) {UpdateLevels.applyXPForArmor(player,UpdateLevels.getXPForCrit(stack));}
 
         }
     }

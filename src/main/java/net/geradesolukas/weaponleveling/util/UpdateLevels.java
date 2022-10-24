@@ -20,13 +20,13 @@ public class UpdateLevels {
     public static void applyXPOnItemStack(ItemStack stack, Player player, Entity target, Boolean critical) {
         if(!player.getLevel().isClientSide) {
             int xpamountcrit = 0;
-            int xpamounthit = UpdateLevels.getXPForHit();
+            int xpamounthit = UpdateLevels.getXPForHit(stack);
             int xpamount = 0;
             if (!target.isAlive()) {
                 xpamount = UpdateLevels.getXPForEntity(target);
             }
             if (critical) {
-                xpamountcrit = UpdateLevels.getXPForCrit();
+                xpamountcrit = UpdateLevels.getXPForCrit(stack);
             }
             updateProgressItem(player,stack,xpamount+xpamounthit+xpamountcrit);
         }
@@ -40,37 +40,36 @@ public class UpdateLevels {
                 ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
                 ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
                 ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
-                if (isAcceptedArmor(helmet)) {updateProgressItem(player,helmet,value);}
-                if (isAcceptedArmor(chestplate)) {updateProgressItem(player,chestplate,value);}
-                if (isAcceptedArmor(leggings)) {updateProgressItem(player,leggings,value);}
-                if (isAcceptedArmor(feet)) {updateProgressItem(player,feet,value);}
+                if (ItemUtils.isAcceptedArmor(helmet)) {updateProgressItem(player,helmet,value);}
+                if (ItemUtils.isAcceptedArmor(chestplate)) {updateProgressItem(player,chestplate,value);}
+                if (ItemUtils.isAcceptedArmor(leggings)) {updateProgressItem(player,leggings,value);}
+                if (ItemUtils.isAcceptedArmor(feet)) {updateProgressItem(player,feet,value);}
 
             }
         }
     }
 
     public static void applyExperience(Player player, int xpamount) {
-        UpdateLevels updateLevels = new UpdateLevels();
         ItemStack hand = player.getMainHandItem();
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
         ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
 
-        if(UpdateLevels.isAcceptedMeleeWeaponStack(hand)) {
-            updateLevels.updateProgressItem(player,hand,xpamount);
+        if(ItemUtils.isAcceptedMeleeWeaponStack(hand)) {
+            updateProgressItem(player,hand,xpamount);
         }
-        if(UpdateLevels.isAcceptedArmor(helmet) && player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY) {
-            updateLevels.updateProgressItem(player,helmet,xpamount);
+        if(ItemUtils.isAcceptedArmor(helmet) && player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY) {
+            updateProgressItem(player,helmet,xpamount);
         }
-        if(UpdateLevels.isAcceptedArmor(chestplate) && player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY) {
-            updateLevels.updateProgressItem(player,chestplate,xpamount);
+        if(ItemUtils.isAcceptedArmor(chestplate) && player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY) {
+            updateProgressItem(player,chestplate,xpamount);
         }
-        if(UpdateLevels.isAcceptedArmor(leggings) && player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY) {
-            updateLevels.updateProgressItem(player,leggings,xpamount);
+        if(ItemUtils.isAcceptedArmor(leggings) && player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY) {
+            updateProgressItem(player,leggings,xpamount);
         }
-        if(UpdateLevels.isAcceptedArmor(feet) && player.getItemBySlot(EquipmentSlot.FEET) != ItemStack.EMPTY) {
-            updateLevels.updateProgressItem(player,feet,xpamount);
+        if(ItemUtils.isAcceptedArmor(feet) && player.getItemBySlot(EquipmentSlot.FEET) != ItemStack.EMPTY) {
+            updateProgressItem(player,feet,xpamount);
         }
     }
 
@@ -79,14 +78,14 @@ public class UpdateLevels {
         int currentlevel = stack.getOrCreateTag().getInt("level");
         int currentprogress = stack.getOrCreateTag().getInt("levelprogress");
         currentprogress += updateamount;
-        if (currentlevel < WeaponLevelingConfig.Server.value_max_level.get() && !ItemUtils.isBroken(stack)) {
+        if (currentlevel < ItemUtils.getMaxLevel(stack) && !ItemUtils.isBroken(stack)) {
             updateItem(player,stack,currentlevel,currentprogress);
         }
     }
 
 
     private static void updateItem(Player player,ItemStack stack, int level, int progress) {
-        int maxprogress = getMaxLevel(level);
+        int maxprogress = getMaxLevel(level, stack);
         if (progress >= maxprogress) {
             int levelupamount = progress /= maxprogress;
             int nextprogress = progress % maxprogress;
@@ -99,10 +98,10 @@ public class UpdateLevels {
     }
 
 
-    public static int getMaxLevel(int currentlevel) {
+    public static int getMaxLevel(int currentlevel, ItemStack stack) {
         int maxlevel;
-        int levelmodifier = WeaponLevelingConfig.Server.value_level_modifier.get();
-        int startinglevel = WeaponLevelingConfig.Server.value_starting_level_amount.get();
+        int levelmodifier = ItemUtils.getLevelModifier(stack);
+        int startinglevel =  ItemUtils.getLevelStartAmount(stack);
 
         if (currentlevel != 0) {
               maxlevel = ((currentlevel - 1) + currentlevel) * levelmodifier + 100;
@@ -147,40 +146,37 @@ public class UpdateLevels {
     }
 
 
-    public static int getXPForHit() {
+    public static int getXPForHit(ItemStack stack) {
         int xpamount = 0;
-        int amount = WeaponLevelingConfig.Server.value_hit_xp_amount.get();
-        if (shouldGiveHitXP(WeaponLevelingConfig.Server.value_hit_percentage.get())) {xpamount = amount;}
+        int amount = ItemUtils.getHitXPAmount(stack);
+        if (shouldGiveHitXP(ItemUtils.getHitXPChance(stack))) {xpamount = amount;}
         return xpamount;
     }
 
-    public static int getXPForCrit() {
+    public static int getXPForCrit(ItemStack stack) {
         int xpamount = 0;
-        int amount = WeaponLevelingConfig.Server.value_crit_xp_amount.get();
-        if (shouldGiveHitXP(WeaponLevelingConfig.Server.value_crit_percentage.get())) {xpamount = amount;}
+        int amount = ItemUtils.getCritXPAmount(stack);
+        if (shouldGiveHitXP(ItemUtils.getCritXPChance(stack))) {xpamount = amount;}
         return xpamount;
     }
 
-    public static boolean isAcceptedMeleeWeaponStack(ItemStack stack) {
-        String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-        return (stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem || WeaponLevelingConfig.Server.melee_items.get().contains(name)) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name) ;
-    }
-    public static boolean isAcceptedMeleeWeaponItem(Item item) {
-        String name = ForgeRegistries.ITEMS.getKey(item).toString();
-        return (item instanceof SwordItem || item instanceof AxeItem || WeaponLevelingConfig.Server.melee_items.get().contains(name)) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name) ;
-    }
+    //public static boolean isAcceptedMeleeWeaponStack(ItemStack stack) {
+    //    String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+    //    return (stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem || WeaponLevelingConfig.Server.melee_items.get().contains(name)) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name) ;
+    //}
+    //
+    //public static boolean isAcceptedArmor(ItemStack stack) {
+    //    String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+    //    return (stack.getItem() instanceof ArmorItem) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name);
+    //}
+    //
+    //public static boolean isAcceptedProjectileWeapon(ItemStack stack) {
+    //    String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+    //    return (stack.getItem() instanceof ProjectileWeaponItem || (WeaponLevelingConfig.Server.projectile_items.get().contains(name))) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name);
+    //}
 
-
-    public static boolean isAcceptedArmor(ItemStack stack) {
-        String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-        return (stack.getItem() instanceof ArmorItem) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name);
-    }
-
-    public static boolean isAcceptedProjectileWeapon(ItemStack stack) {
-        String name = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-        return (stack.getItem() instanceof ProjectileWeaponItem || (WeaponLevelingConfig.Server.projectile_items.get().contains(name))) && !WeaponLevelingConfig.Server.blacklist_items.get().contains(name);
-    }
-
+    
+    
     public static void sendLevelUpNotification(Player player,ItemStack stack, int level) {
         if(WeaponLevelingConfig.Server.levelup_type.get() == WeaponLevelingConfig.Server.LevelUpType.TOAST) {
             ToastHelper.sendToast((ServerPlayer) player,stack,level);
@@ -207,33 +203,28 @@ public class UpdateLevels {
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
 
-        int helmetlevel = helmet.getOrCreateTag().getInt("level");
-        int chestplatelevel = chestplate.getOrCreateTag().getInt("level");
-        int leggingslevel = leggings.getOrCreateTag().getInt("level");
-        int bootslevel = boots.getOrCreateTag().getInt("level");
+        float partdamage = (damage / 4);
+        float helmetdamage = getDamagePerPiece(player,partdamage,helmet);
+        float chestplatedamage = getDamagePerPiece(player,partdamage,chestplate);
+        float leggingsdamage = getDamagePerPiece(player,partdamage,leggings);
+        float bootsdamage = getDamagePerPiece(player,partdamage,boots);
 
-        if (ItemUtils.isBroken(helmet)) helmetlevel = 0;
-        if (ItemUtils.isBroken(chestplate)) chestplatelevel = 0;
-        if (ItemUtils.isBroken(leggings)) leggingslevel = 0;
-        if (ItemUtils.isBroken(boots)) bootslevel = 0;
-
-        double maxdamagereduction = WeaponLevelingConfig.Server.value_max_damage_reduction.get() / 100;
-
-        double maxlevel = WeaponLevelingConfig.Server.value_max_level.get();
-
-        double partdamage = (damage / 4);
-        double helmetdamage = partdamage - (partdamage * (maxdamagereduction * (helmetlevel/maxlevel)));
-        double chestplatedamage = partdamage - (partdamage * (maxdamagereduction * (chestplatelevel/maxlevel)));
-        double leggingsdamage = partdamage - (partdamage * (maxdamagereduction * (leggingslevel/maxlevel)));
-        double bootsdamage = partdamage - (partdamage * (maxdamagereduction * (bootslevel/maxlevel)));
-
-
-        return (float) (helmetdamage + chestplatedamage + leggingsdamage + bootsdamage);
+        return (helmetdamage + chestplatedamage + leggingsdamage + bootsdamage);
     }
 
-    public static float getReduction(int level) {
-        double maxdamagereduction = WeaponLevelingConfig.Server.value_max_damage_reduction.get();
-        return (float) maxdamagereduction * ((float) level/WeaponLevelingConfig.Server.value_max_level.get());
+    public static float getDamagePerPiece(Player player, float partdamage, ItemStack stack) {
+        int level = stack.getOrCreateTag().getInt("level");
+        if (ItemUtils.isBroken(stack)) level = 0;
+        double maxdamagereduction = getReduction(level,stack) / 100;
+        double maxlevel = ItemUtils.getMaxLevel(stack);
+        double finaldamage = partdamage - (partdamage * (maxdamagereduction * (level/maxlevel)));
+
+        return (float) finaldamage;
+    }
+
+    public static float getReduction(int level, ItemStack stack) {
+        double maxdamagereduction = ItemUtils.getArmorMaxDamageReduction(stack);
+        return (float) maxdamagereduction * ((float) level/ItemUtils.getMaxLevel(stack));
     }
 
 
