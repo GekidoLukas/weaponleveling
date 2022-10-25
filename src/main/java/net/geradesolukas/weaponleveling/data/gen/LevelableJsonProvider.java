@@ -20,18 +20,13 @@ public class LevelableJsonProvider implements DataProvider {
 
 
     private final DataGenerator dataProvider;
-    private final String modid;
-    private final String itemname;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
-    private static Map<ResourceLocation, LevelableItem> levelableItems = ImmutableMap.of();
+    private Map<ResourceLocation, LevelableItem> levelableItems = ImmutableMap.of();
 
-    //private final ArrayList<LevelableItem> levelableItems = new ArrayList<>();
 
-    public LevelableJsonProvider(DataGenerator dataProvider, String modid, String itemname) {
+    public LevelableJsonProvider(DataGenerator dataProvider) {
         this.dataProvider = dataProvider;
-        this.modid = modid;
-        this.itemname = itemname;
     }
 
 
@@ -43,28 +38,36 @@ public class LevelableJsonProvider implements DataProvider {
             entries.add(levelableItem.getItem().getRegistryName());
             Path path = this.dataProvider.getOutputFolder().resolve("data/" + levelableItem.getItem().getRegistryName().getNamespace() + "/levelable_items/" + levelableItem.getItem().getRegistryName().getPath() + ".json");
             JsonObject jsonObject = new JsonObject();
+            if (!this.levelableItems.isEmpty())
+            {
+                try {
+                    this.save(pCache,jsonObject,path);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
 
         });
 
-
-        //Path path = this.dataProvider.getOutputFolder();
-
-        //saveJson(pCache,);
-
-        //levelableItems.forEach(sound -> {
-        //    //try {
-        //    //    LevelableItem levelableItem = levelableItems.get(1)
-        //    //    DataProvider.save(GSON, pCache, levelableItems.);
-        //    //}
-        //});
     }
 
-    private static void saveJson(HashCache pCache, JsonObject itemJson, Path pPath) {
 
-    }
 
     @Override
     public String getName() {
-        return null;
+        return "Levelable Items";
+    }
+
+    private void save(HashCache pCache, JsonObject itemJson, Path pPath) throws IOException {
+        DataProvider.save(GSON,pCache, this.mapToJson(this.levelableItems), pPath);
+    }
+
+    private JsonObject mapToJson(final Map<ResourceLocation, LevelableItem> map)
+    {
+        final JsonObject obj = new JsonObject();
+        // namespaces are ignored when serializing
+        map.forEach((k, v) -> obj.add(k.getPath(), v.serialize()));
+        return obj;
     }
 }

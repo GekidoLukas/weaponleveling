@@ -112,6 +112,16 @@ public class LevelableItem {
         return armorMaxDamageReduction;
     }
 
+    public JsonObject serialize() {
+
+        final JsonObject object = new JsonObject();
+        if(this.isMelee) object.addProperty("isMeleeWeapon", true);
+        if(this.isProjectile) object.addProperty("isProjectileWeapon", true);
+        if(this.isArmor) object.addProperty("isArmor", true);
+
+        return object;
+    }
+
     public static LevelableItem fromJson(JsonObject object, ResourceLocation resourceLocation) {
         Item item = ForgeRegistries.ITEMS.getValue(resourceLocation);
         boolean disabled = false;
