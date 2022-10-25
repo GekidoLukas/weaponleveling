@@ -3,7 +3,10 @@ package net.geradesolukas.weaponleveling.data;
 import com.google.gson.JsonObject;
 import net.geradesolukas.weaponleveling.config.WeaponLevelingConfig;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @SuppressWarnings("unused")
@@ -123,7 +126,12 @@ public class LevelableItem {
     }
 
     public static LevelableItem fromJson(JsonObject object, ResourceLocation resourceLocation) {
+        //boolean isTagList = false;
+        //if(object.has("isTagList")) {
+        //    isTagList = object.get("isTagList").getAsBoolean();
+        //}
         Item item = ForgeRegistries.ITEMS.getValue(resourceLocation);
+
         boolean disabled = false;
         if(object.has("disabled")) {
             disabled = object.get("disabled").getAsBoolean();

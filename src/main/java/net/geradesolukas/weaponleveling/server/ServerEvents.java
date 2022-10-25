@@ -40,10 +40,12 @@ public class ServerEvents {
     public static void onreloadListen(AddReloadListenerEvent event) {
         event.addListener(new LevelableItemsLoader());
     }
-    @SubscribeEvent
-    public static void onDataGather(GatherDataEvent event) {
-        //event.getGenerator().addProvider(new LevelableJsonProvider());
-        }
+
+    //@SubscribeEvent
+    //public static void onDataGather(GatherDataEvent event) {
+    //    //event.getGenerator().addProvider(new LevelableJsonProvider()
+    //}
+
     @SubscribeEvent
     public static void onAttribute(ItemAttributeModifierEvent event) {
         ItemStack stack = event.getItemStack();

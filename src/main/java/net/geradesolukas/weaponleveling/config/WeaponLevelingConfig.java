@@ -47,6 +47,7 @@ public class WeaponLevelingConfig {
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist_items;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> melee_items;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> projectile_items;
+        public static final ForgeConfigSpec.ConfigValue<List<? extends String>> armor_items;
 
 
         public static final ForgeConfigSpec.ConfigValue<Double> value_max_damage_reduction;
@@ -59,6 +60,8 @@ public class WeaponLevelingConfig {
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> entities_boss;
 
         public static final ForgeConfigSpec.ConfigValue<Boolean> broken_items_wont_vanish;
+
+        public static final ForgeConfigSpec.ConfigValue<Boolean> disable_unlisted_items;
 
         public static final ForgeConfigSpec.EnumValue<LevelUpType> levelup_type;
         public enum LevelUpType {ACTIONBAR, TOAST}
@@ -88,12 +91,14 @@ public class WeaponLevelingConfig {
             BUILDER.comment("Item Config").push("item");
             blacklist_items = BUILDER.comment("Blacklisted Items").defineList("blacklist_items", ModLists.DEFAULT_ITEM_BLACKLIST, o -> o instanceof String);
             melee_items = BUILDER.comment("Melee Weapons, that are not extending the AxeItem or SwordItem Class").defineList("melee_items", ModLists.DEFAULT_MELEE_ITEMS, o -> o instanceof String);
-            projectile_items = BUILDER.comment("Projectile Weapons, that are not extending the AxeItem or SwordItem Class").defineList("projectile_items", ModLists.DEFAULT_PROJECTILE_ITEMS, o -> o instanceof String);
+            armor_items = BUILDER.comment("Armors, that are not extending the Armor Class or Should be added if Option \"disable_unlisted_items\" is set to true").defineList("armor_items", ModLists.DEFAULT_ARMOR_ITEMS, o -> o instanceof String);
+            projectile_items = BUILDER.comment("Projectile Weapons, that are not extending the ProjectileItem Class").defineList("projectile_items", ModLists.DEFAULT_PROJECTILE_ITEMS, o -> o instanceof String);
             levelup_type = BUILDER.comment("How the player is notified about the item's Level Up",
                     "ACTIONBAR: Will display the Level Up in the Actionbar",
                     "TOAST: Will display the Level Up in the Actionbar").defineEnum("levelUpDisplayType", LevelUpType.TOAST);
 
             broken_items_wont_vanish = BUILDER.comment("If set to true, items will not vanish when broken, but rather have a useless version").define("broken_items_wont_vanish", true);
+            disable_unlisted_items = BUILDER.comment("If set to true, Swords, Axes and Armor will not be supported").define("disable_unlisted_items", false);
 
 
             BUILDER.pop();

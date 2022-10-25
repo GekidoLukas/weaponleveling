@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class LevelableJsonProvider implements DataProvider {
 
-
+// UNUSED
     private final DataGenerator dataProvider;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 

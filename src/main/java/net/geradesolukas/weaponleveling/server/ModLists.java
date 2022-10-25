@@ -35,6 +35,7 @@ public class ModLists {
             PARRYTHISID + "wooden_dagger", PARRYTHISID + "stone_dagger", PARRYTHISID + "iron_dagger",PARRYTHISID + "golden_dagger", PARRYTHISID + "diamond_dagger",PARRYTHISID + "netherite_dagger"
     );
 
+    public static final List<String> DEFAULT_ARMOR_ITEMS = ImmutableList.of();
 
     public static final List<String> DEFAULT_ANIMALS = ImmutableList.of(MCID +"pig",MCID +"cow",MCID +"sheep",MCID +"chicken",MCID +"mooshroom",
             MCID +"axolotl",MCID +"bee",MCID +"cat",MCID +"donkey",MCID +"fox",MCID +"goat",

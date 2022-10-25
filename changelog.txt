@@ -1,7 +1,11 @@
 Version 1.3.4
 - Added builtin MrCrayfish's Gun Mod Compat
+- Added builtin Parry This! Compat
 - Added Armor not rendering when broken
+- Added Armor Items Config Option
 - Added Projectile Damage Multiplier Config Option
+- Added Disable Unlisted Items Config Option
+- Added Datapack based System, that is prioritised over the config system
 
 - Updated min forge version to 40.1.54
 
@@ -10,7 +14,7 @@ Version 1.3.4
 - Fixed issue where using bone meal on a flower crashes the game
 - Fixed issue where Bows and Crossbows did too much damage
 - Fixed issue where breaking items would post a debug message in chat (again, yeah idk how)
-- Fixed issue where Parry This!'s Spears would be duped on throw (Potentially fixes similar issues
+- Fixed issue where Parry This!'s Spears would be duped on throw (Potentially fixes similar issues)
 
 - Removed old Gun Fallback System
 
