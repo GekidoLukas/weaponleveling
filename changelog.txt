@@ -1,4 +1,4 @@
-Version 1.3.4
+Version 1.3.5
 - Added builtin MrCrayfish's Gun Mod Compat
 - Added builtin Parry This! Compat
 - Added Armor not rendering when broken
