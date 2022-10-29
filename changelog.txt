@@ -1,4 +1,4 @@
-Version 1.3.5
+Version 1.4.0
 - Added builtin MrCrayfish's Gun Mod Compat
 - Added builtin Parry This! Compat
 - Added Armor not rendering when broken
@@ -6,6 +6,7 @@ Version 1.3.5
 - Added Projectile Damage Multiplier Config Option
 - Added Disable Unlisted Items Config Option
 - Added Datapack based System, that is prioritised over the config system
+- Added Item NBT based System, that is prioritised over the datapack and config system
 
 - Updated min forge version to 40.1.54
 

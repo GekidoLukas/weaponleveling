@@ -6,7 +6,8 @@
   "client": [
     "MixinGui",
     "MixinItemRenderer",
-    "MixinAbstractContainerScreen"
+    "MixinAbstractContainerScreen",
+    "MixinHumanoidArmorLayer"
   ],
   "mixins": [
     "MixinBowItem",
@@ -21,7 +22,6 @@
     "MixinItemStack",
     "MixinForgeHooks",
     "MixinInventory",
-    "MixinHumanoidArmorLayer",
     "MixinArmorPenetrationMechanic",
     "MixinSpearEntity",
     "MixinDaggerEntity"

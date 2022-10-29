@@ -28,7 +28,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '1.18.2-1.3.5'
+version = '1.18.2-1.4.0'
 group = 'net.geradesolukas.weaponleveling' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'weaponleveling'
 
@@ -177,7 +177,7 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.54'
-    minecraftLibrary(annotationProcessor(shade("com.github.LlamaLad7:MixinExtras:0.1.0-rc3")))
+    minecraftLibrary(annotationProcessor(shade("com.github.LlamaLad7:MixinExtras:0.1.0")))
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 
@@ -192,10 +192,10 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:clothconfig-348521:3972426") //ClothConfigApi
 
-    compileOnly fg.deobf("curse.maven:crayfishgun-289479:3961690") //MrCrayfish's Gun Mod
-    compileOnly fg.deobf("curse.maven:framework-549225:3926054") //Framework
+    implementation fg.deobf("curse.maven:crayfishgun-289479:3961690") //MrCrayfish's Gun Mod
+    implementation fg.deobf("curse.maven:framework-549225:3926054") //Framework
 
-    implementation fg.deobf("curse.maven:parrythis-479996:3910075") //Parry This!
+    compileOnly fg.deobf("curse.maven:parrythis-479996:3910075") //Parry This!
 
 
 
@@ -271,5 +271,6 @@ tasks.withType(JavaCompile).configureEach {
 mixin {
     add sourceSets.main, "weaponleveling.mixin-refmap.json"
     config 'weaponleveling.mixin.json'
+
 }
 

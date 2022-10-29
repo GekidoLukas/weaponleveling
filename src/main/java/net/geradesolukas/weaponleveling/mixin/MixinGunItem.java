@@ -30,8 +30,11 @@ import java.util.List;
 
 @Pseudo
 @Mixin(targets = "com.mrcrayfish.guns.item.GunItem")
-public abstract class MixinGunItem {
+public abstract class MixinGunItem extends Item{
 
+    public MixinGunItem(Properties pProperties) {
+        super(pProperties);
+    }
 
     @WrapOperation(
             method = "Lcom/mrcrayfish/guns/item/GunItem;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
