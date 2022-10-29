@@ -81,7 +81,7 @@ public class WeaponLevelingConfig {
             value_level_modifier = BUILDER.comment("The Modifier for the equation used to calculate the amount of xp needed to level up (Default = 80)").defineInRange("weaponLevelModifier",80, 0, 10000);
             value_starting_level_amount = BUILDER.comment("The XP amount needed to reach the first level (Default = 50)").defineInRange("weaponStartAmount",50, 0, 10000);
             value_damage_per_level = BUILDER.comment("The Extra Damage a weapon gets for each level (Default = 0.1)").defineInRange("weaponDamagePerLevel",0.1d, 0, 100);
-            value_bowlike_damage_modifier = BUILDER.comment("The Value, that gets multiplied with the bow's damage to lower it. It is recommended to leave it below 1  (Default = 0.1)").defineInRange("weaponBowLikeModifier",0.25d, 1, 10);
+            value_bowlike_damage_modifier = BUILDER.comment("The Value, that gets multiplied with the bow's damage to lower it. It is recommended to leave it below 1  (Default = 0.25d)").defineInRange("weaponBowLikeModifier",0.25d, 1, 10);
 
 
             value_max_damage_reduction = BUILDER.comment("The Max Percentage an Armor Part can reduce").defineInRange("weaponMaxReduction",75.0, 0, 100);
