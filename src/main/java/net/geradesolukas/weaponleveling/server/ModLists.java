@@ -21,18 +21,18 @@ public class ModLists {
             TINKERSID + "dagger", TINKERSID + "sword", TINKERSID + "cleaver", TINKERSID + "scythe", TINKERSID + "broad_axe", TINKERSID + "hand_axe",
             TINKERSID + "sledge_hammer", TINKERSID + "mattock",
 
-            PARRYTHISID + "wooden_mace", PARRYTHISID + "stone_mace", PARRYTHISID + "iron_mace",PARRYTHISID + "golden_mace", PARRYTHISID + "diamond_mace",PARRYTHISID + "netherite_mace",
-            PARRYTHISID + "wooden_spear", PARRYTHISID + "stone_spear", PARRYTHISID + "iron_spear",PARRYTHISID + "golden_spear", PARRYTHISID + "diamond_spear",PARRYTHISID + "netherite_spear",
-            PARRYTHISID + "wooden_dagger", PARRYTHISID + "stone_dagger", PARRYTHISID + "iron_dagger",PARRYTHISID + "golden_dagger", PARRYTHISID + "diamond_dagger",PARRYTHISID + "netherite_dagger",
-            PARRYTHISID + "wooden_flail", PARRYTHISID + "stone_flail", PARRYTHISID + "iron_flail",PARRYTHISID + "golden_flail", PARRYTHISID + "diamond_flail",PARRYTHISID + "netherite_flail",
-            PARRYTHISID + "wooden_hammer", PARRYTHISID + "stone_hammer", PARRYTHISID + "iron_hammer",PARRYTHISID + "golden_hammer", PARRYTHISID + "diamond_hammer",PARRYTHISID + "netherite_hammer"
+            PARRYTHISID + "wood_mace", PARRYTHISID + "stone_mace", PARRYTHISID + "iron_mace",PARRYTHISID + "gold_mace", PARRYTHISID + "diamond_mace",PARRYTHISID + "netherite_mace",
+            PARRYTHISID + "wood_spear", PARRYTHISID + "stone_spear", PARRYTHISID + "iron_spear",PARRYTHISID + "gold_spear", PARRYTHISID + "diamond_spear",PARRYTHISID + "netherite_spear",
+            PARRYTHISID + "wood_dagger", PARRYTHISID + "stone_dagger", PARRYTHISID + "iron_dagger",PARRYTHISID + "gold_dagger", PARRYTHISID + "diamond_dagger",PARRYTHISID + "netherite_dagger",
+            PARRYTHISID + "wood_flail", PARRYTHISID + "stone_flail", PARRYTHISID + "iron_flail",PARRYTHISID + "gold_flail", PARRYTHISID + "diamond_flail",PARRYTHISID + "netherite_flail",
+            PARRYTHISID + "wood_hammer", PARRYTHISID + "stone_hammer", PARRYTHISID + "iron_hammer",PARRYTHISID + "gold_hammer", PARRYTHISID + "diamond_hammer",PARRYTHISID + "netherite_hammer"
             );
 
     public static final List<String> DEFAULT_PROJECTILE_ITEMS = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow",
             TETRAID + "modular_crossbow", TETRAID + "modular_bow",
             CGMID + "pistol", CGMID + "shotgun", CGMID + "mini_gun", CGMID + "assault_rifle", CGMID + "machine_pistol", CGMID + "heavy_rifle", CGMID + "grenade_launcher", CGMID + "bazooka",
-            PARRYTHISID + "wooden_spear", PARRYTHISID + "stone_spear", PARRYTHISID + "iron_spear",PARRYTHISID + "golden_spear", PARRYTHISID + "diamond_spear",PARRYTHISID + "netherite_spear",
-            PARRYTHISID + "wooden_dagger", PARRYTHISID + "stone_dagger", PARRYTHISID + "iron_dagger",PARRYTHISID + "golden_dagger", PARRYTHISID + "diamond_dagger",PARRYTHISID + "netherite_dagger"
+            PARRYTHISID + "wood_spear", PARRYTHISID + "stone_spear", PARRYTHISID + "iron_spear",PARRYTHISID + "gold_spear", PARRYTHISID + "diamond_spear",PARRYTHISID + "netherite_spear",
+            PARRYTHISID + "wood_dagger", PARRYTHISID + "stone_dagger", PARRYTHISID + "iron_dagger",PARRYTHISID + "gold_dagger", PARRYTHISID + "diamond_dagger",PARRYTHISID + "netherite_dagger"
     );
 
     public static final List<String> DEFAULT_ARMOR_ITEMS = ImmutableList.of();

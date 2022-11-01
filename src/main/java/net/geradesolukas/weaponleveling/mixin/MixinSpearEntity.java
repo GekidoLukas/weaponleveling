@@ -5,9 +5,12 @@ import net.geradesolukas.weaponleveling.util.ItemUtils;
 import net.geradesolukas.weaponleveling.util.UpdateLevels;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
@@ -22,10 +25,14 @@ import java.lang.annotation.Target;
 
 @Pseudo
 @Mixin(targets = "com.theishiopian.parrying.Entity.SpearEntity")
-public abstract class MixinSpearEntity {
+public abstract class MixinSpearEntity extends AbstractArrow {
 
 
     @Shadow(remap = false) public ItemStack spearItem;
+
+    protected MixinSpearEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
+        super(pEntityType, pLevel);
+    }
 
     @Inject(
             method = "Lcom/theishiopian/parrying/Entity/SpearEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
