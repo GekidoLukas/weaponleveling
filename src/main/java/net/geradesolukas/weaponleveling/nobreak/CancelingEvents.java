@@ -30,14 +30,14 @@ public class CancelingEvents {
         return stack.getDamageValue() >= (stack.getMaxDamage() + 1);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public static void onRenderHand(RenderHandEvent event) {
-        ItemStack stack = event.getItemStack();
-        if (ItemUtils.isBroken(stack)) {
-            event.setCanceled(true);
-        }
-    }
+    //@OnlyIn(Dist.CLIENT)
+    //@SubscribeEvent
+    //public static void onRenderHand(RenderHandEvent event) {
+    //    ItemStack stack = event.getItemStack();
+    //    if (ItemUtils.isBroken(stack)) {
+    //        event.setCanceled(true);
+    //    }
+    //}
 
     @SubscribeEvent
     public static void onArmor(ItemAttributeModifierEvent event) {

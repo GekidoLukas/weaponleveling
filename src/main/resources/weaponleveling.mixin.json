@@ -4,27 +4,29 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8.5",
   "client": [
-    "MixinGui",
-    "MixinItemRenderer",
     "MixinAbstractContainerScreen",
-    "MixinHumanoidArmorLayer"
+    "MixinGui",
+    "MixinHumanoidArmorLayer",
+    "MixinItemRenderer",
+    "MixinPlayerRenderer"
   ],
   "mixins": [
+    "MixinArmorPenetrationMechanic",
     "MixinBowItem",
     "MixinCrossbowItem",
-    "MixinThrownTrident",
+    "MixinDaggerEntity",
     "MixinEnchantmentHelper",
-    "MixinPlayer",
-    "MixinModularBowItem",
-    "MixinModularCrossbowItem",
+    "MixinForgeHooks",
     "MixinGun",
     "MixinGunItem",
-    "MixinItemStack",
-    "MixinForgeHooks",
     "MixinInventory",
-    "MixinArmorPenetrationMechanic",
+    "MixinItemInHandRenderer",
+    "MixinItemStack",
+    "MixinModularBowItem",
+    "MixinModularCrossbowItem",
+    "MixinPlayer",
     "MixinSpearEntity",
-    "MixinDaggerEntity"
+    "MixinThrownTrident"
   ],
   "plugin": "net.geradesolukas.weaponleveling.mixin.MixinConfigPlugin",
   "injectors": {
