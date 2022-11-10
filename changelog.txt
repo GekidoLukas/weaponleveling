@@ -1,3 +1,13 @@
+Version 1.4.3
+- Fixed potential crash with better combat
+
+
+
+Version 1.4.2
+- Added Broken Items not rendering in Hand
+- Fixed issue, where bowlikeDamageModifier in Config could not be below
+
+
 Version 1.4.1
 - Fixed Parry This! Crash
 - Fixed Parry This! Default List

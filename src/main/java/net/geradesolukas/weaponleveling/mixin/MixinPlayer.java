@@ -35,14 +35,14 @@ public abstract class MixinPlayer {
     }
 
 
-    @ModifyArg(
-            method = "attack",
-            at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V"),index = 1)
-    private ItemStack replaceEmpty(ItemStack emptystack) {
-        ItemStack stack = ((Player) ((Object)this) ).getMainHandItem();
-        stack.setDamageValue(stack.getMaxDamage() + 1);
-        return stack;
-    }
+    //@ModifyArg(
+    //        method = "attack",
+    //        at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V"),index = 1)
+    //private ItemStack replaceEmpty(ItemStack emptystack) {
+    //    ItemStack stack = ((Player) ((Object)this) ).getMainHandItem();
+    //    stack.setDamageValue(stack.getMaxDamage() + 1);
+    //    return stack;
+    //}
 
     @WrapOperation(
             method = "Lnet/minecraft/world/entity/player/Player;hurtCurrentlyUsedShield(F)V",

@@ -1,6 +1,7 @@
 package net.geradesolukas.weaponleveling.mixin;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
+import net.minecraftforge.fml.ModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -21,6 +22,8 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+        if(mixinClassName.endsWith("_BETTERCOMBAT")) return ModList.get().isLoaded("bettercombat");
+        if(mixinClassName.endsWith("_NOBETTERCOMBAT")) return !ModList.get().isLoaded("bettercombat");
         return true;
     }
 
