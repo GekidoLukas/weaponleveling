@@ -17,7 +17,7 @@ public class ModLists {
     public static final List<String> DEFAULT_ITEM_BLACKLIST = ImmutableList.of();
     //public static final List<String> DEFAULT_NO_MELEE = ImmutableList.of();
     public static final List<String> DEFAULT_MELEE_ITEMS = ImmutableList.of(MCID +"trident",
-            TETRAID + "modular_sword", TETRAID + "modular_double",
+            TETRAID + "modular_sword", TETRAID + "modular_double", TETRAID + "modular_single",
             TINKERSID + "dagger", TINKERSID + "sword", TINKERSID + "cleaver", TINKERSID + "scythe", TINKERSID + "broad_axe", TINKERSID + "hand_axe",
             TINKERSID + "sledge_hammer", TINKERSID + "mattock",
 
@@ -29,8 +29,8 @@ public class ModLists {
             );
 
     public static final List<String> DEFAULT_PROJECTILE_ITEMS = ImmutableList.of(MCID +"trident",MCID +"bow",MCID + "crossbow",
-            TETRAID + "modular_crossbow", TETRAID + "modular_bow",
-            CGMID + "pistol", CGMID + "shotgun", CGMID + "mini_gun", CGMID + "assault_rifle", CGMID + "machine_pistol", CGMID + "heavy_rifle", CGMID + "grenade_launcher", CGMID + "bazooka",
+            TETRAID + "modular_crossbow", TETRAID + "modular_bow",TETRAID + "modular_single",
+            CGMID + "pistol", CGMID + "shotgun", CGMID + "mini_gun", CGMID + "assault_rifle", CGMID + "machine_pistol", CGMID + "heavy_rifle",CGMID + "rifle", CGMID + "grenade_launcher", CGMID + "bazooka",
             PARRYTHISID + "wood_spear", PARRYTHISID + "stone_spear", PARRYTHISID + "iron_spear",PARRYTHISID + "gold_spear", PARRYTHISID + "diamond_spear",PARRYTHISID + "netherite_spear",
             PARRYTHISID + "wood_dagger", PARRYTHISID + "stone_dagger", PARRYTHISID + "iron_dagger",PARRYTHISID + "gold_dagger", PARRYTHISID + "diamond_dagger",PARRYTHISID + "netherite_dagger"
     );

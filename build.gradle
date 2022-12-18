@@ -28,7 +28,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '1.18.2-1.4.3'
+version = '1.18.2-1.4.4'
 group = 'net.geradesolukas.weaponleveling' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'weaponleveling'
 
@@ -181,8 +181,8 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 
-    compileOnly fg.deobf("curse.maven:tetra-289712:3844400") //Tetra
-    compileOnly fg.deobf("curse.maven:mutil-351914:3788376") //mutil
+    implementation fg.deobf("curse.maven:tetra-289712:3844400") //Tetra
+    implementation fg.deobf("curse.maven:mutil-351914:3788376") //mutil
 
     compileOnly fg.deobf("curse.maven:tinkers-74072:3998764") //Tinkers
     compileOnly fg.deobf("curse.maven:mantle-74924:3829975") //Mantle
@@ -192,8 +192,8 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:clothconfig-348521:3972426") //ClothConfigApi
 
-    implementation fg.deobf("curse.maven:crayfishgun-289479:3961690") //MrCrayfish's Gun Mod
-    implementation fg.deobf("curse.maven:framework-549225:3926054") //Framework
+    compileOnly fg.deobf("curse.maven:crayfishgun-289479:3961690") //MrCrayfish's Gun Mod
+    compileOnly fg.deobf("curse.maven:framework-549225:3926054") //Framework
 
     compileOnly fg.deobf("curse.maven:parrythis-479996:3910075") //Parry This!
 
