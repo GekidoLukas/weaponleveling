@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "net.weaponleveling.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "MixinTitleScreen"
+  ],
+  "mixins": [
+    "MixinBowItem",
+    "MixinCrossbowItem",
+    "MixinItemStack",
+    "MixinLivingEntity",
+    "MixinPlayer",
+    "MixinServerPlayer",
+    "MixinThrownTrident"
+  ],
+  "plugin": "net.weaponleveling.mixin.MixinConfigPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

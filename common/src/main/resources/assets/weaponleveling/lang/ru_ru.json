@@ -1,0 +1,16 @@
+{
+  "weaponleveling.tooltip.level": "Уровень ",
+  "weaponleveling.tooltip.reduction": "Снижение урона ",
+  "weaponleveling.tooltip.projectile_weapon_level": "Дополнительный урон ",
+  "weaponleveling.tooltip.levelprogress": "Прогресс ",
+  "weaponleveling.tooltip.pressshift": "Нажмите [Shift] чтобы увидеть уровень",
+  "weaponleveling.tooltip.maxlevel": "Максимальный уровень",
+  "weaponleveling.tooltip.overmaxlevel": "Подождите, это незаконно",
+  "weaponleveling.levelup": "Достиг уровня ",
+  "weaponleveling.command.setlevel": "Установлен уровень %s на %s",
+  "weaponleveling.command.setpoints": "Установлены очки опыта %s на %s",
+  "weaponleveling.command.exception.novalidweapon": "%s не является допустимым элементом",
+  "weaponleveling.command.exception.outofbounds": "%s выше максимального значения",
+  "weaponleveling.tooltip.broken": "Сломанный"
+}
+

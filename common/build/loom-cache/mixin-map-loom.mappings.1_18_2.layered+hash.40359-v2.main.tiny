@@ -1,0 +1,2 @@
+v1	named	intermediary
+FIELD	net/weaponleveling/mixin/MixinThrownTrident	Lnet/minecraft/world/item/ItemStack;	tridentItem	field_7650
