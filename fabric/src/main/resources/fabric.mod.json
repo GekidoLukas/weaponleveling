@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "weaponleveling",
+  "version": "${version}",
+  "name": "Weapon Leveling",
+  "description": "This mod increases the amount of damage you deal with your weapons over time, by leveling them up",
+  "authors": [
+    "GeradesoLukas"
+  ],
+  "contact": {
+    "homepage": "ttps://www.curseforge.com/minecraft/mc-mods/weapon-leveling",
+    "sources": "https://github.com/GeradesoLukas/weaponleveling"
+  },
+  "license": "All rights reserved",
+  "icon": "assets/weaponleveling/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.weaponleveling.fabric.WeaponLevelingModFabric"
+    ],
+    "client": [
+      "net.weaponleveling.fabric.WeaponLevelingModClientFabric"
+    ]
+  },
+  "mixins": [
+    "weaponleveling.mixins.json",
+    "weaponleveling-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.18.2",
+    "architectury": ">=4.9.83",
+    "forgeconfigapiport": ">=3.2.4"
+  }
+}

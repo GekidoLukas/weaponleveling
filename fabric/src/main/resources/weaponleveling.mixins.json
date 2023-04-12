@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.weaponleveling.fabric.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+  ],
+  "mixins": [
+    "MixinPlayerFabric"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
