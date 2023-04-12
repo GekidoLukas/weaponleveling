@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "[40,)"
+license = "All rights reserved"
+issueTrackerURL="https://github.com/GeradesoLukas/weaponleveling/issues"
+
+[[mods]]
+modId = "weaponleveling"
+version = "${version}"
+displayName = "Weapon Leveling"
+authors = "GeradesoLukas"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/weapon-leveling"
+description = '''
+This mod increases the amount of damage you deal with your weapons over time, by leveling them up
+'''
+#logoFile = ""
+
+[[dependencies.weaponleveling]]
+modId = "forge"
+mandatory = true
+versionRange = "[40,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.weaponleveling]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.weaponleveling]]
+modId = "architectury"
+mandatory = true
+versionRange = "[4.9.83,)"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.weaponleveling.forge.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+  ],
+  "mixins": [
+    "MixinGun",
+    "MixinGunItem"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
