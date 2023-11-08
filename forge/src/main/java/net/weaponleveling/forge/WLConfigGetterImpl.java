@@ -3,6 +3,7 @@ package net.weaponleveling.forge;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.forge.compat.bettercombat.BetterCombatCompat;
+import net.weaponleveling.forge.compat.cgm.CGMCompat;
 import net.weaponleveling.forge.config.WeaponLevelingConfigForge;
 import net.weaponleveling.util.ToastHelper;
 
@@ -131,5 +132,13 @@ public class WLConfigGetterImpl {
 
     public static ItemStack getAttackItem(Player player) {
         return BetterCombatCompat.getAttackItem(player);
+    }
+
+    public static boolean isCGMGunItem(ItemStack stack) {
+        return CGMCompat.isGunItem(stack);
+    }
+
+    public static boolean getBrokenItemsDontVanish() {
+        return WeaponLevelingConfigForge.Server.broken_items_wont_vanish.get();
     }
 }

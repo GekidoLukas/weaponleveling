@@ -7,13 +7,18 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.weaponleveling.WLConfigGetter;
 import net.weaponleveling.WeaponLevelingMod;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class UpdateLevels {
     public static void applyXPOnItemStack(ItemStack stack, Player player, Entity target, Boolean critical) {
@@ -24,7 +29,9 @@ public class UpdateLevels {
             if (!target.isAlive()) {
                 xpamount = UpdateLevels.getXPForEntity(target);
             }
+
             if (critical) {
+
                 xpamountcrit = UpdateLevels.getXPForCrit(stack);
             }
             updateProgressItem(player, stack, xpamount + xpamounthit + xpamountcrit);
@@ -123,20 +130,66 @@ public class UpdateLevels {
     public static int getXPForEntity(Entity entity) {
         String name = Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
         int xpamount = WLConfigGetter.getXPKillGeneric();
-        if(WLConfigGetter.getMinibossEntities().contains(name) || isCustomMiniBoss(entity)) {
-            xpamount = WLConfigGetter.getXPKillMiniboss();
-        } else if(WLConfigGetter.getBossEntities().contains(name)|| isCustomBoss(entity)) {
+        AtomicInteger liststate = new AtomicInteger();
+
+
+        Registry.ENTITY_TYPE.getTags().forEach(tagKeyNamedPair -> {
+            TagKey<EntityType<?>> tagKey = tagKeyNamedPair.getFirst();
+            if(Registry.ENTITY_TYPE.getTag(tagKey).get().contains(entity.getType().arch$holder())) {
+                if (WLConfigGetter.getAnimalEntities().contains("#" + tagKey.location().toString())) {
+                    liststate.set(1);
+                }
+                if (WLConfigGetter.getMonsterEntities().contains("#" +tagKey.location().toString())) {
+                    liststate.set(2);
+                }
+                if (WLConfigGetter.getMinibossEntities().contains("#" +tagKey.location().toString())) {
+                    liststate.set(3);
+                }
+                if (WLConfigGetter.getBossEntities().contains("#" +tagKey.location().toString())) {
+                    liststate.set(4);
+                }
+            }
+        });
+
+
+        if(WLConfigGetter.getBossEntities().contains(name) || isCustomBoss(entity)|| liststate.get() == 4) {
             xpamount = WLConfigGetter.getXPKillBoss();
-        } else if(WLConfigGetter.getAnimalEntities().contains(name)) {
-            xpamount = WLConfigGetter.getXPKillAnimal();
-        }   else if(WLConfigGetter.getMonsterEntities().contains(name)) {
+        }
+
+        else if(WLConfigGetter.getMinibossEntities().contains(name) || isCustomMiniBoss(entity) || liststate.get() == 3) {
+            xpamount = WLConfigGetter.getXPKillMiniboss();
+        }
+
+        else if(WLConfigGetter.getMonsterEntities().contains(name) || isCustomMonster(entity) || liststate.get() == 2) {
             xpamount = WLConfigGetter.getXPKillMonster();
         }
-        //LOGGER.info("Lefthanded Stuff "+ entity.getEntityData().get());
-        // entity.getPersistentData().getBoolean("LeftHanded")
+
+        else if(WLConfigGetter.getAnimalEntities().contains(name) || isCustomAnimal(entity) || liststate.get() == 1) {
+            xpamount = WLConfigGetter.getXPKillAnimal();
+        }
+
 
         return xpamount;
     }
+
+    private static boolean isCustomAnimal(Entity entity) {
+        if (entity.getTags().contains("wl_animal")) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private static boolean isCustomMonster(Entity entity) {
+        if (entity.getTags().contains("wl_monster")) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 
     private static boolean isCustomMiniBoss(Entity entity) {
         if (entity.getTags().contains("wl_miniboss")) {
@@ -159,6 +212,7 @@ public class UpdateLevels {
         int xpamount = 0;
         int amount = ItemUtils.getHitXPAmount(stack);
         if (shouldGiveHitXP(ItemUtils.getHitXPChance(stack))) {xpamount = amount;}
+        WeaponLevelingMod.LOGGER.info("Chance: " + ItemUtils.getHitXPChance(stack) + " Amount: " + xpamount);
         return xpamount;
     }
 
@@ -202,7 +256,7 @@ public class UpdateLevels {
         return (int)(initialxp * randomValue);
     }
 
-    public static float reduceDamageArmor(Player player, float damage) {
+    public static float reduceDamageArmor(LivingEntity player, float damage) {
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
         ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
@@ -217,7 +271,7 @@ public class UpdateLevels {
         return (helmetdamage + chestplatedamage + leggingsdamage + bootsdamage);
     }
 
-    public static float getDamagePerPiece(Player player, float partdamage, ItemStack stack) {
+    public static float getDamagePerPiece(LivingEntity player, float partdamage, ItemStack stack) {
         int level = stack.getOrCreateTag().getInt("level");
         //if (ItemUtils.isBroken(stack)) level = 0;
         double maxdamagereduction = getReduction(level,stack) / 100;

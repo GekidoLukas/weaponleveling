@@ -29,14 +29,13 @@ configurations {
 
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
-    forgeRuntimeLibrary("com.github.LlamaLad7:MixinExtras:0.1.1")
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
-    //forgeRuntimeLibrary(shadowCommon(annotationProcessor("com.github.llamalad7.MixinExtras:${rootProject.mixinextras_version}"))) {transitive false}
+    forgeRuntimeLibrary(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")))
 
 
     modImplementation "curse.maven:bettercombat-639842:4428885" // Better Combat
@@ -45,6 +44,15 @@ dependencies {
 
     modImplementation "curse.maven:crayfishgun-289479:4344223" //MrCrayfish's Gun Mod
     modImplementation "curse.maven:framework-549225:4287475" //Framework
+    //modRuntimeOnly
+    //modCompileOnly()
+    modImplementation "curse.maven:tinkers-74072:4509008" //Tinkers
+    modImplementation "curse.maven:mantle-74924:4509007" //Mantle
+
+    modImplementation "curse.maven:parrythis-479996:3910075" //Parry This!
+
+    modImplementation "curse.maven:tetra-289712:4029100" //Tetra
+    modImplementation "curse.maven:mutil-351914:3788376" //mutil
 }
 
 processResources {
@@ -60,17 +68,17 @@ shadowJar {
     exclude "architectury.common.json"
 
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    archiveClassifier = null
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier = "dev"
 }
 
 sourcesJar {
@@ -88,7 +96,7 @@ components.java {
 publishing {
     publications {
         mavenForge(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = rootProject.archives_base_name + "-forge-" + project.name
             from components.java
         }
     }

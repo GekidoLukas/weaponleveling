@@ -132,4 +132,12 @@ public class WLConfigGetterImpl {
     public static ItemStack getAttackItem(Player player) {
         return BetterCombatCompat.getAttackItem(player);
     }
+
+    public static boolean isCGMGunItem(ItemStack stack) {
+        return false;
+    }
+
+    public static boolean getBrokenItemsDontVanish() {
+        return WeaponLevelingConfigFabric.Server.broken_items_wont_vanish.get();
+    }
 }

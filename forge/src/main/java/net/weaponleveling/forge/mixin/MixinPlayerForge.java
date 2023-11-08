@@ -4,6 +4,7 @@ package net.weaponleveling.forge.mixin;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.util.ItemUtils;
 import net.weaponleveling.util.UpdateLevels;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,8 +23,8 @@ public class MixinPlayerForge {
         Player player = ((Player) ((Object) this));
         ItemStack stack = player.getMainHandItem();
         if(ItemUtils.isAcceptedMeleeWeaponStack(stack) && crit) {
-            UpdateLevels.applyXPOnItemStack(stack,  player, target, true);
-            UpdateLevels.applyXPForArmorItem(player, true, stack);
+            UpdateLevels.applyXPOnItemStack(stack,  player, target, crit);
+            UpdateLevels.applyXPForArmorItem(player, crit, stack);
         }
     }
 }

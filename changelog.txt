@@ -2,3 +2,4 @@ Version 2.0.0
 - Added "weaponleveling.tooltip.itemlevel"
 - Removed "weaponleveling.tooltip.armorlevel" translation
 - Removed "weaponleveling.tooltip.weaponlevel" translation
+- Added Taglist Support for Config and Datapack System

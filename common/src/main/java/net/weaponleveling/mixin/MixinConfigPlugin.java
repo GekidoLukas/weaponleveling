@@ -1,6 +1,6 @@
 package net.weaponleveling.mixin;
 
-import net.weaponleveling.WeaponLevelingMod;
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class MixinConfigPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
-        MixinBootstrap.init();
+        MixinExtrasBootstrap.init();
         //WeaponLevelingMod.LOGGER.info("OnLoad runs");
     }
 
@@ -23,7 +23,7 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        return false;
+        return true;
     }
 
     @Override

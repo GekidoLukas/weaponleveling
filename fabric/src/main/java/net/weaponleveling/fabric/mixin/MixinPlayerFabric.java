@@ -21,8 +21,8 @@ public class MixinPlayerFabric {
         Player player = ((Player) ((Object) this));
         ItemStack stack = player.getMainHandItem();
         if(ItemUtils.isAcceptedMeleeWeaponStack(stack) && crit) {
-            UpdateLevels.applyXPOnItemStack(stack,  player, target, true);
-            UpdateLevels.applyXPForArmorItem(player, true, stack);
+            UpdateLevels.applyXPOnItemStack(stack,  player, target, crit);
+            UpdateLevels.applyXPForArmorItem(player, crit, stack);
         }
     }
 }

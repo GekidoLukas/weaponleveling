@@ -125,6 +125,11 @@ public class WLConfigGetter {
     }
 
     @ExpectPlatform
+    public static boolean getBrokenItemsDontVanish() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static ToastHelper.LevelUpType getLevelUpType() {
         throw new AssertionError();
     }
@@ -134,5 +139,9 @@ public class WLConfigGetter {
         throw new AssertionError();
     }
 
+    @ExpectPlatform
+    public static boolean isCGMGunItem(ItemStack stack) {
+        throw new AssertionError();
+    }
 
 }

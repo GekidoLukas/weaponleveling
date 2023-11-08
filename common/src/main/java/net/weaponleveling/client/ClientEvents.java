@@ -1,5 +1,6 @@
 package net.weaponleveling.client;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -46,7 +47,9 @@ public class ClientEvents {
         //}
 
 
-
+        if(ItemUtils.isBroken(stack)) {
+            tooltip.add(new TranslatableComponent("weaponleveling.tooltip.broken").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+        }
         if (ItemUtils.isLevelableItem(stack)) {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
@@ -79,7 +82,7 @@ public class ClientEvents {
                     );
                 }
 
-                if (ItemUtils.isAcceptedProjectileWeapon(stack) && !(ItemUtils.isAcceptedMeleeWeaponStack(stack) )) {
+                if (ItemUtils.isAcceptedProjectileWeapon(stack) && !(ItemUtils.isAcceptedMeleeWeaponStack(stack) || WLConfigGetter.isCGMGunItem(stack))) {
                     //|| CGMCompat.isGunItem(stack)
                     double extradamage = level * ItemUtils.getWeaponDamagePerLevel(stack);
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)

@@ -69,6 +69,10 @@ public class ItemUtils {
         return (isClassItem || (WLConfigGetter.getArmorItems().contains(name)));
     }
 
+    public static boolean isBroken(ItemStack stack) {
+        return stack.getTag() != null && stack.getTag().getBoolean("isBroken");
+    }
+
     public static boolean isAcceptedMeleeWeaponStack(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(Registry.ITEM.getKey(stack.getItem()));
         boolean nbtadded = false;
