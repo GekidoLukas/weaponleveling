@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.weaponleveling.WLConfigGetter;
 import net.weaponleveling.util.ItemUtils;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,10 +24,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
-public class MixinItemStack {
+public abstract class MixinItemStack {
+
+    @Shadow public abstract boolean hurt(int m, Random random, ServerPlayer arg);
 
     @Inject(
             method = "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;",
@@ -57,11 +62,15 @@ public class MixinItemStack {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private <T extends LivingEntity> void preventBreak(int i, T livingEntity, Consumer<T> consumer, CallbackInfo ci) {
         ItemStack stack = ((ItemStack) ((Object) this));
-        if(WLConfigGetter.getBrokenItemsDontVanish() && ItemUtils.isLevelableItem(stack)) {
-            CompoundTag tag = new CompoundTag();
-            tag.putBoolean("isBroken", true);
-            stack.setTag(tag);
-            ci.cancel();
+        if(livingEntity instanceof ServerPlayer player) {
+            if(this.hurt(i, livingEntity.getRandom(), player)) {
+                if(WLConfigGetter.getBrokenItemsDontVanish() && ItemUtils.shouldBeUnbreakable(stack)) {
+                    CompoundTag tag = new CompoundTag();
+                    tag.putBoolean("isBroken", true);
+                    stack.setTag(tag);
+                    ci.cancel();
+                }
+            }
         }
     }
 }

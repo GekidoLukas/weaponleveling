@@ -37,6 +37,10 @@ public class ConfigListsForge {
 
     public static final List<String> DEFAULT_ARMOR_ITEMS = ImmutableList.of();
 
+    public static final List<String> DEFAULT_UNBREAKABLE_WHITELIST = ImmutableList.of();
+
+    public static final List<String> DEFAULT_UNBREAKABLE_BLACKLIST = ImmutableList.of();
+
     public static final List<String> DEFAULT_ANIMALS = ImmutableList.of(MCID +"pig",MCID +"cow",MCID +"sheep",MCID +"chicken",MCID +"mooshroom",
             MCID +"axolotl",MCID +"bee",MCID +"cat",MCID +"donkey",MCID +"fox",MCID +"goat",
             MCID +"horse",MCID +"llama",MCID +"mule",MCID +"ocelot",MCID +"panda",MCID +"rabbit",

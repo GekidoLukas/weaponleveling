@@ -102,7 +102,16 @@ public class WLConfigGetterImpl {
         return WeaponLevelingConfigForge.Server.armor_items.get();
     }
 
+    public static List<? extends String> getUnbreakableWhitelist() {
+        return WeaponLevelingConfigForge.Server.unbreakable_items_whitelist.get();
+    }
+    public static List<? extends String> getUnbreakableBlacklist() {
+        return WeaponLevelingConfigForge.Server.unbreakable_items_blacklist.get();
+    }
 
+    public static boolean getLevelableIsUnbreakable() {
+        return WeaponLevelingConfigForge.Server.levelable_items_auto_unbreakable.get();
+    }
 
     public static List<? extends String> getAnimalEntities() {
         return WeaponLevelingConfigForge.Server.entities_animal.get();

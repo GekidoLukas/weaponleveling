@@ -2,12 +2,15 @@ package net.weaponleveling.util;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Registry;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 import net.weaponleveling.WLConfigGetter;
 import net.weaponleveling.data.LevelableItem;
 import net.weaponleveling.data.LevelableItemsLoader;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ItemUtils {
 
@@ -71,6 +74,19 @@ public class ItemUtils {
 
     public static boolean isBroken(ItemStack stack) {
         return stack.getTag() != null && stack.getTag().getBoolean("isBroken");
+    }
+
+    public static boolean shouldBeUnbreakable(ItemStack stack) {
+        String name = Registry.ITEM.getKey(stack.getItem()).toString();
+        AtomicBoolean isInTag = new AtomicBoolean(false);
+        if(WLConfigGetter.getLevelableIsUnbreakable() && isLevelableItem(stack )&& !WLConfigGetter.getUnbreakableBlacklist().contains(name)) isInTag.set(true);
+        if(WLConfigGetter.getUnbreakableWhitelist().contains(name) && !WLConfigGetter.getUnbreakableBlacklist().contains(name)) isInTag.set(true);
+        Registry.ITEM.getTags().forEach(tagKeyNamedPair -> {
+            TagKey<Item> tagKey = tagKeyNamedPair.getFirst();
+            if(WLConfigGetter.getUnbreakableWhitelist().contains("#" +tagKey.location().toString())) isInTag.set(true);
+            if(WLConfigGetter.getUnbreakableBlacklist().contains("#" +tagKey.location().toString())) isInTag.set(false);
+        });
+        return isInTag.get();
     }
 
     public static boolean isAcceptedMeleeWeaponStack(ItemStack stack) {

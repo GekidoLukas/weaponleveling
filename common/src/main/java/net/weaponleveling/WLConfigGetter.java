@@ -125,6 +125,19 @@ public class WLConfigGetter {
     }
 
     @ExpectPlatform
+    public static List<? extends String> getUnbreakableWhitelist() {
+        throw new AssertionError();
+    }
+    @ExpectPlatform
+    public static List<? extends String> getUnbreakableBlacklist() {
+        throw new AssertionError();
+    }
+    @ExpectPlatform
+    public static boolean getLevelableIsUnbreakable() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static boolean getBrokenItemsDontVanish() {
         throw new AssertionError();
     }

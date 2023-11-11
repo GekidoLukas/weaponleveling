@@ -50,6 +50,12 @@ public class WeaponLevelingConfigFabric {
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> projectile_items;
         public static final ForgeConfigSpec.ConfigValue<List<? extends String>> armor_items;
 
+        public static final ForgeConfigSpec.ConfigValue<List<? extends String>> unbreakable_items_whitelist;
+        public static final ForgeConfigSpec.ConfigValue<List<? extends String>> unbreakable_items_blacklist;
+
+
+        public static final ForgeConfigSpec.ConfigValue<Boolean> levelable_items_auto_unbreakable;
+
         public static final ForgeConfigSpec.ConfigValue<Double> value_max_damage_reduction;
 
         public static final ForgeConfigSpec.ConfigValue<Double> value_bowlike_damage_modifier;
@@ -99,6 +105,11 @@ public class WeaponLevelingConfigFabric {
                     "TOAST: Will display the Level Up in the Actionbar").defineEnum("levelUpDisplayType", ToastHelper.LevelUpType.TOAST);
 
             broken_items_wont_vanish = BUILDER.comment("If set to true, items will not vanish when broken, but rather have a useless version").define("broken_items_wont_vanish", true);
+
+            unbreakable_items_whitelist = BUILDER.comment("Items, that should not fully break when their durability reaches 0.").defineList("unbreakable_items_whitelist", ConfigListsFabric.DEFAULT_UNBREAKABLE_WHITELIST, o -> o instanceof String);
+            unbreakable_items_blacklist = BUILDER.comment("Items, you want to break, even if they are a Levelable item or in the whitelist (why did you put em there?).").defineList("unbreakable_items_blacklist", ConfigListsFabric.DEFAULT_UNBREAKABLE_BLACKLIST, o -> o instanceof String);
+            levelable_items_auto_unbreakable = BUILDER.comment("If set to true, all items that are levelable will not break when durability reaches 0").define("levelable_items_auto_unbreakable", true);
+
             disable_unlisted_items = BUILDER.comment("If set to true, Swords, Axes and Armor will not be supported").define("disable_unlisted_items", false);
 
 
