@@ -42,14 +42,4 @@ public class WeaponLevelingMod {
         //System.out.println(ExampleExpectPlatform.getConfigDirectory().toAbsolutePath().normalize().toString());
         ReloadListenerRegistry.register(PackType.SERVER_DATA,LevelableItemsLoader.INSTANCE);
     }
-
-
-    // X PROJECTILEWEAPONS - X Datapack system - X Generalize Armor and Weapon level to Item Level in tooltip - X applying xp - X Better multi-levelup/levelup - mod compats
-    // X Critical Damage XP - X Tax Free Armor XP
-    //Forge Compats: X BetterCombat ; X CGM ; X Tinkers ; X Parry This ; XAlex's mobs ; X Tetra
-    //Fabric Compats: X BetterCombat ;
-    //Bugs: X Tinkers no hit nor crit xp with Hand Axe, Mattock | X Crossbows and bows no extra damage
-    //X Armor damage reduction
-    //TODO Tag lists loading after levelable items
-    //XEntities always show up as boss because I use all of the type tags existing instead of the entities' type tags
 }

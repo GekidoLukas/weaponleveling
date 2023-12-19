@@ -12,6 +12,11 @@
       "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V": "Lnet/minecraft/class_1665;method_7442(Z)V",
       "getArrow": "Lnet/minecraft/class_1764;method_18814(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1665;"
     },
+    "net/weaponleveling/mixin/MixinInventoryMenu": {
+      "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;hasBindingCurse(Lnet/minecraft/world/item/ItemStack;)Z": "Lnet/minecraft/class_1890;method_8224(Lnet/minecraft/class_1799;)Z",
+      "mayPickup": "Lnet/minecraft/class_1723$1;method_7674(Lnet/minecraft/class_1657;)Z",
+      "net/minecraft/world/inventory/InventoryMenu$1": "net/minecraft/class_1723$1"
+    },
     "net/weaponleveling/mixin/MixinItemStack": {
       "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;": "Lnet/minecraft/class_1799;method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",
       "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;": "Lnet/minecraft/class_1799;method_7909()Lnet/minecraft/class_1792;",
@@ -80,6 +85,11 @@
       "net/weaponleveling/mixin/MixinCrossbowItem": {
         "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V": "Lnet/minecraft/class_1665;method_7442(Z)V",
         "getArrow": "Lnet/minecraft/class_1764;method_18814(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1665;"
+      },
+      "net/weaponleveling/mixin/MixinInventoryMenu": {
+        "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;hasBindingCurse(Lnet/minecraft/world/item/ItemStack;)Z": "Lnet/minecraft/class_1890;method_8224(Lnet/minecraft/class_1799;)Z",
+        "mayPickup": "Lnet/minecraft/class_1723$1;method_7674(Lnet/minecraft/class_1657;)Z",
+        "net/minecraft/world/inventory/InventoryMenu$1": "net/minecraft/class_1723$1"
       },
       "net/weaponleveling/mixin/MixinItemStack": {
         "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;": "Lnet/minecraft/class_1799;method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",
