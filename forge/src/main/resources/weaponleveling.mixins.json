@@ -5,13 +5,14 @@
   "client": [
   ],
   "mixins": [
-    "MixinPlayerForge",
+    "MixinDaggerEntity",
     "MixinGun",
     "MixinGunItem",
     "MixinModifiableBowItem",
     "MixinModifiableCrossbowItem",
-    "MixinDaggerEntity",
-    "MixinSpearEntity"
+    "MixinPlayerForge",
+    "MixinSpearEntity",
+    "MixinWeaponRegistry"
   ],
   "injectors": {
     "defaultRequire": 1

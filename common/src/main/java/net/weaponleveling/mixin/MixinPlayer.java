@@ -1,5 +1,6 @@
 package net.weaponleveling.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -73,6 +74,14 @@ public class MixinPlayer {
         }
     }
 
+    @ModifyExpressionValue(
+            method = "tick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"))
+    private boolean preventCooldown(boolean original) {
+        Player player = ((Player) ((Object) this));
+        return original || ItemUtils.isBroken(WLConfigGetter.getAttackItem(player));
+    }
+
     //@Inject(
     //        method = "attack",
     //        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isSprinting()Z", ordinal = 1, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
@@ -132,6 +141,12 @@ public class MixinPlayer {
 
 
     }
+
+    //@WrapOperation(
+    //        method = "actuallyHurt",
+    //        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F"))
+    //private void bypassArmor(Player instance,DamageSource damageSource, float f, Operation<Float> original) {
+    //}
 
     //@ModifyReturnValue( method = "Lnet/minecraft/world/entity/player/Player;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V",
     //        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setHealth(F)V"))

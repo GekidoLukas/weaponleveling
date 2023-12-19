@@ -23,6 +23,15 @@ public class ItemUtils {
         }
     }
 
+    public static void removeAttributeModifier(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute) {
+        if(multimap.get(attribute).stream().findFirst().isPresent()) {
+            AttributeModifier modifier = multimap.get(attribute).stream().findFirst().get();
+            AttributeModifier newmodifier = new AttributeModifier(modifier.getId(),modifier.getName(),0d,modifier.getOperation());
+            multimap.remove(attribute,modifier);
+            multimap.put(attribute,newmodifier);
+        }
+    }
+
     public static boolean isLevelableJSON(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(Registry.ITEM.getKey(stack.getItem()));
         return LevelableItemsLoader.isValid(stack.getItem()) && !levelableitem.isDisabled();

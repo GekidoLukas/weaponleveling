@@ -3,8 +3,8 @@
   "package": "net.weaponleveling.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "MixinTitleScreen",
     "client.MixinGameRenderer",
+    "client.MixinHumanoidArmorLayer",
     "client.MixinItemInHandRenderer",
     "client.MixinItemRenderer",
     "client.MixinPlayerRenderer"

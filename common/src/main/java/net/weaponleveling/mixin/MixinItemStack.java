@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.weaponleveling.WLConfigGetter;
@@ -41,9 +42,17 @@ public abstract class MixinItemStack {
         ItemStack stack = ((ItemStack) ((Object) this));
         Attribute attackDamage = Attributes.ATTACK_DAMAGE;
         Attribute attackSpeed = Attributes.ATTACK_SPEED;
+        Attribute armor = Attributes.ARMOR;
+        Attribute armor_toughness = Attributes.ARMOR_TOUGHNESS;
         if (ItemUtils.isLevelableItem(stack) && ItemUtils.isAcceptedMeleeWeaponStack(stack) && stack.getTag() != null) {
             ItemUtils.modifyAttributeModifier(hashmap,attackDamage, ItemUtils.getWeaponDamagePerLevel(stack) * stack.getTag().getInt("level"));
             ItemUtils.modifyAttributeModifier(hashmap,attackSpeed, 0.0d );
+        }
+        if(ItemUtils.isBroken(stack)) {
+            ItemUtils.removeAttributeModifier(hashmap, armor);
+            ItemUtils.removeAttributeModifier(hashmap, armor_toughness);
+            //ItemUtils.removeAttributeModifier(hashmap, attackDamage);
+            //ItemUtils.removeAttributeModifier(hashmap, attackSpeed);
         }
         cir.setReturnValue(hashmap);
     }

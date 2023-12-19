@@ -47,10 +47,10 @@ public class UpdateLevels {
                 ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
                 ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
                 ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
-                if (ItemUtils.isAcceptedArmor(helmet)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
-                if (ItemUtils.isAcceptedArmor(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
-                if (ItemUtils.isAcceptedArmor(leggings)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
-                if (ItemUtils.isAcceptedArmor(feet)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
+                if (ItemUtils.isAcceptedArmor(helmet) && !ItemUtils.isBroken(helmet)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
+                if (ItemUtils.isAcceptedArmor(chestplate) && !ItemUtils.isBroken(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
+                if (ItemUtils.isAcceptedArmor(leggings) && !ItemUtils.isBroken(leggings)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
+                if (ItemUtils.isAcceptedArmor(feet) && !ItemUtils.isBroken(feet)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
 
             }
         }
@@ -63,10 +63,10 @@ public class UpdateLevels {
                 ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
                 ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
                 ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
-                if (ItemUtils.isAcceptedArmor(helmet)) {updateProgressItem(player,helmet,armorXPAmount(getCritOrHit(crit,stack), true, helmet));}
-                if (ItemUtils.isAcceptedArmor(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(getCritOrHit(crit,stack), true, chestplate));}
-                if (ItemUtils.isAcceptedArmor(leggings)) {updateProgressItem(player,leggings,armorXPAmount(getCritOrHit(crit,stack), true, leggings));}
-                if (ItemUtils.isAcceptedArmor(feet)) {updateProgressItem(player,feet,armorXPAmount(getCritOrHit(crit,stack), true, feet));}
+                if (ItemUtils.isAcceptedArmor(helmet) && !ItemUtils.isBroken(helmet)) {updateProgressItem(player,helmet,armorXPAmount(getCritOrHit(crit,stack), true, helmet));}
+                if (ItemUtils.isAcceptedArmor(chestplate) && !ItemUtils.isBroken(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(getCritOrHit(crit,stack), true, chestplate));}
+                if (ItemUtils.isAcceptedArmor(leggings) && !ItemUtils.isBroken(leggings)) {updateProgressItem(player,leggings,armorXPAmount(getCritOrHit(crit,stack), true, leggings));}
+                if (ItemUtils.isAcceptedArmor(feet) && !ItemUtils.isBroken(feet)) {updateProgressItem(player,feet,armorXPAmount(getCritOrHit(crit,stack), true, feet));}
 
             }
         }

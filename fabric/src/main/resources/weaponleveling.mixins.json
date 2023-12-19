@@ -5,7 +5,8 @@
   "client": [
   ],
   "mixins": [
-    "MixinPlayerFabric"
+    "MixinPlayerFabric",
+    "MixinWeaponRegistry"
   ],
   "injectors": {
     "defaultRequire": 1

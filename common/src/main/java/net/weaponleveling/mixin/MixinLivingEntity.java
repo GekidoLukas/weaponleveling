@@ -1,5 +1,6 @@
 package net.weaponleveling.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.InteractionHand;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import static net.weaponleveling.util.UpdateLevels.updateProgressItem;
@@ -71,6 +73,14 @@ public class MixinLivingEntity {
         //amount = ServerEvents.onLivingHurt(source,((Entity) ((Object)this)),amount);
 
     }
+
+    //@ModifyExpressionValue(
+    //        method = "getDamageAfterArmorAbsorb",
+    //        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/damagesource/DamageSource;isBypassArmor()Z"))
+    //private boolean passByArmor(boolean original) {
+    //    LivingEntity livingEntity = ((LivingEntity) ((Object) this));
+    //    return original;
+    //}
 
     @WrapOperation( method = "Lnet/minecraft/world/entity/LivingEntity;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setHealth(F)V"))

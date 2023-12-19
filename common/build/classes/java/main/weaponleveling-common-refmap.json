@@ -30,11 +30,13 @@
       "Lnet/minecraft/world/entity/player/Player;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V": "Lnet/minecraft/class_1657;method_6074(Lnet/minecraft/class_1282;F)V",
       "Lnet/minecraft/world/entity/player/Player;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F": "Lnet/minecraft/class_1657;method_6132(Lnet/minecraft/class_1282;F)F",
       "Lnet/minecraft/world/entity/player/Player;setHealth(F)V": "Lnet/minecraft/class_1657;method_6033(F)V",
+      "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z": "Lnet/minecraft/class_1799;method_7973(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z",
       "actuallyHurt": "Lnet/minecraft/class_1657;method_6074(Lnet/minecraft/class_1282;F)V",
       "attack": "Lnet/minecraft/class_1657;method_7324(Lnet/minecraft/class_1297;)V",
       "blockActionRestricted": "Lnet/minecraft/class_1657;method_21701(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1934;)Z",
       "die": "Lnet/minecraft/class_1657;method_6078(Lnet/minecraft/class_1282;)V",
-      "interactOn": "Lnet/minecraft/class_1657;method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;"
+      "interactOn": "Lnet/minecraft/class_1657;method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+      "tick": "Lnet/minecraft/class_1657;method_5773()V"
     },
     "net/weaponleveling/mixin/MixinServerPlayer": {
       "die": "Lnet/minecraft/class_3222;method_6078(Lnet/minecraft/class_1282;)V"
@@ -44,11 +46,11 @@
       "Lnet/minecraft/world/entity/projectile/ThrownTrident;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V": "Lnet/minecraft/class_1685;method_5783(Lnet/minecraft/class_3414;FF)V",
       "onHitEntity": "Lnet/minecraft/class_1685;method_7454(Lnet/minecraft/class_3966;)V"
     },
-    "net/weaponleveling/mixin/MixinTitleScreen": {
-      "init()V": "Lnet/minecraft/class_442;method_25426()V"
-    },
     "net/weaponleveling/mixin/client/MixinGameRenderer": {
       "shouldRenderBlockOutline": "Lnet/minecraft/class_757;method_3202()Z"
+    },
+    "net/weaponleveling/mixin/client/MixinHumanoidArmorLayer": {
+      "renderArmorPiece": "Lnet/minecraft/class_970;method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V"
     },
     "net/weaponleveling/mixin/client/MixinItemInHandRenderer": {
       "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "Lnet/minecraft/class_759;method_3228(Lnet/minecraft/class_742;FFLnet/minecraft/class_1268;FLnet/minecraft/class_1799;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
@@ -97,11 +99,13 @@
         "Lnet/minecraft/world/entity/player/Player;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V": "Lnet/minecraft/class_1657;method_6074(Lnet/minecraft/class_1282;F)V",
         "Lnet/minecraft/world/entity/player/Player;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F": "Lnet/minecraft/class_1657;method_6132(Lnet/minecraft/class_1282;F)F",
         "Lnet/minecraft/world/entity/player/Player;setHealth(F)V": "Lnet/minecraft/class_1657;method_6033(F)V",
+        "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z": "Lnet/minecraft/class_1799;method_7973(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z",
         "actuallyHurt": "Lnet/minecraft/class_1657;method_6074(Lnet/minecraft/class_1282;F)V",
         "attack": "Lnet/minecraft/class_1657;method_7324(Lnet/minecraft/class_1297;)V",
         "blockActionRestricted": "Lnet/minecraft/class_1657;method_21701(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1934;)Z",
         "die": "Lnet/minecraft/class_1657;method_6078(Lnet/minecraft/class_1282;)V",
-        "interactOn": "Lnet/minecraft/class_1657;method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;"
+        "interactOn": "Lnet/minecraft/class_1657;method_7287(Lnet/minecraft/class_1297;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
+        "tick": "Lnet/minecraft/class_1657;method_5773()V"
       },
       "net/weaponleveling/mixin/MixinServerPlayer": {
         "die": "Lnet/minecraft/class_3222;method_6078(Lnet/minecraft/class_1282;)V"
@@ -111,11 +115,11 @@
         "Lnet/minecraft/world/entity/projectile/ThrownTrident;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V": "Lnet/minecraft/class_1685;method_5783(Lnet/minecraft/class_3414;FF)V",
         "onHitEntity": "Lnet/minecraft/class_1685;method_7454(Lnet/minecraft/class_3966;)V"
       },
-      "net/weaponleveling/mixin/MixinTitleScreen": {
-        "init()V": "Lnet/minecraft/class_442;method_25426()V"
-      },
       "net/weaponleveling/mixin/client/MixinGameRenderer": {
         "shouldRenderBlockOutline": "Lnet/minecraft/class_757;method_3202()Z"
+      },
+      "net/weaponleveling/mixin/client/MixinHumanoidArmorLayer": {
+        "renderArmorPiece": "Lnet/minecraft/class_970;method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V"
       },
       "net/weaponleveling/mixin/client/MixinItemInHandRenderer": {
         "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "Lnet/minecraft/class_759;method_3228(Lnet/minecraft/class_742;FFLnet/minecraft/class_1268;FLnet/minecraft/class_1799;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V",
