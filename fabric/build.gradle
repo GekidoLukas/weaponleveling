@@ -52,6 +52,8 @@ shadowJar {
 
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
+    relocate("com.llamalad7.mixinextras", "net.geradesolukas.mixinextras")
+    mergeServiceFiles()
 }
 
 remapJar {
