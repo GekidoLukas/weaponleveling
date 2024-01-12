@@ -33,10 +33,8 @@
     },
     "net/weaponleveling/mixin/MixinPlayer": {
       "Lnet/minecraft/world/entity/player/Player;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V": "Lnet/minecraft/class_1657;method_6074(Lnet/minecraft/class_1282;F)V",
-      "Lnet/minecraft/world/entity/player/Player;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F": "Lnet/minecraft/class_1657;method_6132(Lnet/minecraft/class_1282;F)F",
       "Lnet/minecraft/world/entity/player/Player;setHealth(F)V": "Lnet/minecraft/class_1657;method_6033(F)V",
       "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z": "Lnet/minecraft/class_1799;method_7973(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z",
-      "actuallyHurt": "Lnet/minecraft/class_1657;method_6074(Lnet/minecraft/class_1282;F)V",
       "attack": "Lnet/minecraft/class_1657;method_7324(Lnet/minecraft/class_1297;)V",
       "blockActionRestricted": "Lnet/minecraft/class_1657;method_21701(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1934;)Z",
       "die": "Lnet/minecraft/class_1657;method_6078(Lnet/minecraft/class_1282;)V",
@@ -107,10 +105,8 @@
       },
       "net/weaponleveling/mixin/MixinPlayer": {
         "Lnet/minecraft/world/entity/player/Player;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V": "Lnet/minecraft/class_1657;method_6074(Lnet/minecraft/class_1282;F)V",
-        "Lnet/minecraft/world/entity/player/Player;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F": "Lnet/minecraft/class_1657;method_6132(Lnet/minecraft/class_1282;F)F",
         "Lnet/minecraft/world/entity/player/Player;setHealth(F)V": "Lnet/minecraft/class_1657;method_6033(F)V",
         "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z": "Lnet/minecraft/class_1799;method_7973(Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Z",
-        "actuallyHurt": "Lnet/minecraft/class_1657;method_6074(Lnet/minecraft/class_1282;F)V",
         "attack": "Lnet/minecraft/class_1657;method_7324(Lnet/minecraft/class_1297;)V",
         "blockActionRestricted": "Lnet/minecraft/class_1657;method_21701(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1934;)Z",
         "die": "Lnet/minecraft/class_1657;method_6078(Lnet/minecraft/class_1282;)V",

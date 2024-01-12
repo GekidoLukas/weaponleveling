@@ -33,7 +33,7 @@ public abstract class MixinItemStack {
     @Inject(
             method = "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;",
             at = @At(value = "RETURN"), cancellable = true)
-    private void inejctModifier(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
+    private void injectModifier(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
         //Multimap<Attribute, AttributeModifier> multimap = cir.getReturnValue();
         HashMultimap<Attribute, AttributeModifier> hashmap = HashMultimap.create(cir.getReturnValue());
         ItemStack stack = ((ItemStack) ((Object) this));

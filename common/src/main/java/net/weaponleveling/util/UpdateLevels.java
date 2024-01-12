@@ -17,9 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.weaponleveling.WLPlatformGetter;
-import net.weaponleveling.WeaponLevelingMod;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -29,15 +27,13 @@ public class UpdateLevels {
             int xpamountcrit = 0;
             int xpamounthit = UpdateLevels.getXPForHit(stack);
             int xpamount = 0;
-            //if (!target.isAlive()) {
-            //    xpamount = UpdateLevels.getXPForEntity(target);
-            //}
 
             if (critical) {
                 xpamountcrit = UpdateLevels.getXPForCrit(stack);
             }
 
             WLPlatformGetter.updateEpicFight(player, xpamount + xpamounthit + xpamountcrit);
+            UpdateLevels.applyXPForArmor(player,xpamount+ xpamounthit + xpamountcrit);
             updateProgressItem(player, stack, xpamount + xpamounthit + xpamountcrit);
         }
 
@@ -331,21 +327,21 @@ public class UpdateLevels {
         if(killer instanceof Player player) {
             ItemStack stack = WLPlatformGetter.getAttackItem(player);
             if(specificStack != null) {
-                UpdateLevels.applyXPOnItemStack(specificStack, player, victim, false);
+                UpdateLevels.applyXPOnItemStack(specificStack, player, victim, crit);
             } else if(source.isProjectile()) {
                 ItemStack mainhand = player.getMainHandItem();
                 ItemStack offhand = player.getOffhandItem();
                 if(ItemUtils.isAcceptedProjectileWeapon(mainhand)) {
-                    UpdateLevels.applyXPOnItemStack(mainhand, player, victim, false);
+                    UpdateLevels.applyXPOnItemStack(mainhand, player, victim, crit);
                 } else if(ItemUtils.isAcceptedProjectileWeapon(offhand)) {
-                    UpdateLevels.applyXPOnItemStack(offhand, player, victim, false);
+                    UpdateLevels.applyXPOnItemStack(offhand, player, victim, crit);
                 }
             } else if(ItemUtils.isAcceptedMeleeWeaponStack(stack)) {
-                UpdateLevels.applyXPOnItemStack(stack, player, victim, false);
+                UpdateLevels.applyXPOnItemStack(stack, player, victim, crit);
             }
 
-
         }
+
 
     }
 }

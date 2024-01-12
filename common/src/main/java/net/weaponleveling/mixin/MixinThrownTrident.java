@@ -4,11 +4,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
-import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.util.ItemUtils;
 import net.weaponleveling.util.UpdateLevels;
 import org.spongepowered.asm.mixin.Mixin;
@@ -47,15 +45,5 @@ public class MixinThrownTrident {
         }
         return f;
     }
-    //@Inject(
-    //        method = "onHitEntity",
-    //        at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    //private void injectedDamage(EntityHitResult result, CallbackInfo ci, Entity entity, float f) {
-    //    Entity entity1 = ((ThrownTrident) ((Object)this) ).getOwner();
-    //    if(ItemUtils.isAcceptedProjectileWeapon(tridentItem) && entity1 instanceof Player) {
-    //        double weaponlevelamount = tridentItem.getOrCreateTag().getInt("level");
-    //        weaponlevelamount *= ItemUtils.getWeaponDamagePerLevel(tridentItem);
-    //        f += weaponlevelamount;
-    //    }
-    //}
+
 }

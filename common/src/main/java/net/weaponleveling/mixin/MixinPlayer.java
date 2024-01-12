@@ -10,11 +10,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.weaponleveling.WLPlatformGetter;
-import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.util.ItemUtils;
 import net.weaponleveling.util.UpdateLevels;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,23 +22,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import static net.weaponleveling.util.UpdateLevels.updateProgressItem;
-
 @Mixin(Player.class)
 public class MixinPlayer {
 
-
-    @Inject(
-            method = "attack",
-            at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void injectedXP(Entity target, CallbackInfo ci) {
-        //Player player = ((Player) ((Object) this));
-        //ItemStack stack = WLPlatformGetter.getAttackItem(player);
-        //if(ItemUtils.isAcceptedMeleeWeaponStack(stack)) {
-        //    UpdateLevels.applyXPOnItemStack(stack,  player, target, false);
-        //    UpdateLevels.applyXPForArmorItem(player, false, stack);
-        //}
-    }
 
 
     @Inject(
@@ -51,23 +35,6 @@ public class MixinPlayer {
         UpdateLevels.updateForKill(victim, source, null);
     }
 
-
-    //todo check wtf this is
-    @Inject(
-            method = "actuallyHurt",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void injectedHurt(DamageSource source, float damageamount, CallbackInfo ci) {
-        //WeaponLevelingMod.LOGGER.info("this fires for Player");
-        //Player victim = ((Player) ((Object) this));
-        //Entity killer = source.getEntity();
-        //if(source.isProjectile() && killer instanceof Player player) {
-        //    ItemStack hand = WLPlatformGetter.getAttackItem(player);
-        //    int xpamount = 0;
-        //    int amount = UpdateLevels.getXPForHit(hand);
-        //    if (UpdateLevels.shouldGiveHitXP(ItemUtils.getCritXPChance(hand))) {xpamount = amount;}
-        //    updateProgressItem(player, hand, xpamount);
-        //}
-    }
 
 
     @Inject(
