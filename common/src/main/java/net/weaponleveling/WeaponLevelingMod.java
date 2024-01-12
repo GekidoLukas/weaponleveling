@@ -15,7 +15,7 @@ public class WeaponLevelingMod {
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static void init() {
         CommandRegistrationEvent.EVENT.register(ItemLevelCommand::register);
-        //Networking.registerC2SPackets();
+        Networking.registerC2SPackets();
         ReloadListenerRegistry.register(PackType.SERVER_DATA,LevelableItemsLoader.INSTANCE);
     }
 }

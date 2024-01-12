@@ -3,3 +3,6 @@ Version 2.0.0
 - Removed "weaponleveling.tooltip.armorlevel" translation
 - Removed "weaponleveling.tooltip.weaponlevel" translation
 - Added Taglist Support for Config and Datapack System
+- Added Support for Epic Fight Mod
+- Fixed many Crashes
+- Fixed mixinextras issues
