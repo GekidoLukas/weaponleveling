@@ -1,7 +1,6 @@
 package net.weaponleveling.mixin;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,10 +10,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.weaponleveling.WLConfigGetter;
+import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.util.ItemUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -73,7 +70,7 @@ public abstract class MixinItemStack {
         ItemStack stack = ((ItemStack) ((Object) this));
         if(livingEntity instanceof ServerPlayer player) {
             if(this.hurt(i, livingEntity.getRandom(), player)) {
-                if(WLConfigGetter.getBrokenItemsDontVanish() && ItemUtils.shouldBeUnbreakable(stack)) {
+                if(WLPlatformGetter.getBrokenItemsDontVanish() && ItemUtils.shouldBeUnbreakable(stack)) {
                     CompoundTag tag = new CompoundTag();
                     tag.putBoolean("isBroken", true);
                     stack.setTag(tag);

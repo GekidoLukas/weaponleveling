@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.weaponleveling.WLConfigGetter;
+import net.weaponleveling.WLPlatformGetter;
 
 public class LevelableItem {
 
@@ -152,37 +152,37 @@ public class LevelableItem {
         }
 
         //Level
-        int maxLevel = WLConfigGetter.getMaxLevel();
+        int maxLevel = WLPlatformGetter.getMaxLevel();
         if (object.has("maxLevel")) {
             maxLevel = object.get("maxLevel").getAsInt();
         }
 
-        int levelModifier = WLConfigGetter.getLevelModifier();
+        int levelModifier = WLPlatformGetter.getLevelModifier();
         if (object.has("levelModifier")) {
             levelModifier = object.get("levelModifier").getAsInt();
         }
 
-        int levelStartAmount = WLConfigGetter.getStartingLevelAmount();
+        int levelStartAmount = WLPlatformGetter.getStartingLevelAmount();
         if (object.has("levelStartAmount")) {
             levelStartAmount = object.get("levelStartAmount").getAsInt();
         }
 
-        int hitXPAmount = WLConfigGetter.getHitXPAmount();
+        int hitXPAmount = WLPlatformGetter.getHitXPAmount();
         if (object.has("hitXPAmount")) {
             hitXPAmount = object.get("hitXPAmount").getAsInt();
         }
 
-        int hitXPChance = WLConfigGetter.getHitXPPercentage();
+        int hitXPChance = WLPlatformGetter.getHitXPPercentage();
         if (object.has("hitXPChance")) {
             hitXPChance = object.get("hitXPChance").getAsInt();
         }
 
-        int critXPAmount = WLConfigGetter.getCritXPAmount();
+        int critXPAmount = WLPlatformGetter.getCritXPAmount();
         if (object.has("critXPAmount")) {
             critXPAmount = object.get("critXPAmount").getAsInt();
         }
 
-        int critXPChance = WLConfigGetter.getCritXPPercentage();
+        int critXPChance = WLPlatformGetter.getCritXPPercentage();
         if (object.has("critXPChance")) {
             critXPChance = object.get("critXPChance").getAsInt();
         }
@@ -190,22 +190,22 @@ public class LevelableItem {
 
         //Damage
 
-        double weaponDamagePerLevel = WLConfigGetter.getDamagePerLevel();
+        double weaponDamagePerLevel = WLPlatformGetter.getDamagePerLevel();
         if (object.has("weaponDamagePerLevel")) {
             weaponDamagePerLevel = object.get("weaponDamagePerLevel").getAsDouble();
         }
 
-        double bowlikeModifier = WLConfigGetter.getBowlikeModifier();
+        double bowlikeModifier = WLPlatformGetter.getBowlikeModifier();
         if (object.has("bowlikeModifier")) {
             bowlikeModifier = object.get("bowlikeModifier").getAsDouble();
         }
 
-        double armorMaxDamageReduction = WLConfigGetter.getMaxDamageReduction();
+        double armorMaxDamageReduction = WLPlatformGetter.getMaxDamageReduction();
         if (object.has("armorMaxDamageReduction")) {
             armorMaxDamageReduction = object.get("armorMaxDamageReduction").getAsDouble();
         }
 
-        int armorXPRNGModifier = WLConfigGetter.getArmorXPRNGModifier();
+        int armorXPRNGModifier = WLPlatformGetter.getArmorXPRNGModifier();
         if (object.has("armorXPRNGModifier")) {
             armorXPRNGModifier = object.get("armorXPRNGModifier").getAsInt();
         }

@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,8 +16,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.weaponleveling.WLConfigGetter;
+import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingMod;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,14 +29,15 @@ public class UpdateLevels {
             int xpamountcrit = 0;
             int xpamounthit = UpdateLevels.getXPForHit(stack);
             int xpamount = 0;
-            if (!target.isAlive()) {
-                xpamount = UpdateLevels.getXPForEntity(target);
-            }
+            //if (!target.isAlive()) {
+            //    xpamount = UpdateLevels.getXPForEntity(target);
+            //}
 
             if (critical) {
-
                 xpamountcrit = UpdateLevels.getXPForCrit(stack);
             }
+
+            WLPlatformGetter.updateEpicFight(player, xpamount + xpamounthit + xpamountcrit);
             updateProgressItem(player, stack, xpamount + xpamounthit + xpamountcrit);
         }
 
@@ -129,43 +133,43 @@ public class UpdateLevels {
 
     public static int getXPForEntity(Entity entity) {
         String name = Registry.ENTITY_TYPE.getKey(entity.getType()).toString();
-        int xpamount = WLConfigGetter.getXPKillGeneric();
+        int xpamount = WLPlatformGetter.getXPKillGeneric();
         AtomicInteger liststate = new AtomicInteger();
 
 
         Registry.ENTITY_TYPE.getTags().forEach(tagKeyNamedPair -> {
             TagKey<EntityType<?>> tagKey = tagKeyNamedPair.getFirst();
             if(Registry.ENTITY_TYPE.getTag(tagKey).get().contains(entity.getType().arch$holder())) {
-                if (WLConfigGetter.getAnimalEntities().contains("#" + tagKey.location().toString())) {
+                if (WLPlatformGetter.getAnimalEntities().contains("#" + tagKey.location().toString())) {
                     liststate.set(1);
                 }
-                if (WLConfigGetter.getMonsterEntities().contains("#" +tagKey.location().toString())) {
+                if (WLPlatformGetter.getMonsterEntities().contains("#" +tagKey.location().toString())) {
                     liststate.set(2);
                 }
-                if (WLConfigGetter.getMinibossEntities().contains("#" +tagKey.location().toString())) {
+                if (WLPlatformGetter.getMinibossEntities().contains("#" +tagKey.location().toString())) {
                     liststate.set(3);
                 }
-                if (WLConfigGetter.getBossEntities().contains("#" +tagKey.location().toString())) {
+                if (WLPlatformGetter.getBossEntities().contains("#" +tagKey.location().toString())) {
                     liststate.set(4);
                 }
             }
         });
 
 
-        if(WLConfigGetter.getBossEntities().contains(name) || isCustomBoss(entity)|| liststate.get() == 4) {
-            xpamount = WLConfigGetter.getXPKillBoss();
+        if(WLPlatformGetter.getBossEntities().contains(name) || isCustomBoss(entity)|| liststate.get() == 4) {
+            xpamount = WLPlatformGetter.getXPKillBoss();
         }
 
-        else if(WLConfigGetter.getMinibossEntities().contains(name) || isCustomMiniBoss(entity) || liststate.get() == 3) {
-            xpamount = WLConfigGetter.getXPKillMiniboss();
+        else if(WLPlatformGetter.getMinibossEntities().contains(name) || isCustomMiniBoss(entity) || liststate.get() == 3) {
+            xpamount = WLPlatformGetter.getXPKillMiniboss();
         }
 
-        else if(WLConfigGetter.getMonsterEntities().contains(name) || isCustomMonster(entity) || liststate.get() == 2) {
-            xpamount = WLConfigGetter.getXPKillMonster();
+        else if(WLPlatformGetter.getMonsterEntities().contains(name) || isCustomMonster(entity) || liststate.get() == 2) {
+            xpamount = WLPlatformGetter.getXPKillMonster();
         }
 
-        else if(WLConfigGetter.getAnimalEntities().contains(name) || isCustomAnimal(entity) || liststate.get() == 1) {
-            xpamount = WLConfigGetter.getXPKillAnimal();
+        else if(WLPlatformGetter.getAnimalEntities().contains(name) || isCustomAnimal(entity) || liststate.get() == 1) {
+            xpamount = WLPlatformGetter.getXPKillAnimal();
         }
 
 
@@ -212,7 +216,7 @@ public class UpdateLevels {
         int xpamount = 0;
         int amount = ItemUtils.getHitXPAmount(stack);
         if (shouldGiveHitXP(ItemUtils.getHitXPChance(stack))) {xpamount = amount;}
-        WeaponLevelingMod.LOGGER.info("Chance: " + ItemUtils.getHitXPChance(stack) + " Amount: " + xpamount);
+
         return xpamount;
     }
 
@@ -225,7 +229,7 @@ public class UpdateLevels {
 
 
     public static void sendLevelUpNotification(Player player,ItemStack stack, int level) {
-        if(WLConfigGetter.getLevelUpType() == ToastHelper.LevelUpType.TOAST) {
+        if(WLPlatformGetter.getLevelUpType() == ToastHelper.LevelUpType.TOAST) {
             ToastHelper.sendToast((ServerPlayer) player,stack,level);
         } else {
             Style ITEM = Style.EMPTY.withColor(12517240);
@@ -284,5 +288,64 @@ public class UpdateLevels {
     public static float getReduction(int level, ItemStack stack) {
         double maxdamagereduction = ItemUtils.getArmorMaxDamageReduction(stack);
         return (float) maxdamagereduction * ((float) level/ItemUtils.getMaxLevel(stack));
+    }
+
+    public static void updateForKill(LivingEntity victim, DamageSource source, @Nullable ItemStack specificStack) {
+        Entity killer = source.getEntity();
+
+        if (source.isExplosion()) return;
+        if (source.isMagic()) return;
+
+        if (killer instanceof Player player) {
+            ItemStack stack = WLPlatformGetter.getAttackItem(player);
+            ItemStack offhandStack = player.getOffhandItem();
+
+            int xpamount = UpdateLevels.getXPForEntity(victim);
+
+            if(specificStack != null) {
+                updateProgressItem(player, specificStack, xpamount);
+            } else if (source.isProjectile()) {
+                if(ItemUtils.isAcceptedProjectileWeapon(stack)) {
+                    updateProgressItem(player, stack, xpamount);
+                }else if(ItemUtils.isAcceptedProjectileWeapon(offhandStack)) {
+                    updateProgressItem(player, offhandStack, xpamount);
+                }
+            } else if(ItemUtils.isAcceptedMeleeWeaponStack(stack)) {
+                updateProgressItem(player,stack,xpamount);
+            }
+
+            // For Armor and Potential Offhand Weapon with EFM
+            UpdateLevels.applyXPForArmor(player,xpamount);
+            WLPlatformGetter.updateEpicFight(player, xpamount);
+        }
+
+    }
+
+    public static void updateForHit(LivingEntity victim, DamageSource source, boolean crit, @Nullable ItemStack specificStack) {
+        Entity killer = source.getEntity();
+
+
+        if (source.isExplosion()) return;
+        if (source.isMagic()) return;
+
+        if(killer instanceof Player player) {
+            ItemStack stack = WLPlatformGetter.getAttackItem(player);
+            if(specificStack != null) {
+                UpdateLevels.applyXPOnItemStack(specificStack, player, victim, false);
+            } else if(source.isProjectile()) {
+                ItemStack mainhand = player.getMainHandItem();
+                ItemStack offhand = player.getOffhandItem();
+                if(ItemUtils.isAcceptedProjectileWeapon(mainhand)) {
+                    UpdateLevels.applyXPOnItemStack(mainhand, player, victim, false);
+                } else if(ItemUtils.isAcceptedProjectileWeapon(offhand)) {
+                    UpdateLevels.applyXPOnItemStack(offhand, player, victim, false);
+                }
+            } else if(ItemUtils.isAcceptedMeleeWeaponStack(stack)) {
+                UpdateLevels.applyXPOnItemStack(stack, player, victim, false);
+            }
+
+
+        }
+
     }
 }

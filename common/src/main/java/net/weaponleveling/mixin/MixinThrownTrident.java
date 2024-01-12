@@ -3,10 +3,12 @@ package net.weaponleveling.mixin;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
+import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.util.ItemUtils;
 import net.weaponleveling.util.UpdateLevels;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,9 +27,12 @@ public class MixinThrownTrident {
     @Inject(
             method = "onHitEntity",
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/ThrownTrident;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void injectedLevel(EntityHitResult result, CallbackInfo ci, Entity entity, float f, Entity entity1, DamageSource damagesource, SoundEvent soundevent, float f1) {
-        if(ItemUtils.isAcceptedProjectileWeapon(tridentItem) && entity1 instanceof Player) {
-            UpdateLevels.applyXPOnItemStack(tridentItem, (Player) entity1, entity, false);
+    private void injectedLevel(EntityHitResult result, CallbackInfo ci, Entity entity, float f, Entity entity1, DamageSource source, SoundEvent soundevent, float f1) {
+        if(entity instanceof LivingEntity living) {
+            UpdateLevels.updateForHit(living, source, false, tridentItem);
+            if(!living.isAlive()) {
+                UpdateLevels.updateForKill(living, source, tridentItem);
+            }
         }
     }
 

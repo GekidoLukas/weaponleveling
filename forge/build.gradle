@@ -12,6 +12,7 @@ loom {
 
     forge {
         convertAccessWideners = true
+
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
         mixinConfig "weaponleveling-common.mixins.json"
@@ -38,21 +39,24 @@ dependencies {
     forgeRuntimeLibrary(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")))
 
 
-    modImplementation "curse.maven:bettercombat-639842:4428885" // Better Combat
-    modImplementation "curse.maven:clothconfig-348521:3972426" // Cloth Config
-    modImplementation "curse.maven:playeranim-658587:4418152" // playerAnimator
+    modCompileOnly "curse.maven:bettercombat-639842:4428885" // Better Combat
+    modCompileOnly "curse.maven:clothconfig-348521:3972426" // Cloth Config
+    modCompileOnly "curse.maven:playeranim-658587:4418152" // playerAnimator
 
-    modImplementation "curse.maven:crayfishgun-289479:4344223" //MrCrayfish's Gun Mod
-    modImplementation "curse.maven:framework-549225:4287475" //Framework
+    modCompileOnly "curse.maven:crayfishgun-289479:4344223" //MrCrayfish's Gun Mod
+    modCompileOnly "curse.maven:framework-549225:4287475" //Framework
     //modRuntimeOnly
     //modCompileOnly()
-    modImplementation "curse.maven:tinkers-74072:4509008" //Tinkers
-    modImplementation "curse.maven:mantle-74924:4509007" //Mantle
+    modCompileOnly "curse.maven:tinkers-74072:4509008" //Tinkers
+    modCompileOnly "curse.maven:mantle-74924:4509007" //Mantle
 
-    modImplementation "curse.maven:parrythis-479996:3910075" //Parry This!
+    modCompileOnly "curse.maven:parrythis-479996:3910075" //Parry This!
 
-    modImplementation "curse.maven:tetra-289712:4029100" //Tetra
-    modImplementation "curse.maven:mutil-351914:3788376" //mutil
+    modCompileOnly "curse.maven:tetra-289712:4029100" //Tetra
+    modCompileOnly "curse.maven:mutil-351914:3788376" //mutil
+
+    //modImplementation "curse.maven:geckolib-388172:4181370"
+    modCompileOnly "curse.maven:epic-fight-mod-405076:4922082" // Epic Fight
 }
 
 processResources {
