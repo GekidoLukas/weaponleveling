@@ -47,6 +47,7 @@ dependencies {
     modCompileOnly "curse.maven:framework-549225:4287475" //Framework
     //modRuntimeOnly
     //modCompileOnly()
+    //modImplementation
     modCompileOnly "curse.maven:tinkers-74072:4509008" //Tinkers
     modCompileOnly "curse.maven:mantle-74924:4509007" //Mantle
 
@@ -73,7 +74,6 @@ shadowJar {
 
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
-
     relocate("com.llamalad7.mixinextras", "net.geradesolukas.mixinextras")
     mergeServiceFiles()
 }

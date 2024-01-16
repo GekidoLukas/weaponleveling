@@ -6,3 +6,8 @@ Version 2.0.0
 - Added Support for Epic Fight Mod
 - Fixed many Crashes
 - Fixed mixinextras issues
+
+Version 2.0.1
+
+- Fixed Tinker's Construct Crash
+- Fixed Fabric not loading due to mixinextras not being present

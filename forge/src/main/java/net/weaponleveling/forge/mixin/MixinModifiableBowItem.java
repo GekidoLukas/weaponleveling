@@ -20,7 +20,7 @@ import slimeknights.tconstruct.tools.item.ModifiableBowItem;
 public class MixinModifiableBowItem {
     @Inject(
             method = "Lslimeknights/tconstruct/tools/item/ModifiableBowItem;releaseUsing(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
-            at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, remap = false)
+            at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedDamage(ItemStack stack, Level level, LivingEntity entity, int i1, CallbackInfo ci, Player player, ToolStack toolStack, boolean flag1, boolean flag2, int i2, float float1, float float2, float float3, ItemStack itemStack, ArrowItem arrowItem, float float4, float float5, int int2, int int3, AbstractArrow abstractarrow) {
         if(ItemUtils.isAcceptedProjectileWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
