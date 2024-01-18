@@ -142,6 +142,12 @@ public class WLPlatformGetter {
         throw new AssertionError();
     }
 
+
+    @ExpectPlatform
+    public static boolean sendRegistryInLog() {
+        throw new AssertionError();
+    }
+
     @ExpectPlatform
     public static ToastHelper.LevelUpType getLevelUpType() {
         throw new AssertionError();

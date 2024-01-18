@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
-import slimeknights.tconstruct.tools.item.ModifiableBowItem;
 @Pseudo
 @Mixin(targets = "slimeknights.tconstruct.tools.item.ModifiableBowItem")
 public class MixinModifiableBowItem {

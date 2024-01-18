@@ -10,8 +10,6 @@ import static net.weaponleveling.networking.Networking.TOAST_PACKET_ID;
 
 public class ToastHelper {
     public static void sendToast(ServerPlayer player, ItemStack stack, int level) {
-        //send Packet here
-        //Networking.sendToClient(new PacketSendToast(stack,level),player);
 
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
         buf.writeItem(stack);

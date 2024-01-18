@@ -12,7 +12,6 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
         MixinExtrasBootstrap.init();
-        //WeaponLevelingMod.LOGGER.info("OnLoad runs");
     }
 
     @Override

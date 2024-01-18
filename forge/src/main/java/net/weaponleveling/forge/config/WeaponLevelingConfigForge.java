@@ -68,6 +68,8 @@ public class WeaponLevelingConfigForge {
 
         public static final ForgeConfigSpec.ConfigValue<Boolean> broken_items_wont_vanish;
 
+        public static final ForgeConfigSpec.ConfigValue<Boolean> send_registry_in_log;
+
         public static final ForgeConfigSpec.ConfigValue<Boolean> disable_unlisted_items;
 
         public static final ForgeConfigSpec.EnumValue<ToastHelper.LevelUpType> levelup_type;
@@ -113,6 +115,7 @@ public class WeaponLevelingConfigForge {
             broken_items_wont_vanish = BUILDER.comment("If set to true, items will not vanish when broken, but rather have a useless version").define("broken_items_wont_vanish", true);
             disable_unlisted_items = BUILDER.comment("If set to true, Swords, Axes and Armor will not be supported").define("disable_unlisted_items", false);
 
+            send_registry_in_log = BUILDER.comment("Defines whether Weapon Leveling will log every registered weapon as debug. If an Item is invalid it will still send an Error.").define("send_registry_in_log", false);
 
             BUILDER.pop();
 

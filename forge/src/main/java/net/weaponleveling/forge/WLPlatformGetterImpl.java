@@ -7,7 +7,6 @@ import net.weaponleveling.forge.compat.cgm.CGMCompat;
 import net.weaponleveling.forge.compat.epicfight.EpicFightCompat;
 import net.weaponleveling.forge.config.WeaponLevelingConfigForge;
 import net.weaponleveling.util.ToastHelper;
-import net.weaponleveling.util.UpdateLevels;
 
 import java.util.List;
 
@@ -155,5 +154,9 @@ public class WLPlatformGetterImpl {
 
     public static void updateEpicFight(Player player, int xp) {
        EpicFightCompat.updateEpicItem(player,xp);
+    }
+
+    public static boolean sendRegistryInLog() {
+        return WeaponLevelingConfigForge.Server.send_registry_in_log.get();
     }
 }

@@ -3,7 +3,6 @@ package net.weaponleveling.forge.compat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.forge.compat.bettercombat.BetterCombatCompat;
-import net.weaponleveling.forge.compat.epicfight.EpicFightCompat;
 
 public class HandItemCheck {
 

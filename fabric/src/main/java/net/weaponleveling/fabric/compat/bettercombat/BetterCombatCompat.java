@@ -3,7 +3,6 @@ package net.weaponleveling.fabric.compat.bettercombat;
 import dev.architectury.platform.Platform;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.weaponleveling.WeaponLevelingMod;
 
 public class BetterCombatCompat {
 

@@ -2,10 +2,6 @@ package net.weaponleveling.forge.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.mrcrayfish.guns.item.GunItem;
-import net.minecraft.world.entity.Entity;
-import net.weaponleveling.WeaponLevelingMod;
-import net.weaponleveling.util.ItemUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -14,13 +10,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import org.spongepowered.asm.mixin.Debug;
+import net.weaponleveling.util.ItemUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
@@ -50,13 +43,6 @@ public abstract class MixinGunItem extends Item{
         }
         return original.call(instance,object);
     }
-
-    //@Inject(method = "Lcom/mrcrayfish/guns/item/GunItem;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
-    //        at = @At(value = "HEAD"))
-    //private void addTooltip(ItemStack stack, Level level, List list, TooltipFlag flag, CallbackInfo ci) {
-    //    WeaponLevelingMod.LOGGER.info("Inject worked");
-    //}
-
 
 
 }

@@ -2,15 +2,14 @@ package net.weaponleveling.data;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
+import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingMod;
 
 import java.util.HashMap;
@@ -26,7 +25,7 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
     public static Map<ResourceLocation, JsonElement> MAP = new HashMap<>();
 
     public LevelableItemsLoader() {
-        super(GSON, "levelable_items");
+        super(GSON, directory);
     }
 
 
@@ -42,7 +41,6 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         MAP = jsonMap;
-        //applyNew(jsonMap);
     }
 
     public static void applyNew(Map<ResourceLocation, JsonElement> jsonMap) {
@@ -54,36 +52,28 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
             JsonObject jsonElementAsJsonObject = jsonElement.getAsJsonObject();
 
             if(jsonElementAsJsonObject.has("taglist") && jsonElementAsJsonObject.get("taglist").getAsBoolean()) {
-                WeaponLevelingMod.LOGGER.info("Yooo");
+
                 try {
 
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
                     String keyString = resourceLocation.getPath();
 
-                    WeaponLevelingMod.LOGGER.info("Registering Tag: #" + resourceLocation);
-
-                    //Registry.ITEM_REGISTRY.
+                    if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Registering Tag: #" + resourceLocation);
 
 
-
-                    //WeaponLevelingMod.LOGGER.info("This: " + tagKey.location().toString());
                     TagKey<Item> key = TagKey.create(Registry.ITEM_REGISTRY, resourceLocation);
 
                     if (Registry.ITEM.getTag(key).isPresent()) {
-                        WeaponLevelingMod.LOGGER.info("Tagkey exists: #" + resourceLocation.toString() );
-                        if(Registry.ITEM.getTag(key).isPresent()) WeaponLevelingMod.LOGGER.info(Registry.ITEM.getTag(key).get());
-                        //if(jsonObject.has("leveltypes") || jsonObject.has("disabled")) {
+                        if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Tagkey exists: #" + resourceLocation.toString() );
+
                         Registry.ITEM.getTag(key).get().forEach((itemHolder) -> {
                             Item item = itemHolder.value();
-                            WeaponLevelingMod.LOGGER.info("Item is here: " + Registry.ITEM.getKey(item) + " and Location" + resourceLocation);
+                            if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + Registry.ITEM.getKey(item));
 
                             LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, Registry.ITEM.getKey(item));
                             builder.put(Registry.ITEM.getKey(item), levelableItem);
                         });
 
-                        //LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, resourceLocation);
-                        //builder.put(resourceLocation, levelableItem);
-                        //}else WeaponLeveling.LOGGER.error("{} does not contain a valid object", resourceLocation);
 
                     } else WeaponLevelingMod.LOGGER.error("{} is not a valid Item Tag", () -> resourceLocation);
 
@@ -93,18 +83,14 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
             } else {
                 try {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    String keyString = resourceLocation.getPath();
 
-                    WeaponLevelingMod.LOGGER.info("Registering: " + resourceLocation);
+                    if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Registering: " + resourceLocation);
 
                     if (Registry.ITEM.containsKey(resourceLocation)) {
 
-
-                        //if(jsonObject.has("leveltypes") || jsonObject.has("disabled")) {
-
                         LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, resourceLocation);
                         builder.put(resourceLocation, levelableItem);
-                        //}else WeaponLeveling.LOGGER.error("{} does not contain a valid object", resourceLocation);
+
 
                     } else WeaponLevelingMod.LOGGER.error("{} is not a valid Item", () -> resourceLocation);
 

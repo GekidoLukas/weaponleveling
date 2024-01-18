@@ -1,9 +1,7 @@
 package net.weaponleveling.fabric.mixin;
 
 import net.bettercombat.api.WeaponAttributes;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 import net.weaponleveling.util.ItemUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;

@@ -34,7 +34,6 @@ public abstract class MixinItemStack {
             method = "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;",
             at = @At(value = "RETURN"), cancellable = true)
     private void injectModifier(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
-        //Multimap<Attribute, AttributeModifier> multimap = cir.getReturnValue();
         HashMultimap<Attribute, AttributeModifier> hashmap = HashMultimap.create(cir.getReturnValue());
         ItemStack stack = ((ItemStack) ((Object) this));
         Attribute attackDamage = Attributes.ATTACK_DAMAGE;
@@ -48,8 +47,6 @@ public abstract class MixinItemStack {
         if(ItemUtils.isBroken(stack)) {
             ItemUtils.removeAttributeModifier(hashmap, armor);
             ItemUtils.removeAttributeModifier(hashmap, armor_toughness);
-            //ItemUtils.removeAttributeModifier(hashmap, attackDamage);
-            //ItemUtils.removeAttributeModifier(hashmap, attackSpeed);
         }
         cir.setReturnValue(hashmap);
     }

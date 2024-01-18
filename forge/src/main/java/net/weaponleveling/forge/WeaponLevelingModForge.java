@@ -4,17 +4,15 @@ import com.google.gson.JsonElement;
 import dev.architectury.platform.Platform;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.weaponleveling.WeaponLevelingMod;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.WeaponLevelingModClient;
 import net.weaponleveling.data.LevelableItemsLoader;
 import net.weaponleveling.forge.compat.tetra.TetraCompat;
@@ -44,7 +42,6 @@ public class WeaponLevelingModForge {
 
     @SubscribeEvent
     public static void addReloadListeners(TagsUpdatedEvent event) {
-        WeaponLevelingMod.LOGGER.warn("Reloaded Tags here");
         Map<ResourceLocation, JsonElement> jsonMap = LevelableItemsLoader.MAP;
         LevelableItemsLoader.applyNew(jsonMap);
     }

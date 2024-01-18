@@ -30,21 +30,17 @@ public class ClientEvents {
 
     public static void onTooltipRender(ItemStack stack, List<Component> full_tooltip, TooltipFlag tooltipFlag) {
 
-        //ItemStack stack = event.getItemStack();
+
         List<Component> tooltip = new ArrayList<>();
-        //List<Component> full_tooltip = event.getToolTip();
+
         DecimalFormat doubleDecimalFormat = new DecimalFormat("#.##");
         DecimalFormat fourDecimalFormat = new DecimalFormat("#.####");
-        //CompoundTag compound = new CompoundTag();
-        //compound.putInt();
+
         Style ARROW = Style.EMPTY.withColor(12517240);
         Style TEXT = Style.EMPTY.withColor(9736850);
         Style VALUES = Style.EMPTY.withColor(15422034);
         Style SHIFT = Style.EMPTY.withColor(12517240);
 
-        //if (ItemUtils.isLevelableItem(stack)) {
-        //    full_tooltip.add(new TextComponent("Is JsonItem").setStyle(VALUES));
-        //}
 
 
         if(ItemUtils.isBroken(stack)) {
@@ -83,7 +79,7 @@ public class ClientEvents {
                 }
 
                 if (ItemUtils.isAcceptedProjectileWeapon(stack) && !(ItemUtils.isAcceptedMeleeWeaponStack(stack) || WLPlatformGetter.isCGMGunItem(stack))) {
-                    //|| CGMCompat.isGunItem(stack)
+
                     double extradamage = level * ItemUtils.getWeaponDamagePerLevel(stack);
                     tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
                             .append(new TranslatableComponent("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))

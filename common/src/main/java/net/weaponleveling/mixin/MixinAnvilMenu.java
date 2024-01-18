@@ -2,7 +2,10 @@ package net.weaponleveling.mixin;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AnvilMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ItemCombinerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.util.ItemUtils;

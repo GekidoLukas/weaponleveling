@@ -210,22 +210,6 @@ public class LevelableItem {
             armorXPRNGModifier = object.get("armorXPRNGModifier").getAsInt();
         }
 
-
-        //String leveltype = "none";
-        //if(object.has("leveltype")) {
-        //    leveltype = object.get("leveltype").getAsString();
-        //}
-        //if(object.has("leveltypes")) {
-        //    JsonArray leveltypes = object.get("leveltypes").getAsJsonArray();
-        //    leveltypes.forEach(levelentry -> {
-        //        JsonObject entry = levelentry.getAsJsonObject();
-        //        String type = entry.get("type").getAsString();
-        //        if(type == null) return;
-        //    });
-        //}
-
-
-        //WeaponLeveling.LOGGER.info("This is the Item: " + item.toString() + " and this is disabled: " + disabled);
         return new LevelableItem(item, disabled, isMeleeWeapon, isProjectileWeapon, isArmor, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, critXPAmount, critXPChance, weaponDamagePerLevel, bowlikeModifier, armorMaxDamageReduction, armorXPRNGModifier);
     }
 }

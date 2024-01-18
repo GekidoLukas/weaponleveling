@@ -154,4 +154,8 @@ public class WLPlatformGetterImpl {
     public static void updateEpicFight(Player player, int xp) {
 
     }
+
+    public static boolean sendRegistryInLog() {
+        return WeaponLevelingConfigFabric.Server.send_registry_in_log.get();
+    }
 }
