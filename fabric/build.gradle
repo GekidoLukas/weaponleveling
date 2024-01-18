@@ -21,24 +21,28 @@ configurations {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    //include("com.github.LlamaLad7:MixinExtras:0.1.1")
-    implementation 'com.electronwill.night-config:core:3.6.5'
-    implementation 'com.electronwill.night-config:toml:3.6.5'
-    modImplementation "curse.maven:forgeconfigapiport-547434:3943250"
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-    //include(annotationProcessor(implementation("com.github.LlamaLad7:MixinExtras:0.1.1")))
-
-    implementation(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")))
-
-    modImplementation "curse.maven:bettercombat-639842:4428886" // Better Combat
-    modImplementation "curse.maven:clothconfig-348521:3972420" // Cloth Config
-    modImplementation "curse.maven:playeranim-658587:4418153" // playerAnimator
-
-    // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+
+    implementation(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")))
+
+    implementation "com.electronwill.night-config:core:${rootProject.night_config_version}"
+    implementation "com.electronwill.night-config:toml:${rootProject.night_config_version}"
+    modApi "net.minecraftforge:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
+
+
+    modImplementation "curse.maven:bettercombat-639842:${rootProject.bettercombat_fabric_version}" // Better Combat
+    modImplementation "curse.maven:clothconfig-348521:${rootProject.clothconfig_fabric_version}" // Cloth Config
+    modImplementation "curse.maven:playeranim-658587:${rootProject.playeranim_fabric_version}" // playerAnimator
+
+
+
+
+
 }
 
 processResources {
