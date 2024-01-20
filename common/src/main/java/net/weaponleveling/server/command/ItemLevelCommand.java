@@ -5,10 +5,11 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.util.ItemUtils;
@@ -17,14 +18,14 @@ import net.weaponleveling.util.UpdateLevels;
 public class ItemLevelCommand {
 
     private static final DynamicCommandExceptionType NOT_VALID_ITEM = new DynamicCommandExceptionType((value) -> {
-        return new TranslatableComponent("weaponleveling.command.exception.novalidweapon",value);
+        return  Component.translatable("weaponleveling.command.exception.novalidweapon", value);
     });
     private static final DynamicCommandExceptionType OUT_OF_BOUNDS = new DynamicCommandExceptionType((value) -> {
-        return new TranslatableComponent("weaponleveling.command.exception.outofbounds",value);
+        return  Component.translatable("weaponleveling.command.exception.outofbounds",value);
     });
 
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, Commands.CommandSelection commandSelection) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher,CommandBuildContext commandBuildContex, Commands.CommandSelection commandSelection) {
         dispatcher.register(Commands.literal("itemlevel").requires((permission) -> {
                     return permission.hasPermission(2);
                 })
@@ -47,7 +48,7 @@ public class ItemLevelCommand {
         if (ItemUtils.isLevelableItem(stack)) {
             if(level <= ItemUtils.getMaxLevel(stack)) {
                 stack.getOrCreateTag().putInt("level", level);
-                source.sendSuccess(new TranslatableComponent("weaponleveling.command.setlevel",stack.getHoverName(),level),true);
+                source.sendSuccess(Component.translatable("weaponleveling.command.setlevel",stack.getHoverName(),level),true);
             }else {
                 throw OUT_OF_BOUNDS.create(level);
             }
@@ -66,7 +67,7 @@ public class ItemLevelCommand {
         if (ItemUtils.isLevelableItem(stack)) {
             if(points <= maxprogress) {
                 stack.getOrCreateTag().putInt("levelprogress", points);
-                source.sendSuccess(new TranslatableComponent("weaponleveling.command.setpoints",stack.getHoverName(),points),true);
+                source.sendSuccess(Component.translatable("weaponleveling.command.setpoints",stack.getHoverName(),points),true);
             }else {
                 throw OUT_OF_BOUNDS.create(points);
             }
@@ -76,5 +77,6 @@ public class ItemLevelCommand {
         }
         return 1;
     }
+
 
 }

@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -38,7 +37,7 @@ public abstract class MixinGunItem extends Item{
             int level = stack.getOrCreateTag().getInt("level");
             DecimalFormat doubleDecimalFormat = new DecimalFormat("#.##");
             double extradamage = level * ItemUtils.getWeaponDamagePerLevel(stack);
-            Component mycomponent = new TextComponent(" +" + doubleDecimalFormat.format(extradamage)).withStyle(DAMAGE);
+            Component mycomponent = Component.literal(" +" + doubleDecimalFormat.format(extradamage)).withStyle(DAMAGE);
             return original.call(instance, component.append(mycomponent));
         }
         return original.call(instance,object);

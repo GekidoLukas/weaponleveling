@@ -1,9 +1,8 @@
 package net.weaponleveling.util;
 
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -202,7 +201,7 @@ public class UpdateLevels {
             Style TEXT = Style.EMPTY.withColor(9736850);
             Style VALUES = Style.EMPTY.withColor(15422034);
             String itemname = stack.getDisplayName().getString();
-            player.displayClientMessage((new TextComponent(itemname + " ").setStyle(ITEM)).append(new TranslatableComponent("weaponleveling.levelup").setStyle(TEXT)).append(new TextComponent("" + level).setStyle(VALUES)), true);
+            player.displayClientMessage((Component.literal(itemname + " ").setStyle(ITEM)).append(Component.translatable("weaponleveling.levelup").setStyle(TEXT)).append(Component.literal("" + level).setStyle(VALUES)), true);
         }
 
 

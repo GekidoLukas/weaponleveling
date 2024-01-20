@@ -4,8 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.weaponleveling.WLPlatformGetter;
@@ -44,7 +42,7 @@ public class ClientEvents {
 
 
         if(ItemUtils.isBroken(stack)) {
-            tooltip.add(new TranslatableComponent("weaponleveling.tooltip.broken").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+            tooltip.add(Component.translatable("weaponleveling.tooltip.broken").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
         }
         if (ItemUtils.isLevelableItem(stack)) {
             if (shouldExtendTooltip()) {
@@ -53,51 +51,51 @@ public class ClientEvents {
                 int maxlevelprogress = UpdateLevels.getMaxLevel(level,stack);
 
 
-                tooltip.add(new TranslatableComponent("weaponleveling.tooltip.itemlevel").setStyle(ARROW));
+                tooltip.add(Component.translatable("weaponleveling.tooltip.itemlevel").setStyle(ARROW));
 
-                tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
-                        .append(new TranslatableComponent("weaponleveling.tooltip.level").setStyle(TEXT))
-                        .append(new TextComponent("" + level).setStyle(VALUES))
+                tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
+                        .append(Component.translatable("weaponleveling.tooltip.level").setStyle(TEXT))
+                        .append(Component.literal("" + level).setStyle(VALUES))
                 );
 
 
                 if (level < ItemUtils.getMaxLevel(stack)) {
-                    tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
-                            .append(new TranslatableComponent("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
-                            .append(new TextComponent("" + levelprogress).setStyle(VALUES))
-                            .append(new TextComponent("/").setStyle(TEXT))
-                            .append(new TextComponent("" + maxlevelprogress).setStyle(VALUES))
+                    tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
+                            .append(Component.translatable("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
+                            .append(Component.literal("" + levelprogress).setStyle(VALUES))
+                            .append(Component.literal("/").setStyle(TEXT))
+                            .append(Component.literal("" + maxlevelprogress).setStyle(VALUES))
                     );
                 } else if(level == ItemUtils.getMaxLevel(stack)) {
-                    tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
-                            .append(new TranslatableComponent("weaponleveling.tooltip.maxlevel").setStyle(VALUES))
+                    tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
+                            .append(Component.translatable("weaponleveling.tooltip.maxlevel").setStyle(VALUES))
                     );
                 }else {
-                    tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
-                            .append(new TranslatableComponent("weaponleveling.tooltip.overmaxlevel").setStyle(VALUES))
+                    tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
+                            .append(Component.translatable("weaponleveling.tooltip.overmaxlevel").setStyle(VALUES))
                     );
                 }
 
                 if (ItemUtils.isAcceptedProjectileWeapon(stack) && !(ItemUtils.isAcceptedMeleeWeaponStack(stack) || WLPlatformGetter.isCGMGunItem(stack))) {
 
                     double extradamage = level * ItemUtils.getWeaponDamagePerLevel(stack);
-                    tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
-                            .append(new TranslatableComponent("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))
-                            .append(new TextComponent("" + doubleDecimalFormat.format(extradamage)).setStyle(VALUES))
+                    tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
+                            .append(Component.translatable("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))
+                            .append(Component.literal("" + doubleDecimalFormat.format(extradamage)).setStyle(VALUES))
                     );
                 }
 
                 if (ItemUtils.isAcceptedArmor(stack)) {
-                    tooltip.add(new TextComponent(" ▶ ").setStyle(ARROW)
-                            .append(new TranslatableComponent("weaponleveling.tooltip.reduction").setStyle(TEXT))
-                            .append(new TextComponent( fourDecimalFormat.format(UpdateLevels.getReduction(level, stack))+ "%").setStyle(VALUES))
+                    tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
+                            .append(Component.translatable("weaponleveling.tooltip.reduction").setStyle(TEXT))
+                            .append(Component.literal( fourDecimalFormat.format(UpdateLevels.getReduction(level, stack))+ "%").setStyle(VALUES))
                     );
                 }
 
 
 
             } else {
-                tooltip.add(new TranslatableComponent("weaponleveling.tooltip.pressshift").setStyle(SHIFT));
+                tooltip.add(Component.translatable("weaponleveling.tooltip.pressshift").setStyle(SHIFT));
             }
         }
         full_tooltip.addAll(1,tooltip);

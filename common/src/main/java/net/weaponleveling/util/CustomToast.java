@@ -9,9 +9,8 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -46,8 +45,8 @@ public class CustomToast implements Toast {
 
         if (stack != null) {
 
-            List<FormattedCharSequence> subtitle = component.getMinecraft().font.split(new TranslatableComponent("weaponleveling.levelup").setStyle(TEXT).append(new TextComponent(""+level).setStyle(VALUES)), 125);
-            List<FormattedCharSequence> title = component.getMinecraft().font.split(new TextComponent(stack.getHoverName().getString()).setStyle(ITEM), 125);
+            List<FormattedCharSequence> subtitle = component.getMinecraft().font.split(Component.translatable("weaponleveling.levelup").setStyle(TEXT).append(Component.literal(""+level).setStyle(VALUES)), 125);
+            List<FormattedCharSequence> title = component.getMinecraft().font.split(Component.literal(stack.getHoverName().getString()).setStyle(ITEM), 125);
 
             int i = 16776960;
 

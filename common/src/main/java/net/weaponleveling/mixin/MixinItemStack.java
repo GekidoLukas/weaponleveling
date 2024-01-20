@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.util.ItemUtils;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,7 +30,7 @@ import java.util.function.Consumer;
 @Mixin(ItemStack.class)
 public abstract class MixinItemStack {
 
-    @Shadow public abstract boolean hurt(int m, Random random, ServerPlayer arg);
+    @Shadow public abstract boolean hurt(int i, RandomSource randomSource, @Nullable ServerPlayer serverPlayer);
 
     @Inject(
             method = "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;",
