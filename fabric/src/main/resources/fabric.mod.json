@@ -8,7 +8,7 @@
     "GeradesoLukas"
   ],
   "contact": {
-    "homepage": "ttps://www.curseforge.com/minecraft/mc-mods/weapon-leveling",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/weapon-leveling",
     "sources": "https://github.com/GeradesoLukas/weaponleveling"
   },
   "license": "All rights reserved",
@@ -28,8 +28,8 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.18.2",
-    "architectury": ">=4.9.83",
-    "forgeconfigapiport": ">=3.2.4"
+    "minecraft": ">=1.19.2",
+    "architectury": ">=6.5.85",
+    "forgeconfigapiport": ">=4.2.11"
   }
 }
