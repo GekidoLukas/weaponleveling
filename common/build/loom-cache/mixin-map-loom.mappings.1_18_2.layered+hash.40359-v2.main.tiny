@@ -1,4 +1,0 @@
-v1	named	intermediary
-FIELD	net/weaponleveling/mixin/MixinAnvilMenu	I	repairItemCountCost	field_7776
-FIELD	net/weaponleveling/mixin/MixinThrownTrident	Lnet/minecraft/world/item/ItemStack;	tridentItem	field_7650
-METHOD	net/weaponleveling/mixin/MixinItemStack	(ILjava/util/Random;Lnet/minecraft/server/level/ServerPlayer;)Z	hurt	method_7970
