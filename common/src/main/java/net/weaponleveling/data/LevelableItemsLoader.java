@@ -3,6 +3,8 @@ package net.weaponleveling.data;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -11,6 +13,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingMod;
+import net.weaponleveling.util.ModUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,17 +64,17 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                     if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Registering Tag: #" + resourceLocation);
 
 
-                    TagKey<Item> key = TagKey.create(Registry.ITEM_REGISTRY, resourceLocation);
+                    TagKey<Item> key = TagKey.create(Registries.ITEM, resourceLocation);
 
-                    if (Registry.ITEM.getTag(key).isPresent()) {
+                    if (BuiltInRegistries.ITEM.getTag(key).isPresent()) {
                         if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Tagkey exists: #" + resourceLocation.toString() );
 
-                        Registry.ITEM.getTag(key).get().forEach((itemHolder) -> {
+                        BuiltInRegistries.ITEM.getTag(key).get().forEach((itemHolder) -> {
                             Item item = itemHolder.value();
-                            if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + Registry.ITEM.getKey(item));
+                            if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
 
-                            LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, Registry.ITEM.getKey(item));
-                            builder.put(Registry.ITEM.getKey(item), levelableItem);
+                            LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, BuiltInRegistries.ITEM.getKey(item));
+                            builder.put(BuiltInRegistries.ITEM.getKey(item), levelableItem);
                         });
 
 
@@ -86,7 +89,7 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
 
                     if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Registering: " + resourceLocation);
 
-                    if (Registry.ITEM.containsKey(resourceLocation)) {
+                    if (BuiltInRegistries.ITEM.containsKey(resourceLocation)) {
 
                         LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, resourceLocation);
                         builder.put(resourceLocation, levelableItem);
@@ -113,6 +116,6 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
     }
 
     public static boolean isValid(Item item) {
-        return get(Registry.ITEM.getKey(item)) != null;
+        return get(BuiltInRegistries.ITEM.getKey(item)) != null;
     }
 }

@@ -2,7 +2,6 @@ package net.weaponleveling.forge.mixin;
 
 
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,8 +20,8 @@ public class MixinPlayerForge {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isSprinting()Z", ordinal = 1, shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedCritXP(Entity victim, CallbackInfo ci, float f, float g, float h, boolean bl, boolean bl2, float i, boolean crit) {
         LivingEntity attacker = ((LivingEntity) ((Object) this));
-        DamageSource source = new EntityDamageSource("player", attacker);
         if(victim instanceof LivingEntity living) {
+            DamageSource source = living.damageSources().playerAttack((Player) attacker);
             UpdateLevels.updateForHit(living, source, crit, null);
         }
     }

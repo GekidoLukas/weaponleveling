@@ -30,14 +30,14 @@ dependencies {
 
     implementation "com.electronwill.night-config:core:${rootProject.night_config_version}"
     implementation "com.electronwill.night-config:toml:${rootProject.night_config_version}"
-    modApi "net.minecraftforge:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}"
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
 
 
-    modImplementation "curse.maven:bettercombat-639842:${rootProject.bettercombat_fabric_version}" // Better Combat
-    modImplementation "curse.maven:clothconfig-348521:${rootProject.clothconfig_fabric_version}" // Cloth Config
-    modImplementation "curse.maven:playeranim-658587:${rootProject.playeranim_fabric_version}" // playerAnimator
+    modImplementation "maven.modrinth:better-combat:${rootProject.bettercombat_fabric_version}" // Better Combat
+    modImplementation "maven.modrinth:cloth-config:${rootProject.clothconfig_fabric_version}" // Cloth Config
+    modImplementation "maven.modrinth:playeranimator:${rootProject.playeranim_fabric_version}" // playerAnimator
 
 
 

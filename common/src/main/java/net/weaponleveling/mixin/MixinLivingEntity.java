@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.UpdateLevels;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -46,7 +46,7 @@ public class MixinLivingEntity {
             at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void preventAttack(InteractionHand interactionHand, CallbackInfo ci) {
         LivingEntity entity = ((LivingEntity) ((Object) this));
-        if(ItemUtils.isBroken(entity.getItemInHand(interactionHand))) {
+        if(ModUtils.isBroken(entity.getItemInHand(interactionHand))) {
             ci.cancel();
         }
     }

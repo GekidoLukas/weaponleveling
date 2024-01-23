@@ -14,7 +14,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.weaponleveling.WLPlatformGetter;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.Random;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
@@ -42,13 +41,13 @@ public abstract class MixinItemStack {
         Attribute attackSpeed = Attributes.ATTACK_SPEED;
         Attribute armor = Attributes.ARMOR;
         Attribute armor_toughness = Attributes.ARMOR_TOUGHNESS;
-        if (ItemUtils.isLevelableItem(stack) && ItemUtils.isAcceptedMeleeWeaponStack(stack) && stack.getTag() != null) {
-            ItemUtils.modifyAttributeModifier(hashmap,attackDamage, ItemUtils.getWeaponDamagePerLevel(stack) * stack.getTag().getInt("level"));
-            ItemUtils.modifyAttributeModifier(hashmap,attackSpeed, 0.0d );
+        if (ModUtils.isLevelableItem(stack) && ModUtils.isAcceptedMeleeWeaponStack(stack) && stack.getTag() != null) {
+            ModUtils.modifyAttributeModifier(hashmap,attackDamage, ModUtils.getWeaponDamagePerLevel(stack) * stack.getTag().getInt("level"));
+            ModUtils.modifyAttributeModifier(hashmap,attackSpeed, 0.0d );
         }
-        if(ItemUtils.isBroken(stack)) {
-            ItemUtils.removeAttributeModifier(hashmap, armor);
-            ItemUtils.removeAttributeModifier(hashmap, armor_toughness);
+        if(ModUtils.isBroken(stack)) {
+            ModUtils.removeAttributeModifier(hashmap, armor);
+            ModUtils.removeAttributeModifier(hashmap, armor_toughness);
         }
         cir.setReturnValue(hashmap);
     }
@@ -57,7 +56,7 @@ public abstract class MixinItemStack {
             method = "useOn",
             at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void preventInteract(UseOnContext useOnContext, CallbackInfoReturnable<InteractionResult> cir) {
-        if(ItemUtils.isBroken(useOnContext.getItemInHand())) {
+        if(ModUtils.isBroken(useOnContext.getItemInHand())) {
             cir.setReturnValue(InteractionResult.PASS);
         }
     }
@@ -69,7 +68,7 @@ public abstract class MixinItemStack {
         ItemStack stack = ((ItemStack) ((Object) this));
         if(livingEntity instanceof ServerPlayer player) {
             if(this.hurt(i, livingEntity.getRandom(), player)) {
-                if(WLPlatformGetter.getBrokenItemsDontVanish() && ItemUtils.shouldBeUnbreakable(stack)) {
+                if(WLPlatformGetter.getBrokenItemsDontVanish() && ModUtils.shouldBeUnbreakable(stack)) {
                     CompoundTag tag = new CompoundTag();
                     tag.putBoolean("isBroken", true);
                     stack.setTag(tag);

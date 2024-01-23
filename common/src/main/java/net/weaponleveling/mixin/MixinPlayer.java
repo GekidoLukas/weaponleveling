@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.weaponleveling.WLPlatformGetter;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.UpdateLevels;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,7 +42,7 @@ public class MixinPlayer {
             at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void preventBlockTarget(Level level, BlockPos blockPos, GameType gameType, CallbackInfoReturnable<Boolean> cir) {
         Player player = ((Player) ((Object) this));
-        if(ItemUtils.isBroken(WLPlatformGetter.getAttackItem(player))) {
+        if(ModUtils.isBroken(WLPlatformGetter.getAttackItem(player))) {
             cir.setReturnValue(true);
         }
     }
@@ -52,7 +52,7 @@ public class MixinPlayer {
             at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void preventAttack(Entity target, CallbackInfo ci) {
         Player player = ((Player) ((Object) this));
-        if(ItemUtils.isBroken(WLPlatformGetter.getAttackItem(player))) {
+        if(ModUtils.isBroken(WLPlatformGetter.getAttackItem(player))) {
             ci.cancel();
         }
     }
@@ -62,7 +62,7 @@ public class MixinPlayer {
             at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void preventInteract(Entity entity, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
         Player player = ((Player) ((Object) this));
-        if(ItemUtils.isBroken(player.getMainHandItem())) {
+        if(ModUtils.isBroken(player.getMainHandItem())) {
             cir.setReturnValue(InteractionResult.PASS);
         }
     }
@@ -72,7 +72,7 @@ public class MixinPlayer {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"))
     private boolean preventCooldown(boolean original) {
         Player player = ((Player) ((Object) this));
-        return original || ItemUtils.isBroken(WLPlatformGetter.getAttackItem(player));
+        return original || ModUtils.isBroken(WLPlatformGetter.getAttackItem(player));
     }
 
 

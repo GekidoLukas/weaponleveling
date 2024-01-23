@@ -1,10 +1,11 @@
 package net.weaponleveling.data;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WLPlatformGetter;
+import net.weaponleveling.util.ModUtils;
 
 public class LevelableItem {
 
@@ -127,8 +128,7 @@ public class LevelableItem {
     }
 
     public static LevelableItem fromJson(JsonObject object, ResourceLocation resourceLocation) {
-
-        Item item = Registry.ITEM.get(resourceLocation);
+        Item item = BuiltInRegistries.ITEM.get(resourceLocation);
 
         boolean disabled = false;
         if (object.has("disabled")) {

@@ -5,11 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,11 +20,9 @@ public class MixinItemInHandRenderer {
 
     @Inject(method = "renderItem",
             at = @At("HEAD"), cancellable = true)
-    private void dontRenderItem(LivingEntity livingEntity, ItemStack stack,
-                                ItemTransforms.TransformType transformType,
-                                boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource,
-                                int i, CallbackInfo ci) {
-        if(ItemUtils.isBroken(stack)) {
+    private void dontRenderItem(LivingEntity livingEntity, ItemStack stack, ItemDisplayContext itemDisplayContext,
+                                boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
+        if(ModUtils.isBroken(stack)) {
             ci.cancel();
         }
     }
@@ -35,6 +33,6 @@ public class MixinItemInHandRenderer {
     private static boolean modifyPose(boolean original, AbstractClientPlayer abstractClientPlayer, float f, float g,
                                       InteractionHand interactionHand, float h, ItemStack stack,
                                       float i, PoseStack poseStack, MultiBufferSource multiBufferSource, int j) {
-        return original || ItemUtils.isBroken(stack);
+        return original || ModUtils.isBroken(stack);
     }
 }

@@ -38,9 +38,9 @@ dependencies {
     forgeRuntimeLibrary(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")))
 
 
-    modCompileOnly "curse.maven:bettercombat-639842:${rootProject.bettercombat_forge_version}" // Better Combat
-    modCompileOnly "curse.maven:clothconfig-348521:${rootProject.clothconfig_forge_version}" // Cloth Config
-    modCompileOnly "curse.maven:playeranim-658587:${rootProject.playeranim_forge_version}" // playerAnimator
+    modCompileOnly "maven.modrinth:better-combat:${rootProject.bettercombat_forge_version}" // Better Combat
+    modCompileOnly "maven.modrinth:cloth-config:${rootProject.clothconfig_forge_version}" // Cloth Config
+    modCompileOnly "maven.modrinth:playeranimator:${rootProject.playeranim_forge_version}" // playerAnimator
 
     modCompileOnly "curse.maven:crayfishgun-289479:${rootProject.cgm_version}" //MrCrayfish's Gun Mod
     modCompileOnly "curse.maven:framework-549225:${rootProject.framework_version}" //Framework
@@ -52,13 +52,13 @@ dependencies {
 
     modCompileOnly "curse.maven:parrythis-479996:${rootProject.parrythis_version}" //Parry This!
 
-    modCompileOnly "curse.maven:tetra-289712:${rootProject.tetra_version}" //Tetra
-    modCompileOnly "curse.maven:mutil-351914:${rootProject.mutil_version}" //mutil
+    modCompileOnly "maven.modrinth:tetra:${rootProject.tetra_version}" //Tetra
+    modCompileOnly "maven.modrinth:mutil:${rootProject.mutil_version}" //mutil
 
     //modImplementation "curse.maven:improved-damage-framework-635505:${rootProject.improved_damage_framework_version}" //IDF
 
 
-    modCompileOnly "curse.maven:epic-fight-mod-405076:${rootProject.epic_fight_version}" // Epic Fight
+    modCompileOnly "maven.modrinth:epic-fight:${rootProject.epic_fight_version}" // Epic Fight
 }
 
 processResources {
