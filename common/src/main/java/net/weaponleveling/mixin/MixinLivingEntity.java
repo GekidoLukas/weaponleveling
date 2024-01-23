@@ -28,7 +28,7 @@ public class MixinLivingEntity {
 
     @Inject(
             method = "actuallyHurt",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedHurt(DamageSource source, float damageamount, CallbackInfo ci) {
         LivingEntity victim = ((LivingEntity) ((Object) this));
         UpdateLevels.updateForHit(victim, source, false, null);

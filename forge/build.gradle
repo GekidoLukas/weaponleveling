@@ -55,6 +55,8 @@ dependencies {
     modCompileOnly "curse.maven:tetra-289712:${rootProject.tetra_version}" //Tetra
     modCompileOnly "curse.maven:mutil-351914:${rootProject.mutil_version}" //mutil
 
+    //modImplementation "curse.maven:improved-damage-framework-635505:${rootProject.improved_damage_framework_version}" //IDF
+
 
     modCompileOnly "curse.maven:epic-fight-mod-405076:${rootProject.epic_fight_version}" // Epic Fight
 }
