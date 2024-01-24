@@ -24,13 +24,13 @@ side = "BOTH"
 [[dependencies.weaponleveling]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.2,)"
+versionRange = "[1.20.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.weaponleveling]]
 modId = "architectury"
 mandatory = true
-versionRange = "[6.5.85,)"
+versionRange = "[9.1.12,)"
 ordering = "AFTER"
 side = "BOTH"
