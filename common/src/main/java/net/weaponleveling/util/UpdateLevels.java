@@ -47,10 +47,10 @@ public class UpdateLevels {
                 ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
                 ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
                 ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
-                if (ItemUtils.isAcceptedArmor(helmet) && !ItemUtils.isBroken(helmet)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
-                if (ItemUtils.isAcceptedArmor(chestplate) && !ItemUtils.isBroken(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
-                if (ItemUtils.isAcceptedArmor(leggings) && !ItemUtils.isBroken(leggings)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
-                if (ItemUtils.isAcceptedArmor(feet) && !ItemUtils.isBroken(feet)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
+                if (ModUtils.isAcceptedArmor(helmet) && !ModUtils.isBroken(helmet)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
+                if (ModUtils.isAcceptedArmor(chestplate) && !ModUtils.isBroken(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
+                if (ModUtils.isAcceptedArmor(leggings) && !ModUtils.isBroken(leggings)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
+                if (ModUtils.isAcceptedArmor(feet) && !ModUtils.isBroken(feet)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
 
             }
         }
@@ -63,7 +63,7 @@ public class UpdateLevels {
         int currentlevel = stack.getOrCreateTag().getInt("level");
         int currentprogress = stack.getOrCreateTag().getInt("levelprogress");
         currentprogress += updateamount;
-        if (currentlevel < ItemUtils.getMaxLevel(stack) ) {
+        if (currentlevel < ModUtils.getMaxLevel(stack) ) {
             updateItem(player,stack,currentlevel,currentprogress);
         }
     }
@@ -86,8 +86,8 @@ public class UpdateLevels {
 
     public static int getMaxLevel(int currentlevel, ItemStack stack) {
         int maxlevel;
-        int levelmodifier = ItemUtils.getLevelModifier(stack);
-        int startinglevel =  ItemUtils.getLevelStartAmount(stack);
+        int levelmodifier = ModUtils.getLevelModifier(stack);
+        int startinglevel =  ModUtils.getLevelStartAmount(stack);
 
         if (currentlevel != 0) {
             maxlevel = ((currentlevel - 1) + currentlevel) * levelmodifier + 100;
@@ -180,16 +180,16 @@ public class UpdateLevels {
 
     public static int getXPForHit(ItemStack stack) {
         int xpamount = 0;
-        int amount = ItemUtils.getHitXPAmount(stack);
-        if (shouldGiveHitXP(ItemUtils.getHitXPChance(stack))) {xpamount = amount;}
+        int amount = ModUtils.getHitXPAmount(stack);
+        if (shouldGiveHitXP(ModUtils.getHitXPChance(stack))) {xpamount = amount;}
 
         return xpamount;
     }
 
     public static int getXPForCrit(ItemStack stack) {
         int xpamount = 0;
-        int amount = ItemUtils.getCritXPAmount(stack);
-        if (shouldGiveHitXP(ItemUtils.getCritXPChance(stack))) {xpamount = amount;}
+        int amount = ModUtils.getCritXPAmount(stack);
+        if (shouldGiveHitXP(ModUtils.getCritXPChance(stack))) {xpamount = amount;}
         return xpamount;
     }
 
@@ -218,7 +218,7 @@ public class UpdateLevels {
     public static int armorXPAmount(int initialxp, boolean taxFree, ItemStack stack) {
         if (taxFree) return initialxp;
 
-        double minamount = ((double)ItemUtils.getArmorXPRNGModifier(stack))/100;
+        double minamount = ((double) ModUtils.getArmorXPRNGModifier(stack))/100;
         double randomValue = minamount + (1.0 - minamount)*Math.random();
 
         if (randomValue < minamount) randomValue = minamount;
@@ -243,15 +243,15 @@ public class UpdateLevels {
     public static float getDamagePerPiece(LivingEntity player, float partdamage, ItemStack stack) {
         int level = stack.getOrCreateTag().getInt("level");
         double maxdamagereduction = getReduction(level,stack) / 100;
-        double maxlevel = ItemUtils.getMaxLevel(stack);
+        double maxlevel = ModUtils.getMaxLevel(stack);
         double finaldamage = partdamage - (partdamage * (maxdamagereduction * (level/maxlevel)));
 
         return (float) finaldamage;
     }
 
     public static float getReduction(int level, ItemStack stack) {
-        double maxdamagereduction = ItemUtils.getArmorMaxDamageReduction(stack);
-        return (float) maxdamagereduction * ((float) level/ItemUtils.getMaxLevel(stack));
+        double maxdamagereduction = ModUtils.getArmorMaxDamageReduction(stack);
+        return (float) maxdamagereduction * ((float) level/ ModUtils.getMaxLevel(stack));
     }
 
     public static void updateForKill(LivingEntity victim, DamageSource source, @Nullable ItemStack specificStack) {
@@ -269,12 +269,12 @@ public class UpdateLevels {
             if(specificStack != null) {
                 updateProgressItem(player, specificStack, xpamount);
             } else if (source.isProjectile()) {
-                if(ItemUtils.isAcceptedProjectileWeapon(stack)) {
+                if(ModUtils.isAcceptedProjectileWeapon(stack)) {
                     updateProgressItem(player, stack, xpamount);
-                }else if(ItemUtils.isAcceptedProjectileWeapon(offhandStack)) {
+                }else if(ModUtils.isAcceptedProjectileWeapon(offhandStack)) {
                     updateProgressItem(player, offhandStack, xpamount);
                 }
-            } else if(ItemUtils.isAcceptedMeleeWeaponStack(stack)) {
+            } else if(ModUtils.isAcceptedMeleeWeaponStack(stack)) {
                 updateProgressItem(player,stack,xpamount);
             }
 
@@ -299,12 +299,12 @@ public class UpdateLevels {
             } else if(source.isProjectile()) {
                 ItemStack mainhand = player.getMainHandItem();
                 ItemStack offhand = player.getOffhandItem();
-                if(ItemUtils.isAcceptedProjectileWeapon(mainhand)) {
+                if(ModUtils.isAcceptedProjectileWeapon(mainhand)) {
                     UpdateLevels.applyXPOnItemStack(mainhand, player, victim, crit);
-                } else if(ItemUtils.isAcceptedProjectileWeapon(offhand)) {
+                } else if(ModUtils.isAcceptedProjectileWeapon(offhand)) {
                     UpdateLevels.applyXPOnItemStack(offhand, player, victim, crit);
                 }
-            } else if(ItemUtils.isAcceptedMeleeWeaponStack(stack)) {
+            } else if(ModUtils.isAcceptedMeleeWeaponStack(stack)) {
                 UpdateLevels.applyXPOnItemStack(stack, player, victim, crit);
             }
 

@@ -7,7 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.UpdateLevels;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,9 +38,9 @@ public class MixinThrownTrident {
             method = "onHitEntity",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"), index = 1)
     public float hurtModify(float f) {
-        if(ItemUtils.isAcceptedProjectileWeapon(tridentItem)) {
+        if(ModUtils.isAcceptedProjectileWeapon(tridentItem)) {
             double weaponlevelamount = tridentItem.getOrCreateTag().getInt("level");
-            weaponlevelamount *= ItemUtils.getWeaponDamagePerLevel(tridentItem);
+            weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(tridentItem);
             return f + (float) weaponlevelamount;
         }
         return f;

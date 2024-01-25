@@ -28,9 +28,10 @@ dependencies {
 
     implementation(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")))
 
-    implementation "com.electronwill.night-config:core:${rootProject.night_config_version}"
-    implementation "com.electronwill.night-config:toml:${rootProject.night_config_version}"
-    modApi "net.minecraftforge:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}"
+    implementation("com.electronwill.night-config:core:${rootProject.night_config_version}")
+    implementation("com.electronwill.night-config:toml:${rootProject.night_config_version}")
+    modApi("net.minecraftforge:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}")
+
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
 
@@ -59,6 +60,8 @@ shadowJar {
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
     relocate("com.llamalad7.mixinextras", "net.geradesolukas.mixinextras")
+    relocate("net.minecraftforge", "net.geradesolukas.minecraftforge")
+    relocate("com.electronwill.nightconfig", "net.geradesolukas.nightconfig")
     mergeServiceFiles()
 }
 

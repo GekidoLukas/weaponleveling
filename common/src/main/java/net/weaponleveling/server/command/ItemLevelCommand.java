@@ -11,7 +11,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.UpdateLevels;
 
 public class ItemLevelCommand {
@@ -44,8 +44,8 @@ public class ItemLevelCommand {
 
     private static int setLevelCommand(CommandSourceStack source, ServerPlayer player, int level, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ItemStack stack = player.getMainHandItem();
-        if (ItemUtils.isLevelableItem(stack)) {
-            if(level <= ItemUtils.getMaxLevel(stack)) {
+        if (ModUtils.isLevelableItem(stack)) {
+            if(level <= ModUtils.getMaxLevel(stack)) {
                 stack.getOrCreateTag().putInt("level", level);
                 source.sendSuccess(new TranslatableComponent("weaponleveling.command.setlevel",stack.getHoverName(),level),true);
             }else {
@@ -63,7 +63,7 @@ public class ItemLevelCommand {
         ItemStack stack = player.getMainHandItem();
         int level = stack.getOrCreateTag().getInt("levelprogress");
         int maxprogress = UpdateLevels.getMaxLevel(level,stack);
-        if (ItemUtils.isLevelableItem(stack)) {
+        if (ModUtils.isLevelableItem(stack)) {
             if(points <= maxprogress) {
                 stack.getOrCreateTag().putInt("levelprogress", points);
                 source.sendSuccess(new TranslatableComponent("weaponleveling.command.setpoints",stack.getHoverName(),points),true);

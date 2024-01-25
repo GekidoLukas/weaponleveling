@@ -6,7 +6,7 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,9 +19,9 @@ public class MixinCrossbowItem {
             method = "getArrow",
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private static void injectedDamage(Level p_40915_, LivingEntity p_40916_, ItemStack stack, ItemStack p_40918_, CallbackInfoReturnable<AbstractArrow> cir, ArrowItem arrowitem, AbstractArrow abstractarrow) {
-        if(ItemUtils.isAcceptedProjectileWeapon(stack)) {
+        if(ModUtils.isAcceptedProjectileWeapon(stack)) {
             double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= ItemUtils.getWeaponDamagePerLevel(stack) * ItemUtils.getBowlikeModifier(stack);
+            weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(stack) * ModUtils.getBowlikeModifier(stack);
             abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
         }
     }
