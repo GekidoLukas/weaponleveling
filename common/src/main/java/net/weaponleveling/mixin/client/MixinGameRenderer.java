@@ -3,7 +3,7 @@ package net.weaponleveling.mixin.client;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,7 +21,7 @@ public class MixinGameRenderer {
         GameRenderer renderer = ((GameRenderer) ((Object) this));
         Entity entity = renderer.getMinecraft().getCameraEntity();
         if(entity instanceof Player player) {
-            if(ItemUtils.isBroken(player.getMainHandItem())) {
+            if(ModUtils.isBroken(player.getMainHandItem())) {
                 cir.setReturnValue(false);
             }
         }

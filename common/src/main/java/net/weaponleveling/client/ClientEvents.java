@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.weaponleveling.WLPlatformGetter;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.UpdateLevels;
 
 import java.text.DecimalFormat;
@@ -41,10 +41,10 @@ public class ClientEvents {
 
 
 
-        if(ItemUtils.isBroken(stack)) {
+        if(ModUtils.isBroken(stack)) {
             tooltip.add(Component.translatable("weaponleveling.tooltip.broken").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
         }
-        if (ItemUtils.isLevelableItem(stack)) {
+        if (ModUtils.isLevelableItem(stack)) {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
                 int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
@@ -59,14 +59,14 @@ public class ClientEvents {
                 );
 
 
-                if (level < ItemUtils.getMaxLevel(stack)) {
+                if (level < ModUtils.getMaxLevel(stack)) {
                     tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
                             .append(Component.translatable("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
                             .append(Component.literal("" + levelprogress).setStyle(VALUES))
                             .append(Component.literal("/").setStyle(TEXT))
                             .append(Component.literal("" + maxlevelprogress).setStyle(VALUES))
                     );
-                } else if(level == ItemUtils.getMaxLevel(stack)) {
+                } else if(level == ModUtils.getMaxLevel(stack)) {
                     tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
                             .append(Component.translatable("weaponleveling.tooltip.maxlevel").setStyle(VALUES))
                     );
@@ -76,16 +76,16 @@ public class ClientEvents {
                     );
                 }
 
-                if (ItemUtils.isAcceptedProjectileWeapon(stack) && !(ItemUtils.isAcceptedMeleeWeaponStack(stack) || WLPlatformGetter.isCGMGunItem(stack))) {
+                if (ModUtils.isAcceptedProjectileWeapon(stack) && !(ModUtils.isAcceptedMeleeWeaponStack(stack) || WLPlatformGetter.isCGMGunItem(stack))) {
 
-                    double extradamage = level * ItemUtils.getWeaponDamagePerLevel(stack);
+                    double extradamage = level * ModUtils.getWeaponDamagePerLevel(stack);
                     tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
                             .append(Component.translatable("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))
                             .append(Component.literal("" + doubleDecimalFormat.format(extradamage)).setStyle(VALUES))
                     );
                 }
 
-                if (ItemUtils.isAcceptedArmor(stack)) {
+                if (ModUtils.isAcceptedArmor(stack)) {
                     tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
                             .append(Component.translatable("weaponleveling.tooltip.reduction").setStyle(TEXT))
                             .append(Component.literal( fourDecimalFormat.format(UpdateLevels.getReduction(level, stack))+ "%").setStyle(VALUES))

@@ -1,9 +1,5 @@
 {
   "mappings": {
-    "net/weaponleveling/mixin/MixinAnvilMenu": {
-      "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z": "Lnet/minecraft/class_1799;method_31574(Lnet/minecraft/class_1792;)Z",
-      "createResult": "Lnet/minecraft/class_1706;method_24928()V"
-    },
     "net/weaponleveling/mixin/MixinBowItem": {
       "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V": "Lnet/minecraft/class_1665;method_24919(Lnet/minecraft/class_1297;FFFFF)V",
       "releaseUsing": "Lnet/minecraft/class_1753;method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V"
@@ -72,10 +68,6 @@
   },
   "data": {
     "named:intermediary": {
-      "net/weaponleveling/mixin/MixinAnvilMenu": {
-        "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z": "Lnet/minecraft/class_1799;method_31574(Lnet/minecraft/class_1792;)Z",
-        "createResult": "Lnet/minecraft/class_1706;method_24928()V"
-      },
       "net/weaponleveling/mixin/MixinBowItem": {
         "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V": "Lnet/minecraft/class_1665;method_24919(Lnet/minecraft/class_1297;FFFFF)V",
         "releaseUsing": "Lnet/minecraft/class_1753;method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V"

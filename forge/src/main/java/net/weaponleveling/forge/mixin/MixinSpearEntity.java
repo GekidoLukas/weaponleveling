@@ -9,7 +9,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.weaponleveling.util.ItemUtils;
+import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.UpdateLevels;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
@@ -35,7 +35,7 @@ public abstract class MixinSpearEntity extends AbstractArrow {
             method = "Lcom/theishiopian/parrying/Entity/SpearEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
             at = @At(value = "INVOKE",  target = "Lcom/theishiopian/parrying/Entity/SpearEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedXP(EntityHitResult p_213868_1_, CallbackInfo ci, Entity entity, LivingEntity living, float damage, Entity owner, DamageSource src) {
-        if(ItemUtils.isAcceptedProjectileWeapon(spearItem) && owner instanceof Player) {
+        if(ModUtils.isAcceptedProjectileWeapon(spearItem) && owner instanceof Player) {
             UpdateLevels.applyXPOnItemStack(spearItem, (Player) owner, entity, false);
         }
     }
@@ -46,7 +46,7 @@ public abstract class MixinSpearEntity extends AbstractArrow {
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index = 1)
     private float replaceEmpty(float pAmount) {
         double weaponlevelamount = spearItem.getOrCreateTag().getInt("level");
-        weaponlevelamount *= ItemUtils.getWeaponDamagePerLevel(spearItem);
+        weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(spearItem);
         pAmount += weaponlevelamount;
 
         return pAmount;
