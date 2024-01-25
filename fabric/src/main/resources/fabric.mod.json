@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "weaponleveling",
   "version": "${version}",
-  "name": "Weapon Leveling",
-  "description": "This mod increases the amount of damage you deal with your weapons over time, by leveling them up",
+  "name": "Lukas' Weapon Leveling",
+  "description": "Leveling your items since 2022.\nVery customizable mod to make your equipment stronger over time.",
   "authors": [
     "GeradesoLukas"
   ],
@@ -28,8 +28,7 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.20.1",
-    "architectury": ">=9.1.12",
-    "forgeconfigapiport": ">=8.0.0"
+    "minecraft": "=1.20.1",
+    "architectury": ">=9.1.12"
   }
 }
