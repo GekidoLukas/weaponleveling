@@ -28,12 +28,12 @@ dependencies {
 
     implementation(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")))
 
+
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
     implementation "com.electronwill.night-config:core:${rootProject.night_config_version}"
     implementation "com.electronwill.night-config:toml:${rootProject.night_config_version}"
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-
-
 
     modImplementation "maven.modrinth:better-combat:${rootProject.bettercombat_fabric_version}" // Better Combat
     modImplementation "maven.modrinth:cloth-config:${rootProject.clothconfig_fabric_version}" // Cloth Config

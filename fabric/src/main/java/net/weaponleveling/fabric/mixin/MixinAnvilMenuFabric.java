@@ -1,4 +1,4 @@
-package net.weaponleveling.mixin;
+package net.weaponleveling.fabric.mixin;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,12 +20,12 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.Map;
 
 @Mixin(AnvilMenu.class)
-public abstract class MixinAnvilMenu extends ItemCombinerMenu {
+public abstract class MixinAnvilMenuFabric extends ItemCombinerMenu {
 
 
     @Shadow public int repairItemCountCost;
 
-    public MixinAnvilMenu(@Nullable MenuType<?> menuType, int i, Inventory inventory, ContainerLevelAccess containerLevelAccess) {
+    public MixinAnvilMenuFabric(@Nullable MenuType<?> menuType, int i, Inventory inventory, ContainerLevelAccess containerLevelAccess) {
         super(menuType, i, inventory, containerLevelAccess);
     }
 
