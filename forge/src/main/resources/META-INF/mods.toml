@@ -6,13 +6,14 @@ issueTrackerURL="https://github.com/GeradesoLukas/weaponleveling/issues"
 [[mods]]
 modId = "weaponleveling"
 version = "${version}"
-displayName = "Weapon Leveling"
+displayName = "Lukas' Weapon Leveling"
 authors = "GeradesoLukas"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/weapon-leveling"
 description = '''
-This mod increases the amount of damage you deal with your weapons over time, by leveling them up
+Leveling your items since 2022.
+Very customizable mod to make your equipment stronger over time.
 '''
-#logoFile = ""
+logoFile = "assets/weaponleveling/icon.png"
 
 [[dependencies.weaponleveling]]
 modId = "forge"
@@ -24,7 +25,7 @@ side = "BOTH"
 [[dependencies.weaponleveling]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.18.2,)"
+versionRange = "[1.18.2]"
 ordering = "NONE"
 side = "BOTH"
 
