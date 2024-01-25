@@ -31,9 +31,11 @@ dependencies {
 
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    implementation "com.electronwill.night-config:core:${rootProject.night_config_version}"
-    implementation "com.electronwill.night-config:toml:${rootProject.night_config_version}"
-    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}"
+    implementation (shadowCommon("com.electronwill.night-config:core:${rootProject.night_config_version}"))
+    implementation (shadowCommon("com.electronwill.night-config:toml:${rootProject.night_config_version}"))
+    modApi (shadowCommon("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}")){
+        transitive = false
+    }
 
     modImplementation "maven.modrinth:better-combat:${rootProject.bettercombat_fabric_version}" // Better Combat
     modImplementation "maven.modrinth:cloth-config:${rootProject.clothconfig_fabric_version}" // Cloth Config
@@ -59,6 +61,8 @@ shadowJar {
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
     relocate("com.llamalad7.mixinextras", "net.geradesolukas.mixinextras")
+    relocate("fuzs.forgeconfigapiport", "net.geradesolukas.forgeconfigapiport")
+    relocate("com.electronwill.nightconfig", "net.geradesolukas.nightconfig")
     mergeServiceFiles()
 }
 
