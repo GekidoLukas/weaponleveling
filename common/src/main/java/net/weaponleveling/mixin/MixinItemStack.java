@@ -61,20 +61,4 @@ public abstract class MixinItemStack {
         }
     }
 
-    @Inject(
-            method = "hurtAndBreak",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private <T extends LivingEntity> void preventBreak(int i, T livingEntity, Consumer<T> consumer, CallbackInfo ci) {
-        ItemStack stack = ((ItemStack) ((Object) this));
-        if(livingEntity instanceof ServerPlayer player) {
-            if(this.hurt(i, livingEntity.getRandom(), player)) {
-                if(WLPlatformGetter.getBrokenItemsDontVanish() && ModUtils.shouldBeUnbreakable(stack)) {
-                    CompoundTag tag = new CompoundTag();
-                    tag.putBoolean("isBroken", true);
-                    stack.setTag(tag);
-                    ci.cancel();
-                }
-            }
-        }
-    }
 }
