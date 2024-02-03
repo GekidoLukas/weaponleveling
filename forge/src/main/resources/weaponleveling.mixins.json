@@ -9,6 +9,7 @@
     "MixinDaggerEntity",
     "MixinGun",
     "MixinGunItem",
+    "MixinItemStackForge",
     "MixinModifiableBowItem",
     "MixinModifiableCrossbowItem",
     "MixinPlayerForge",

@@ -7,6 +7,7 @@
   ],
   "mixins": [
     "MixinAnvilMenuFabric",
+    "MixinItemStackFabric",
     "MixinPlayerFabric",
     "MixinWeaponRegistry"
   ],
