@@ -35,7 +35,7 @@ public abstract class MixinAnvilMenuFabric extends ItemCombinerMenu {
     private void unBreakItem(CallbackInfo ci, ItemStack itemStack, int i, int j, int k, ItemStack itemStack2, ItemStack itemStack3, Map map) {
 
         if(WLPlatformGetter.getBrokenItemsDontVanish() && ModUtils.isBroken(itemStack2) && itemStack2.getItem().isValidRepairItem(itemStack, itemStack3)) {
-            CompoundTag tag = new CompoundTag();
+            CompoundTag tag = itemStack2.getTag();
             tag.putBoolean("isBroken", false);
             itemStack2.setTag(tag);
             itemStack2.setDamageValue(itemStack2.getMaxDamage()-1);

@@ -48,6 +48,10 @@
     "net/weaponleveling/mixin/client/MixinGameRenderer": {
       "shouldRenderBlockOutline": "Lnet/minecraft/class_757;method_3202()Z"
     },
+    "net/weaponleveling/mixin/client/MixinGuiGraphics": {
+      "Lnet/minecraft/client/gui/GuiGraphics;renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V": "Lnet/minecraft/class_332;method_51432(Lnet/minecraft/class_327;Lnet/minecraft/class_1799;IILjava/lang/String;)V",
+      "Lnet/minecraft/world/item/ItemStack;isBarVisible()Z": "Lnet/minecraft/class_1799;method_31578()Z"
+    },
     "net/weaponleveling/mixin/client/MixinHumanoidArmorLayer": {
       "renderArmorPiece": "Lnet/minecraft/class_970;method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V"
     },
@@ -113,6 +117,10 @@
       },
       "net/weaponleveling/mixin/client/MixinGameRenderer": {
         "shouldRenderBlockOutline": "Lnet/minecraft/class_757;method_3202()Z"
+      },
+      "net/weaponleveling/mixin/client/MixinGuiGraphics": {
+        "Lnet/minecraft/client/gui/GuiGraphics;renderItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V": "Lnet/minecraft/class_332;method_51432(Lnet/minecraft/class_327;Lnet/minecraft/class_1799;IILjava/lang/String;)V",
+        "Lnet/minecraft/world/item/ItemStack;isBarVisible()Z": "Lnet/minecraft/class_1799;method_31578()Z"
       },
       "net/weaponleveling/mixin/client/MixinHumanoidArmorLayer": {
         "renderArmorPiece": "Lnet/minecraft/class_970;method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V"

@@ -2,6 +2,7 @@ package net.weaponleveling.mixin;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import dev.architectury.platform.Platform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -69,7 +70,10 @@ public abstract class MixinItemStack {
         if(livingEntity instanceof ServerPlayer player) {
             if(this.hurt(i, livingEntity.getRandom(), player)) {
                 if(WLPlatformGetter.getBrokenItemsDontVanish() && ModUtils.shouldBeUnbreakable(stack)) {
-                    CompoundTag tag = new CompoundTag();
+                    if(Platform.isForge()) {
+                        //TODO Play sound for break
+                    }
+                    CompoundTag tag = stack.getTag();
                     tag.putBoolean("isBroken", true);
                     stack.setTag(tag);
                     ci.cancel();

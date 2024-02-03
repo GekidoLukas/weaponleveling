@@ -24,13 +24,5 @@ public class MixinItemRenderer {
         return value;
     }
 
-    //TODO Bar render for 1.20.1
-    //@ModifyExpressionValue(
-    //        method = "Lnet/minecraft/client/renderer/entity/ItemRenderer;renderGuiItemDecorations(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V",
-    //        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isBarVisible()Z"))
-    //private boolean injectBar(boolean original, Font font, ItemStack stack, int i, int j, @Nullable String string) {
-    //    if (ItemUtils.isBroken(stack)) {
-    //        return original && !ItemUtils.isBroken(stack);
-    //    } else return original;
-    //}
+
 }
