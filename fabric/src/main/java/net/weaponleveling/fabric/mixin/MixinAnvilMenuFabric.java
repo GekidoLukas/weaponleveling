@@ -38,7 +38,7 @@ public abstract class MixinAnvilMenuFabric extends ItemCombinerMenu {
 
         WeaponLevelingMod.LOGGER.info("mixin fabric launches");
         if(WLPlatformGetter.getBrokenItemsDontVanish() && ModUtils.isBroken(itemStack2) && itemStack2.getItem().isValidRepairItem(itemStack, itemStack3)) {
-            CompoundTag tag = new CompoundTag();
+            CompoundTag tag = itemStack2.getTag();
             tag.putBoolean("isBroken", false);
             itemStack2.setTag(tag);
             itemStack2.setDamageValue(itemStack2.getMaxDamage()-1);

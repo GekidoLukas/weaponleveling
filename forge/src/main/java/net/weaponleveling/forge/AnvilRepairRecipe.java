@@ -17,7 +17,7 @@ public class AnvilRepairRecipe {
     public static void onAnvilUpdate(AnvilUpdateEvent event) {
         if(WLPlatformGetter.getBrokenItemsDontVanish() && ModUtils.isBroken(event.getLeft()) && event.getLeft().getItem().isValidRepairItem(event.getLeft(), event.getRight())) {
             ItemStack newResult = event.getLeft().copy();
-            CompoundTag tag = new CompoundTag();
+            CompoundTag tag = newResult.getTag();
             tag.putBoolean("isBroken", false);
             newResult.setTag(tag);
             newResult.setDamageValue(newResult.getMaxDamage()-1);

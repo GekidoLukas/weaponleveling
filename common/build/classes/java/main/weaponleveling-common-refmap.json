@@ -15,8 +15,6 @@
     },
     "net/weaponleveling/mixin/MixinItemStack": {
       "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;": "Lnet/minecraft/class_1799;method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",
-      "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;": "Lnet/minecraft/class_1799;method_7909()Lnet/minecraft/class_1792;",
-      "hurtAndBreak": "Lnet/minecraft/class_1799;method_7956(ILnet/minecraft/class_1309;Ljava/util/function/Consumer;)V",
       "useOn": "Lnet/minecraft/class_1799;method_7981(Lnet/minecraft/class_1838;)Lnet/minecraft/class_1269;"
     },
     "net/weaponleveling/mixin/MixinLivingEntity": {
@@ -83,8 +81,6 @@
       },
       "net/weaponleveling/mixin/MixinItemStack": {
         "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;": "Lnet/minecraft/class_1799;method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",
-        "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;": "Lnet/minecraft/class_1799;method_7909()Lnet/minecraft/class_1792;",
-        "hurtAndBreak": "Lnet/minecraft/class_1799;method_7956(ILnet/minecraft/class_1309;Ljava/util/function/Consumer;)V",
         "useOn": "Lnet/minecraft/class_1799;method_7981(Lnet/minecraft/class_1838;)Lnet/minecraft/class_1269;"
       },
       "net/weaponleveling/mixin/MixinLivingEntity": {
