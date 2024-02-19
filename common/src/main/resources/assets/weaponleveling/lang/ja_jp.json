@@ -9,7 +9,7 @@
   "weaponleveling.tooltip.overmaxlevel": "待て, これ以上は上げられない",
   "weaponleveling.levelup": "到達レベル ",
   "weaponleveling.command.setlevel": "%s のレベルを %s に設定します",
-  "weaponleveling.command.setpoints": "s の XP ポイントを %s に設定します",
+  "weaponleveling.command.setpoints": "%s の XP ポイントを %s に設定します",
   "weaponleveling.command.exception.novalidweapon": "%s は有効なアイテムではありません",
   "weaponleveling.command.exception.outofbounds": "%s は最大値を超えています",
   "weaponleveling.tooltip.broken": "壊れた"
