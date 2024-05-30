@@ -31,9 +31,9 @@ dependencies {
 
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    implementation (shadowCommon("com.electronwill.night-config:core:${rootProject.night_config_version}"))
-    implementation (shadowCommon("com.electronwill.night-config:toml:${rootProject.night_config_version}"))
-    modApi (shadowCommon("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}")){
+    implementation ("com.electronwill.night-config:core:${rootProject.night_config_version}")
+    implementation ("com.electronwill.night-config:toml:${rootProject.night_config_version}")
+    modApi ("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}"){
         transitive = false
     }
 
@@ -61,15 +61,20 @@ shadowJar {
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
     relocate("com.llamalad7.mixinextras", "net.geradesolukas.mixinextras")
-    relocate("fuzs.forgeconfigapiport", "net.geradesolukas.forgeconfigapiport")
-    relocate("com.electronwill.nightconfig", "net.geradesolukas.nightconfig")
+    //relocate("fuzs.forgeconfigapiport", "net.geradesolukas.forgeconfigapiport")
+    //relocate("com.electronwill.nightconfig", "net.geradesolukas.nightconfig")
     mergeServiceFiles()
 }
 
 remapJar {
+//    include ("com.electronwill.night-config:core:${rootProject.night_config_version}")
+//    include ("com.electronwill.night-config:toml:${rootProject.night_config_version}")
+//    include ("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}")
+
     injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
+
     archiveClassifier = "fabric"
 }
 
