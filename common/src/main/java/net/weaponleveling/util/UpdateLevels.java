@@ -96,7 +96,7 @@ public class UpdateLevels {
         int startinglevel =  ModUtils.getLevelStartAmount(stack);
 
         if (currentlevel != 0) {
-            maxlevel = ((currentlevel - 1) + currentlevel) * levelmodifier + 100;
+            maxlevel = startinglevel + ((currentlevel - 1) + currentlevel) * levelmodifier;
         } else {
             maxlevel = startinglevel;
         }
@@ -143,6 +143,10 @@ public class UpdateLevels {
 
         else if(entity.getType().is(DataGetter.entities_animal) || isCustomAnimal(entity) || liststate.get() == 1) {
             xpamount = DataGetter.getXpAnimal();
+        }
+
+        else if(entity.getType().is(DataGetter.entities_blacklist)) {
+            xpamount = 0;
         }
 
 
@@ -216,34 +220,6 @@ public class UpdateLevels {
         return (int)(initialxp * randomValue);
     }
 
-    public static float reduceDamageArmor(LivingEntity player, float damage) {
-        ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-        ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
-        ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
-        ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
-
-        float partdamage = (damage / 4);
-        float helmetdamage = getDamagePerPiece(player,partdamage,helmet);
-        float chestplatedamage = getDamagePerPiece(player,partdamage,chestplate);
-        float leggingsdamage = getDamagePerPiece(player,partdamage,leggings);
-        float bootsdamage = getDamagePerPiece(player,partdamage,boots);
-
-        return (helmetdamage + chestplatedamage + leggingsdamage + bootsdamage);
-    }
-
-    public static float getDamagePerPiece(LivingEntity player, float partdamage, ItemStack stack) {
-        int level = stack.getOrCreateTag().getInt("level");
-        double maxdamagereduction = getReduction(level,stack) / 100;
-        double maxlevel = ModUtils.getMaxLevel(stack);
-        double finaldamage = partdamage - (partdamage * (maxdamagereduction * (level/maxlevel)));
-
-        return (float) finaldamage;
-    }
-
-    public static float getReduction(int level, ItemStack stack) {
-        double maxdamagereduction = ModUtils.getArmorMaxDamageReduction(stack);
-        return (float) maxdamagereduction * ((float) level/ ModUtils.getMaxLevel(stack));
-    }
 
     public static void updateForKill(LivingEntity victim, DamageSource source, @Nullable ItemStack specificStack) {
         Entity killer = source.getEntity();

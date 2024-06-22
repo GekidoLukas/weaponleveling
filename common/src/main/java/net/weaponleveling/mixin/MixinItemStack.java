@@ -46,6 +46,10 @@ public abstract class MixinItemStack {
             ModUtils.modifyAttributeModifier(hashmap,attackDamage, ModUtils.getWeaponDamagePerLevel(stack) * stack.getTag().getInt("level"));
             ModUtils.modifyAttributeModifier(hashmap,attackSpeed, 0.0d );
         }
+        if (ModUtils.isLevelableItem(stack) && ModUtils.isAcceptedArmor(stack) && stack.getTag() != null) {
+            ModUtils.modifyAttributeModifier(hashmap,armor, ModUtils.getArmorPerLevel(stack) * stack.getTag().getInt("level"));
+            ModUtils.modifyAttributeModifier(hashmap,armor_toughness, ModUtils.getToughnessPerLevel(stack) * stack.getTag().getInt("level") );
+        }
         if(ModUtils.isBroken(stack)) {
             ModUtils.removeAttributeModifier(hashmap, armor);
             ModUtils.removeAttributeModifier(hashmap, armor_toughness);

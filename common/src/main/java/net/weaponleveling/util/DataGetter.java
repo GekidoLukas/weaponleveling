@@ -80,6 +80,22 @@ public class DataGetter {
         return DAMAGE_PER_LEVEL;
     }
 
+    public static Double ARMOR_PER_LEVEL = null;
+    public static double getArmorPerLevel() {
+        if(ARMOR_PER_LEVEL == null) {
+            return WeaponLevelingConfig.armor_per_level;
+        }
+        return ARMOR_PER_LEVEL;
+    }
+
+    public static Double TOUGHNESS_PER_LEVEL = null;
+    public static double getToughnessPerLevel() {
+        if(TOUGHNESS_PER_LEVEL == null) {
+            return WeaponLevelingConfig.toughness_per_level;
+        }
+        return TOUGHNESS_PER_LEVEL;
+    }
+
     public static Integer ARMOR_RNG = null;
     public static int getArmorRng() {
         if(ARMOR_RNG == null) {
@@ -88,13 +104,7 @@ public class DataGetter {
         return ARMOR_RNG;
     }
 
-    public static Double MAX_DMG_REDUCTION = null;
-    public static double getMaxDmgReduction() {
-        if(MAX_DMG_REDUCTION == null) {
-            return WeaponLevelingConfig.max_damage_reduction_percentage;
-        }
-        return MAX_DMG_REDUCTION;
-    }
+
 
 
     public static Double BOW_LIKE_MODIFIER = null;
@@ -179,6 +189,7 @@ public class DataGetter {
 
 
 
+    public static final TagKey<EntityType<?>> entities_blacklist = TagKey.create(Registries.ENTITY_TYPE,new ResourceLocation(WeaponLevelingMod.MODID,"entities_blacklist"));
     public static final TagKey<EntityType<?>> entities_animal = TagKey.create(Registries.ENTITY_TYPE,new ResourceLocation(WeaponLevelingMod.MODID,"entities_animal"));
     public static final TagKey<EntityType<?>> entities_monster = TagKey.create(Registries.ENTITY_TYPE,new ResourceLocation(WeaponLevelingMod.MODID,"entities_monster"));
     public static final TagKey<EntityType<?>> entities_mini_boss = TagKey.create(Registries.ENTITY_TYPE,new ResourceLocation(WeaponLevelingMod.MODID,"entities_mini_boss"));

@@ -22,8 +22,9 @@ public class WLConfigReader {
         buf.writeInt(WeaponLevelingConfig.level_modifier);
         buf.writeInt(WeaponLevelingConfig.starting_xp_amount);
         buf.writeDouble(WeaponLevelingConfig.damage_per_level);
+        buf.writeDouble(WeaponLevelingConfig.armor_per_level);
+        buf.writeDouble(WeaponLevelingConfig.toughness_per_level);
         buf.writeInt(WeaponLevelingConfig.armor_rng_modifier);
-        buf.writeDouble(WeaponLevelingConfig.max_damage_reduction_percentage);
         buf.writeDouble(WeaponLevelingConfig.bow_like_damage_modifier);
         buf.writeBoolean(WeaponLevelingConfig.broken_items_wont_vanish);
         buf.writeBoolean(WeaponLevelingConfig.disable_unlisted_items);

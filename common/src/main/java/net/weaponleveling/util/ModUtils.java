@@ -1,18 +1,10 @@
 package net.weaponleveling.util;
 
 import com.google.common.collect.Multimap;
-import dev.architectury.registry.registries.Registrar;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
-import net.weaponleveling.WLPlatformGetter;
-import net.weaponleveling.WeaponLevelingConfig;
-import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.data.LevelableItem;
 import net.weaponleveling.data.LevelableItemsLoader;
 
@@ -187,6 +179,18 @@ public class ModUtils {
         else if (isLevelableJSON(stack)) return levelableitem.getWeaponDamagePerLevel();
         else return DataGetter.getDamagePerLevel();
     }
+    public static double getArmorPerLevel(ItemStack stack) {
+        LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
+        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("armorPerLevel")) return stack.getTag().getCompound("levelable").getDouble("armorPerLevel");
+        else if (isLevelableJSON(stack)) return levelableitem.getArmorPerLevel();
+        else return DataGetter.getArmorPerLevel();
+    }
+    public static double getToughnessPerLevel(ItemStack stack) {
+        LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
+        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("toughnessPerLevel")) return stack.getTag().getCompound("levelable").getDouble("toughnessPerLevel");
+        else if (isLevelableJSON(stack)) return levelableitem.getToughnessPerLevel();
+        else return DataGetter.getToughnessPerLevel();
+    }
     public static double getBowlikeModifier(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("bowlikeModifier")) return stack.getTag().getCompound("levelable").getDouble("bowlikeModifier");
@@ -194,12 +198,6 @@ public class ModUtils {
         else return DataGetter.getBowLikeModifier();
     }
 
-    public static double getArmorMaxDamageReduction(ItemStack stack) {
-        LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("armorMaxDamageReduction")) return stack.getTag().getCompound("levelable").getDouble("armorMaxDamageReduction");
-        else if (isLevelableJSON(stack)) return levelableitem.getArmorMaxDamageReduction();
-        else return DataGetter.getMaxDmgReduction();
-    }
 
     public static int getArmorXPRNGModifier(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));

@@ -35,15 +35,17 @@ public class ClientEvents {
         DecimalFormat doubleDecimalFormat = new DecimalFormat("#.##");
         DecimalFormat fourDecimalFormat = new DecimalFormat("#.####");
 
-        Style ARROW = Style.EMPTY.withColor(12517240);
-        Style TEXT = Style.EMPTY.withColor(9736850);
-        Style VALUES = Style.EMPTY.withColor(15422034);
-        Style SHIFT = Style.EMPTY.withColor(12517240);
+        Style TITLE = Style.EMPTY.withColor(WeaponLevelingConfig.titleColor);
+        Style ARROW = Style.EMPTY.withColor(WeaponLevelingConfig.arrowColor);
+        Style TEXT = Style.EMPTY.withColor(WeaponLevelingConfig.textColor);
+        Style VALUES = Style.EMPTY.withColor(WeaponLevelingConfig.valuesColor);
+        Style SHIFT = Style.EMPTY.withColor(WeaponLevelingConfig.shiftColor);
+        Style BROKEN = Style.EMPTY.withColor(WeaponLevelingConfig.brokenColor);
 
 
 
         if(ModUtils.isBroken(stack)) {
-            tooltip.add(Component.translatable("weaponleveling.tooltip.broken").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+            tooltip.add(Component.translatable("weaponleveling.tooltip.broken").setStyle(BROKEN));
         }
         if (ModUtils.isLevelableItem(stack)) {
             if (shouldExtendTooltip()) {
@@ -52,7 +54,7 @@ public class ClientEvents {
                 int maxlevelprogress = UpdateLevels.getMaxLevel(level,stack);
 
 
-                tooltip.add(Component.translatable("weaponleveling.tooltip.itemlevel").setStyle(ARROW));
+                tooltip.add(Component.translatable("weaponleveling.tooltip.itemlevel").setStyle(TITLE));
 
                 tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
                         .append(Component.translatable("weaponleveling.tooltip.level").setStyle(TEXT))
@@ -83,13 +85,6 @@ public class ClientEvents {
                     tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
                             .append(Component.translatable("weaponleveling.tooltip.projectile_weapon_level").setStyle(TEXT))
                             .append(Component.literal("" + doubleDecimalFormat.format(extradamage)).setStyle(VALUES))
-                    );
-                }
-
-                if (ModUtils.isAcceptedArmor(stack)) {
-                    tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
-                            .append(Component.translatable("weaponleveling.tooltip.reduction").setStyle(TEXT))
-                            .append(Component.literal( fourDecimalFormat.format(UpdateLevels.getReduction(level, stack))+ "%").setStyle(VALUES))
                     );
                 }
 

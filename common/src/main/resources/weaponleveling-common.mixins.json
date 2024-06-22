@@ -12,6 +12,7 @@
     "client.MixinPlayerRenderer"
   ],
   "mixins": [
+    "InventoryMixin",
     "MixinBowItem",
     "MixinCrossbowItem",
     "MixinInventoryMenu",

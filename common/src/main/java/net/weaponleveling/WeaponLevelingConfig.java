@@ -12,7 +12,24 @@ public class WeaponLevelingConfig extends MidnightConfig {
     @Entry(category = "client")
     @Client
     public static boolean holdShiftToShow = false;
-
+    @Entry(category = "client", isColor = true)
+    @Client
+    public static int titleColor = 12517240;
+    @Entry(category = "client", isColor = true)
+    @Client
+    public static int arrowColor = 12517240;
+    @Entry(category = "client", isColor = true)
+    @Client
+    public static int textColor = 9736850;
+    @Entry(category = "client", isColor = true)
+    @Client
+    public static int valuesColor = 15422034;
+    @Entry(category = "client", isColor = true)
+    @Client
+    public static int shiftColor = 12517240;
+    @Entry(category = "client", isColor = true)
+    @Client
+    public static int brokenColor = 15422034;
 
 
     //LEVELING
@@ -32,13 +49,17 @@ public class WeaponLevelingConfig extends MidnightConfig {
     @Entry(category = "leveling", min = 0, max = 10000)
     public static int level_modifier = 80;
     @Entry(category = "leveling", min = 0, max = 10000)
-    public static int starting_xp_amount = 50;
+    public static int starting_xp_amount = 100;
     @Entry(category = "leveling", min = 0d, max = 100d)
     public static double damage_per_level = 0.1d;
+    @Entry(category = "leveling", min = 0d, max = 100d)
+    public static double armor_per_level = 0.1d;
+    @Entry(category = "leveling", min = 0d, max = 100d)
+    public static double toughness_per_level = 0.1d;
+
     @Entry(category = "leveling", min = 0, max = 10000)
     public static int armor_rng_modifier = 50;
-    @Entry(category = "leveling", min = 0, max = 100, isSlider = true, precision = 1)
-    public static double max_damage_reduction_percentage= 75.0d;
+
     @Entry(category = "leveling", min = 0d, max = 10d)
     public static double bow_like_damage_modifier=0.25d;
     @Entry(category = "leveling")
@@ -49,7 +70,7 @@ public class WeaponLevelingConfig extends MidnightConfig {
     @Comment(category = "items", centered = true)
     public static Comment items_title;
     @Entry(category = "items")
-    public static boolean broken_items_wont_vanish;
+    public static boolean broken_items_wont_vanish = true;
 
     @Entry(category = "items")
     public static boolean send_registry_in_log;
@@ -57,19 +78,7 @@ public class WeaponLevelingConfig extends MidnightConfig {
     @Entry(category = "items")
     public static boolean disable_unlisted_items;
 
-//    @Entry(category = "items")
-//    public static List<String> blacklist_items = ConfigLists.DEFAULT_ITEM_BLACKLIST;
-//    @Entry(category = "items")
-//    public static List<String> melee_items = ConfigLists.DEFAULT_MELEE_ITEMS;
-//    @Entry(category = "items")
-//    public static List<String> projectile_items = ConfigLists.DEFAULT_PROJECTILE_ITEMS;
-//    @Entry(category = "items")
-//    public static List<String> armor_items = ConfigLists.DEFAULT_ARMOR_ITEMS;
 
-//    @Entry(category = "items")
-//    public static List<String> unbreakable_items_whitelist = ConfigLists.DEFAULT_UNBREAKABLE_WHITELIST;
-//    @Entry(category = "items")
-//    public static List<String> unbreakable_items_blacklist = ConfigLists.DEFAULT_UNBREAKABLE_BLACKLIST;
 
     @Entry(category = "items")
     public static boolean levelable_items_auto_unbreakable = true;
@@ -81,14 +90,6 @@ public class WeaponLevelingConfig extends MidnightConfig {
     //ENTITIES
     @Comment(category = "entities", centered = true)
     public static Comment entities_title;
-//    @Entry(category = "entities")
-//    public static List<String> entities_animal = ConfigLists.DEFAULT_ANIMALS;
-//    @Entry(category = "entities")
-//    public static List<String> entities_monster = ConfigLists.DEFAULT_MONSTER;
-//    @Entry(category = "entities")
-//    public static List<String> entities_mini_boss = ConfigLists.DEFAULT_MINIBOSSES;
-//    @Entry(category = "entities")
-//    public static List<String> entities_boss = ConfigLists.DEFAULT_BOSSES;
 
     @Entry(category = "entities", min = 0, max = 10000)
     public static int xp_for_generic_kill = 1;

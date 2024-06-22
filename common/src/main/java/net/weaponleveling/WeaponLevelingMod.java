@@ -23,7 +23,11 @@ public class WeaponLevelingMod {
         Networking.registerC2SPackets();
         ReloadListenerRegistry.register(PackType.SERVER_DATA,LevelableItemsLoader.INSTANCE);
         MidnightConfig.init(MODID, WeaponLevelingConfig.class);
-
+        //TODO
+        //- Example Datapacks
+        //- Individual Editing of entities
+        //- Fix remaining known bugs
+        //- Staring xp + following on next levels
 
     }
 }

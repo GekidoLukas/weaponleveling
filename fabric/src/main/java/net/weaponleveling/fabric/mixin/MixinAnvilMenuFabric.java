@@ -9,6 +9,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
 import org.jetbrains.annotations.Nullable;
@@ -33,10 +34,10 @@ public abstract class MixinAnvilMenuFabric extends ItemCombinerMenu {
 
     @Inject(
             method = "createResult",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void unBreakItem(CallbackInfo ci, ItemStack itemStack, int i, int j, int k, ItemStack itemStack2, ItemStack itemStack3, Map map) {
 
-        if(DataGetter.getBrokenItemsWontVanish() && ModUtils.isBroken(itemStack2) && itemStack2.getItem().isValidRepairItem(itemStack, itemStack3)) {
+        if(ModUtils.isBroken(itemStack2) && itemStack2.getItem().isValidRepairItem(itemStack, itemStack3)) {
             CompoundTag tag = itemStack2.getTag();
             tag.putBoolean("isBroken", false);
             itemStack2.setTag(tag);

@@ -4,10 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingConfig;
-import net.weaponleveling.util.DataGetter;
-import net.weaponleveling.util.ModUtils;
 
 public class LevelableItem {
 
@@ -27,15 +24,15 @@ public class LevelableItem {
     private final int critXPAmount;
     private final int critXPChance;
     private final double weaponDamagePerLevel;
+    private final double armorArmorPerLevel;
+    private final double armorToughnessPerLevel;
     private final double bowlikeModifier;
-    private final double armorMaxDamageReduction;
-
     private final int armorXPRNGModifier;
 
     //private final String leveltype;
 
 
-    public LevelableItem(Item item, boolean disabled, boolean isMelee, boolean isProjectile, boolean isArmor, int maxLevel, int levelModifier, int levelStartAmount, int hitXPAmount, int hitXPChance, int critXPAmount, int critXPChance, double weaponDamagePerLevel, double bowlikeModifier, double armorMaxDamageReduction, int armorXPRNGModifier) {
+    public LevelableItem(Item item, boolean disabled, boolean isMelee, boolean isProjectile, boolean isArmor, int maxLevel, int levelModifier, int levelStartAmount, int hitXPAmount, int hitXPChance, int critXPAmount, int critXPChance, double weaponDamagePerLevel, double armorArmorPerLevel,double armorToughnessPerLevel, double bowlikeModifier,  int armorXPRNGModifier) {
         this.item = item;
         this.disabled = disabled;
         this.isMelee = isMelee;
@@ -49,8 +46,9 @@ public class LevelableItem {
         this.critXPAmount = critXPAmount;
         this.critXPChance = critXPChance;
         this.weaponDamagePerLevel = weaponDamagePerLevel;
+        this.armorArmorPerLevel = armorArmorPerLevel;
+        this.armorToughnessPerLevel = armorToughnessPerLevel;
         this.bowlikeModifier = bowlikeModifier;
-        this.armorMaxDamageReduction = armorMaxDamageReduction;
         this.armorXPRNGModifier = armorXPRNGModifier;
     }
 
@@ -106,14 +104,17 @@ public class LevelableItem {
     public double getWeaponDamagePerLevel() {
         return weaponDamagePerLevel;
     }
+    public double getArmorPerLevel() {
+        return armorArmorPerLevel;
+    }
+    public double getToughnessPerLevel() {
+        return armorToughnessPerLevel;
+    }
 
     public double getBowlikeModifier() {
         return bowlikeModifier;
     }
 
-    public double getArmorMaxDamageReduction() {
-        return armorMaxDamageReduction;
-    }
 
     public int getArmorXPRNGModifier() {
         return armorXPRNGModifier;
@@ -202,9 +203,14 @@ public class LevelableItem {
             bowlikeModifier = object.get("bowlikeModifier").getAsDouble();
         }
 
-        double armorMaxDamageReduction = WeaponLevelingConfig.max_damage_reduction_percentage;
-        if (object.has("armorMaxDamageReduction")) {
-            armorMaxDamageReduction = object.get("armorMaxDamageReduction").getAsDouble();
+        double armorArmorPerLevel = WeaponLevelingConfig.armor_per_level;
+        if (object.has("armorPerLevel")) {
+            armorArmorPerLevel = object.get("armorArmorPerLevel").getAsDouble();
+        }
+
+        double armorToughnessPerLevel = WeaponLevelingConfig.toughness_per_level;
+        if (object.has("toughnessPerLevel")) {
+            armorToughnessPerLevel = object.get("armorToughnessPerLevel").getAsDouble();
         }
 
         int armorXPRNGModifier = WeaponLevelingConfig.armor_rng_modifier;
@@ -212,6 +218,6 @@ public class LevelableItem {
             armorXPRNGModifier = object.get("armorXPRNGModifier").getAsInt();
         }
 
-        return new LevelableItem(item, disabled, isMeleeWeapon, isProjectileWeapon, isArmor, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, critXPAmount, critXPChance, weaponDamagePerLevel, bowlikeModifier, armorMaxDamageReduction, armorXPRNGModifier);
+        return new LevelableItem(item, disabled, isMeleeWeapon, isProjectileWeapon, isArmor, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, critXPAmount, critXPChance, weaponDamagePerLevel, armorArmorPerLevel, armorToughnessPerLevel, bowlikeModifier, armorXPRNGModifier);
     }
 }

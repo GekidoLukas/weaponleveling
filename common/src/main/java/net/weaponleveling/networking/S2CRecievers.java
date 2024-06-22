@@ -30,8 +30,9 @@ public class S2CRecievers {
             DataGetter.LEVEL_MODIFIER = buf.readInt();
             DataGetter.STARTING_XP = buf.readInt();
             DataGetter.DAMAGE_PER_LEVEL = buf.readDouble();
-            DataGetter.ARMOR_RNG = buf.readInt();
-            DataGetter.MAX_DMG_REDUCTION = buf.readDouble();
+            DataGetter.ARMOR_PER_LEVEL = buf.readDouble();
+            DataGetter.TOUGHNESS_PER_LEVEL = buf.readDouble();
+            DataGetter.ARMOR_RNG = buf.readInt();;
             DataGetter.BOW_LIKE_MODIFIER = buf.readDouble();
             DataGetter.BROKEN_ITEMS_WONT_VANISH = buf.readBoolean();
             DataGetter.DISABLE_UNLISTED = buf.readBoolean();
