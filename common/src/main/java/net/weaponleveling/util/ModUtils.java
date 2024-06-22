@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 import net.weaponleveling.WLPlatformGetter;
+import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.data.LevelableItem;
 import net.weaponleveling.data.LevelableItemsLoader;
@@ -64,29 +65,26 @@ public class ModUtils {
     }
 
     private static boolean isFallbackMelee(ItemStack stack) {
-        String name = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
         boolean isClassItem = (stack.getItem() instanceof SwordItem ||
                 stack.getItem() instanceof AxeItem) &&
-                !WLPlatformGetter.getDisableUnlistedItems();
+                !DataGetter.getDisableUnlisted();
 
-        return (isClassItem || WLPlatformGetter.getMeleeItems().contains(name));
+        return (isClassItem || stack.is(DataGetter.melee_items));
     }
 
 
 
     private static boolean isFallbackProjectile(ItemStack stack) {
-        String name = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
         boolean isClassItem = (stack.getItem() instanceof ProjectileWeaponItem) &&
-                !WLPlatformGetter.getDisableUnlistedItems();
+                !DataGetter.getDisableUnlisted();
 
-        return (isClassItem || (WLPlatformGetter.getProjectedItems().contains(name)));
+        return (isClassItem || stack.is(DataGetter.projectile_items));
     }
     private static boolean isFallbackArmor(ItemStack stack) {
-        String name = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
         boolean isClassItem = (stack.getItem() instanceof ArmorItem) &&
-                !WLPlatformGetter.getDisableUnlistedItems();
+                !DataGetter.getDisableUnlisted();
 
-        return (isClassItem || (WLPlatformGetter.getArmorItems().contains(name)));
+        return (isClassItem || stack.is(DataGetter.armor_items));
     }
 
     public static boolean isBroken(ItemStack stack) {
@@ -94,16 +92,15 @@ public class ModUtils {
     }
 
     public static boolean shouldBeUnbreakable(ItemStack stack) {
-        String name = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
         AtomicBoolean isInTag = new AtomicBoolean(false);
-        if(WLPlatformGetter.getLevelableIsUnbreakable() && isLevelableItem(stack )&& !WLPlatformGetter.getUnbreakableBlacklist().contains(name)) isInTag.set(true);
-        if(WLPlatformGetter.getUnbreakableWhitelist().contains(name) && !WLPlatformGetter.getUnbreakableBlacklist().contains(name)) isInTag.set(true);
+        if(DataGetter.getLevelableAutoUnbreakable() && isLevelableItem(stack )&& !stack.is(DataGetter.non_vanish_items_blacklist)) isInTag.set(true);
+        if(stack.is(DataGetter.non_vanish_items_whitelist) && !stack.is(DataGetter.non_vanish_items_blacklist)) isInTag.set(true);
 
-        BuiltInRegistries.ITEM.getTags().forEach(tagKeyNamedPair -> {
-            TagKey<Item> tagKey = tagKeyNamedPair.getFirst();
-            if(WLPlatformGetter.getUnbreakableWhitelist().contains("#" +tagKey.location().toString())) isInTag.set(true);
-            if(WLPlatformGetter.getUnbreakableBlacklist().contains("#" +tagKey.location().toString())) isInTag.set(false);
-        });
+//        BuiltInRegistries.ITEM.getTags().forEach(tagKeyNamedPair -> {
+//            TagKey<Item> tagKey = tagKeyNamedPair.getFirst();
+//            if(WeaponLevelingConfig.unbreakable_items_whitelist.contains("#" +tagKey.location().toString())) isInTag.set(true);
+//            if(WeaponLevelingConfig.unbreakable_items_blacklist.contains("#" +tagKey.location().toString())) isInTag.set(false);
+//        });
         return isInTag.get();
     }
 
@@ -130,10 +127,9 @@ public class ModUtils {
 
     public static boolean isDisabled(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        String name = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("disabled")) return stack.getTag().getCompound("levelable").getBoolean("disabled");
-        if (LevelableItemsLoader.isValid(stack.getItem())) return levelableitem.isDisabled() ||  WLPlatformGetter.getBlacklistedItems().contains(name);
-        else return WLPlatformGetter.getBlacklistedItems().contains(name);
+        if (LevelableItemsLoader.isValid(stack.getItem())) return levelableitem.isDisabled() ||  stack.is(DataGetter.blacklist_items);
+        else return stack.is(DataGetter.blacklist_items);
 
     }
 
@@ -141,20 +137,20 @@ public class ModUtils {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("maxLevel")) return stack.getTag().getCompound("levelable").getInt("maxLevel");
         else if (isLevelableJSON(stack)) return levelableitem.getMaxLevel();
-        else return WLPlatformGetter.getMaxLevel();
+        else return DataGetter.getMaxLevel();
 
     }
     public static int getLevelModifier(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("levelModifier")) return stack.getTag().getCompound("levelable").getInt("levelModifier");
         else if (isLevelableJSON(stack)) return levelableitem.getLevelModifier();
-        else return WLPlatformGetter.getLevelModifier();
+        else return DataGetter.getLevelModifier();
     }
     public static int getLevelStartAmount(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("levelStartAmount")) return stack.getTag().getCompound("levelable").getInt("levelStartAmount");
         else if (isLevelableJSON(stack)) return levelableitem.getLevelStartAmount();
-        else return WLPlatformGetter.getStartingLevelAmount();
+        else return DataGetter.getStartingXp();
     }
 
 
@@ -162,26 +158,26 @@ public class ModUtils {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("hitXPAmount")) return stack.getTag().getCompound("levelable").getInt("hitXPAmount");
         else if (isLevelableJSON(stack)) return levelableitem.getHitXPAmount();
-        else return WLPlatformGetter.getHitXPAmount();
+        else return DataGetter.getHitXpAmount();
     }
     public static int getHitXPChance(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("hitXPChance")) return stack.getTag().getCompound("levelable").getInt("hitXPChance");
         else if (isLevelableJSON(stack)) return levelableitem.getHitXPChance();
-        else return WLPlatformGetter.getHitXPPercentage();
+        else return DataGetter.getHitPercentage();
     }
 
     public static int getCritXPAmount(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("critXPAmount")) return stack.getTag().getCompound("levelable").getInt("critXPAmount");
         else if (isLevelableJSON(stack)) return levelableitem.getCritXPAmount();
-        else return WLPlatformGetter.getCritXPAmount();
+        else return DataGetter.getCritXpAmount();
     }
     public static int getCritXPChance(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("critXPChance")) return stack.getTag().getCompound("levelable").getInt("critXPChance");
         else if (isLevelableJSON(stack)) return levelableitem.getCritXPChance();
-        else return WLPlatformGetter.getCritXPPercentage();
+        else return DataGetter.getCritPercentage();
     }
 
 
@@ -189,26 +185,26 @@ public class ModUtils {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("weaponDamagePerLevel")) return stack.getTag().getCompound("levelable").getDouble("weaponDamagePerLevel");
         else if (isLevelableJSON(stack)) return levelableitem.getWeaponDamagePerLevel();
-        else return WLPlatformGetter.getDamagePerLevel();
+        else return DataGetter.getDamagePerLevel();
     }
     public static double getBowlikeModifier(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("bowlikeModifier")) return stack.getTag().getCompound("levelable").getDouble("bowlikeModifier");
         else if (isLevelableJSON(stack)) return levelableitem.getBowlikeModifier();
-        else return WLPlatformGetter.getBowlikeModifier();
+        else return DataGetter.getBowLikeModifier();
     }
 
     public static double getArmorMaxDamageReduction(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("armorMaxDamageReduction")) return stack.getTag().getCompound("levelable").getDouble("armorMaxDamageReduction");
         else if (isLevelableJSON(stack)) return levelableitem.getArmorMaxDamageReduction();
-        else return WLPlatformGetter.getMaxDamageReduction();
+        else return DataGetter.getMaxDmgReduction();
     }
 
     public static int getArmorXPRNGModifier(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("armorXPRNGModifier")) return stack.getTag().getCompound("levelable").getInt("armorXPRNGModifier");
         else if (isLevelableJSON(stack)) return levelableitem.getArmorXPRNGModifier();
-        else return WLPlatformGetter.getArmorXPRNGModifier();
+        else return DataGetter.getArmorRng();
     }
 }

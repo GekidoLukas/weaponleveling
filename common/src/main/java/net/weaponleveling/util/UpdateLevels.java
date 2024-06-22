@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.weaponleveling.WLPlatformGetter;
+import net.weaponleveling.WeaponLevelingConfig;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -103,48 +104,45 @@ public class UpdateLevels {
     }
 
     public static int getXPForEntity(Entity entity) {
-        //Registrar<EntityType> en
 
-
-        String name = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString();
-        int xpamount = WLPlatformGetter.getXPKillGeneric();
+        int xpamount = DataGetter.getXpGeneric();
         AtomicInteger liststate = new AtomicInteger();
 
         //TODO Get Entity Tags here
 
-        BuiltInRegistries.ENTITY_TYPE.getTags().forEach(tagKeyNamedPair -> {
-            TagKey<EntityType<?>> tagKey = tagKeyNamedPair.getFirst();
-            if(BuiltInRegistries.ENTITY_TYPE.getTag(tagKey).get().contains(entity.getType().arch$holder())) {
-                if (WLPlatformGetter.getAnimalEntities().contains("#" + tagKey.location().toString())) {
-                    liststate.set(1);
-                }
-                if (WLPlatformGetter.getMonsterEntities().contains("#" +tagKey.location().toString())) {
-                    liststate.set(2);
-                }
-                if (WLPlatformGetter.getMinibossEntities().contains("#" +tagKey.location().toString())) {
-                    liststate.set(3);
-                }
-                if (WLPlatformGetter.getBossEntities().contains("#" +tagKey.location().toString())) {
-                    liststate.set(4);
-                }
-            }
-        });
+//        BuiltInRegistries.ENTITY_TYPE.getTags().forEach(tagKeyNamedPair -> {
+//            TagKey<EntityType<?>> tagKey = tagKeyNamedPair.getFirst();
+//            if(BuiltInRegistries.ENTITY_TYPE.getTag(tagKey).get().contains(entity.getType().arch$holder())) {
+//                if (WeaponLevelingConfig.entities_animal.contains("#" + tagKey.location().toString())) {
+//                    liststate.set(1);
+//                }
+//                if (WeaponLevelingConfig.entities_monster.contains("#" +tagKey.location().toString())) {
+//                    liststate.set(2);
+//                }
+//                if (WeaponLevelingConfig.entities_mini_boss.contains("#" +tagKey.location().toString())) {
+//                    liststate.set(3);
+//                }
+//                if (WeaponLevelingConfig.entities_boss.contains("#" +tagKey.location().toString())) {
+//                    liststate.set(4);
+//                }
+//            }
+//        });
 
 
-        if(WLPlatformGetter.getBossEntities().contains(name) || isCustomBoss(entity)|| liststate.get() == 4) {
-            xpamount = WLPlatformGetter.getXPKillBoss();
+        if(entity.getType().is(DataGetter.entities_boss) || isCustomBoss(entity)|| liststate.get() == 4) {
+            xpamount = DataGetter.getXpBoss();
         }
 
-        else if(WLPlatformGetter.getMinibossEntities().contains(name) || isCustomMiniBoss(entity) || liststate.get() == 3) {
-            xpamount = WLPlatformGetter.getXPKillMiniboss();
+        else if(entity.getType().is(DataGetter.entities_mini_boss) || isCustomMiniBoss(entity) || liststate.get() == 3) {
+            xpamount = DataGetter.getXpMiniboss();
         }
 
-        else if(WLPlatformGetter.getMonsterEntities().contains(name) || isCustomMonster(entity) || liststate.get() == 2) {
-            xpamount = WLPlatformGetter.getXPKillMonster();
+        else if(entity.getType().is(DataGetter.entities_monster) || isCustomMonster(entity) || liststate.get() == 2) {
+            xpamount = DataGetter.getXpMonster();
         }
 
-        else if(WLPlatformGetter.getAnimalEntities().contains(name) || isCustomAnimal(entity) || liststate.get() == 1) {
-            xpamount = WLPlatformGetter.getXPKillAnimal();
+        else if(entity.getType().is(DataGetter.entities_animal) || isCustomAnimal(entity) || liststate.get() == 1) {
+            xpamount = DataGetter.getXpAnimal();
         }
 
 
@@ -152,37 +150,21 @@ public class UpdateLevels {
     }
 
     private static boolean isCustomAnimal(Entity entity) {
-        if (entity.getTags().contains("wl_animal")) {
-            return true;
-        } else {
-            return false;
-        }
+        return entity.getTags().contains("wl_animal");
 
     }
 
     private static boolean isCustomMonster(Entity entity) {
-        if (entity.getTags().contains("wl_monster")) {
-            return true;
-        } else {
-            return false;
-        }
+        return entity.getTags().contains("wl_monster");
 
     }
 
 
     private static boolean isCustomMiniBoss(Entity entity) {
-        if (entity.getTags().contains("wl_miniboss")) {
-            return true;
-        }
-
-        return false;
+        return entity.getTags().contains("wl_miniboss");
     }
     private static boolean isCustomBoss(Entity entity) {
-        if (entity.getTags().contains("wl_boss")) {
-            return true;
-        } else {
-            return false;
-        }
+        return entity.getTags().contains("wl_boss");
 
     }
 
@@ -204,7 +186,7 @@ public class UpdateLevels {
 
 
     public static void sendLevelUpNotification(Player player,ItemStack stack, int level) {
-        if(WLPlatformGetter.getLevelUpType() == ToastHelper.LevelUpType.TOAST) {
+        if(WeaponLevelingConfig.level_up_type == ToastHelper.LevelUpType.TOAST) {
             ToastHelper.sendToast((ServerPlayer) player,stack,level);
         } else {
             Style ITEM = Style.EMPTY.withColor(12517240);

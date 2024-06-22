@@ -7,6 +7,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.WLPlatformGetter;
+import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,7 +36,7 @@ public class MixinItemStackForge {
         ItemStack stack = ((ItemStack) ((Object) this));
         if(livingEntity instanceof ServerPlayer player) {
             if(this.hurt(i, livingEntity.getRandom(), player)) {
-                if(WLPlatformGetter.getBrokenItemsDontVanish() && ModUtils.shouldBeUnbreakable(stack)) {
+                if(DataGetter.getBrokenItemsWontVanish() && ModUtils.shouldBeUnbreakable(stack)) {
                     if(Platform.isForge()) {
                         //TODO Play sound for break
                     }

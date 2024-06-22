@@ -7,6 +7,7 @@ architectury {
     fabric()
 }
 
+
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
 }
@@ -31,11 +32,10 @@ dependencies {
 
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    implementation ("com.electronwill.night-config:core:${rootProject.night_config_version}")
-    implementation ("com.electronwill.night-config:toml:${rootProject.night_config_version}")
-    modApi ("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}"){
-        transitive = false
-    }
+
+    modImplementation (shadowCommon ("maven.modrinth:midnightlib:${rootProject.midnightlib_version_fabric}"))
+
+    modImplementation "maven.modrinth:modmenu:${rootProject.modmenu_fabric}" // Mod Menu
 
     modImplementation "maven.modrinth:better-combat:${rootProject.bettercombat_fabric_version}" // Better Combat
     modImplementation "maven.modrinth:cloth-config:${rootProject.clothconfig_fabric_version}" // Cloth Config
@@ -107,3 +107,5 @@ publishing {
         // Add repositories to publish to here.
     }
 }
+
+

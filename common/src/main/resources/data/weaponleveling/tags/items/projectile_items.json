@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:trident",
+      "required": false
+    },
+    {
+      "id": "minecraft:bow",
+      "required": false
+    },
+    {
+      "id": "minecraft:crossbow",
+      "required": false
+    },
+    {
+      "id": "tetra:modular_crossbow",
+      "required": false
+    },
+    {
+      "id": "tetra:modular_bow",
+      "required": false
+    }
+  ]
+}

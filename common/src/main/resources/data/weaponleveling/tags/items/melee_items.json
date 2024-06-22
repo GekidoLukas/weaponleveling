@@ -1,0 +1,49 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:trident",
+      "required": false
+    },
+    {
+      "id": "tetra:modular_sword",
+      "required": false
+    },
+    {
+      "id": "tetra:modular_double",
+      "required": false
+    },
+    {
+      "id": "tconstruct:dagger",
+      "required": false
+    },
+    {
+      "id": "tconstruct:sword",
+      "required": false
+    },
+    {
+      "id": "tconstruct:cleaver",
+      "required": false
+    },
+    {
+      "id": "tconstruct:scythe",
+      "required": false
+    },
+    {
+      "id": "tconstruct:broad_axe",
+      "required": false
+    },
+    {
+      "id": "tconstruct:hand_axe",
+      "required": false
+    },
+    {
+      "id": "tconstruct:sledge_hammer",
+      "required": false
+    },
+    {
+      "id": "tconstruct:mattock",
+      "required": false
+    }
+  ]
+}

@@ -36,7 +36,7 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
     forgeRuntimeLibrary(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")))
-
+    modImplementation (shadowCommon ("maven.modrinth:midnightlib:${rootProject.midnightlib_version_forge}"))
 
     modCompileOnly "maven.modrinth:better-combat:${rootProject.bettercombat_forge_version}" // Better Combat
     modCompileOnly "maven.modrinth:cloth-config:${rootProject.clothconfig_forge_version}" // Cloth Config

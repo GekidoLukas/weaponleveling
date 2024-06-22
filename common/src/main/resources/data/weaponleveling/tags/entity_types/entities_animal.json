@@ -1,0 +1,389 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:pig",
+      "required": false
+    },
+    {
+      "id": "minecraft:cow",
+      "required": false
+    },
+    {
+      "id": "minecraft:sheep",
+      "required": false
+    },
+    {
+      "id": "minecraft:chicken",
+      "required": false
+    },
+    {
+      "id": "minecraft:mooshroom",
+      "required": false
+    },
+    {
+      "id": "minecraft:axolotl",
+      "required": false
+    },
+    {
+      "id": "minecraft:bee",
+      "required": false
+    },
+    {
+      "id": "minecraft:cat",
+      "required": false
+    },
+    {
+      "id": "minecraft:donkey",
+      "required": false
+    },
+    {
+      "id": "minecraft:fox",
+      "required": false
+    },
+    {
+      "id": "minecraft:goat",
+      "required": false
+    },
+    {
+      "id": "minecraft:horse",
+      "required": false
+    },
+    {
+      "id": "minecraft:llama",
+      "required": false
+    },
+    {
+      "id": "minecraft:mule",
+      "required": false
+    },
+    {
+      "id": "minecraft:ocelot",
+      "required": false
+    },
+    {
+      "id": "minecraft:panda",
+      "required": false
+    },
+    {
+      "id": "minecraft:rabbit",
+      "required": false
+    },
+    {
+      "id": "minecraft:strider",
+      "required": false
+    },
+    {
+      "id": "minecraft:hoglin",
+      "required": false
+    },
+    {
+      "id": "minecraft:trader_llama",
+      "required": false
+    },
+    {
+      "id": "minecraft:turtle",
+      "required": false
+    },
+    {
+      "id": "minecraft:wolf",
+      "required": false
+    },
+    {
+      "id": "minecraft:squid",
+      "required": false
+    },
+    {
+      "id": "minecraft:glow_squid",
+      "required": false
+    },
+    {
+      "id": "minecraft:dolphin",
+      "required": false
+    },
+    {
+      "id": "minecraft:polar_bear",
+      "required": false
+    },
+    {
+      "id": "minecraft:pufferfish",
+      "required": false
+    },
+    {
+      "id": "minecraft:salmon",
+      "required": false
+    },
+    {
+      "id": "minecraft:cod",
+      "required": false
+    },
+    {
+      "id": "minecraft:tropical_fish",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:grizzly_bear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:roadrunner",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:gazelle",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:crocodile",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:fly",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:hummingbird",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:orca",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:sunbird",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:gorilla",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:rattlesnake",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:endergrade",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:hammerhead_shark",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:lobster",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:komodo_dragon",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:capuchin_monkey",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:warped_toad",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:moose",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:raccoon",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:blobfish",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:seal",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:cockroach",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:shoebill",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:elephant",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:crow",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:snow_leopard",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:alligator_snapping_turtle",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:mungus",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:mantis_shrimp",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:polar_bear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:emu",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:platypus",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:dropbear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:tasmanian_devil",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:kangaroo",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:cachalot_whale",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:leafcutter_ant",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:bald_eagle",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:tiger",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:tarantula_hawk",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:frilled_shark",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:mimic_octopus",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:seagull",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:tusklin",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:toucan",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:maned_wolf",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:anaconda",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:anteater",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:flutter",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:gelada_monkey",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:jerboa",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:terrapin",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:comb_jelly",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:cosmic_cod",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:bunfungus",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:bison",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:giant_squid",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:squid_grapple",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:sea_bear",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:devils_hole_pupfish",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:catfish",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:flying_fish",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:rain_frog",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:potoo",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:mudskipper",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:rhinoceros",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:sugar_glider",
+      "required": false
+    }
+  ]
+}

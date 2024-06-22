@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.weaponleveling.WLPlatformGetter;
+import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.UpdateLevels;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class ClientEvents {
 
     private static boolean shouldExtendTooltip() {
-        boolean needshift = WLPlatformGetter.getHoldingShift();
+        boolean needshift = WeaponLevelingConfig.holdShiftToShow;
 
         if (needshift) {
             return Screen.hasShiftDown();

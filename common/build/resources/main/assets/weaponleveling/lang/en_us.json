@@ -12,5 +12,42 @@
   "weaponleveling.command.setpoints": "Set the XP Points of %s to %s",
   "weaponleveling.command.exception.novalidweapon": "%s is not a valid item",
   "weaponleveling.command.exception.outofbounds": "%s is higher than the Maximum Value",
-  "weaponleveling.tooltip.broken": "Broken"
+  "weaponleveling.tooltip.broken": "Broken",
+
+
+  "weaponleveling.midnightconfig.client_title":"Client Configuration",
+  "weaponleveling.midnightconfig.category.client":"Client",
+  "weaponleveling.midnightconfig.holdShiftToShow":"Hold Shift to Show Level/XP",
+
+  "weaponleveling.midnightconfig.leveling_title":"Leveling Configuration",
+  "weaponleveling.midnightconfig.category.leveling":"Leveling",
+  "weaponleveling.midnightconfig.hit_xp_amount":"XP Amount for Hit",
+  "weaponleveling.midnightconfig.crit_xp_amount":"XP Amount for Critical Hit",
+  "weaponleveling.midnightconfig.hit_percentage":"Chance for a Hit to cause XP",
+  "weaponleveling.midnightconfig.crit_percentage":"Chance for a Critical Hit to cause XP",
+  "weaponleveling.midnightconfig.max_item_level":"Max Item Level",
+  "weaponleveling.midnightconfig.level_modifier":"Leveling Modifier",
+  "weaponleveling.midnightconfig.starting_xp_amount":"Starting XP Amount",
+  "weaponleveling.midnightconfig.damage_per_level":"Damage per Level",
+  "weaponleveling.midnightconfig.armor_rng_modifier":"Armor RNG Modifier",
+  "weaponleveling.midnightconfig.max_damage_reduction_percentage":"Max Damage Reduction Percentage",
+  "weaponleveling.midnightconfig.bow_like_damage_modifier":"Bow-Like Damage Modifier",
+  "weaponleveling.midnightconfig.level_up_type":"Level Up Type",
+  "weaponleveling.midnightconfig.enum.LevelUpType.TOAST":"In Toast",
+  "weaponleveling.midnightconfig.enum.LevelUpType.ACTIONBAR":"In Actionbar",
+
+  "weaponleveling.midnightconfig.items_title":"Item Configuration",
+  "weaponleveling.midnightconfig.category.items":"Items",
+  "weaponleveling.midnightconfig.broken_items_wont_vanish":"Items don't vanish when breaking",
+  "weaponleveling.midnightconfig.send_registry_in_log":"Send Registry Information in Log",
+  "weaponleveling.midnightconfig.disable_unlisted_items":"Disable Unlisted Items (Weapons/Armor in Code)",
+  "weaponleveling.midnightconfig.levelable_items_auto_unbreakable":"All Levelable Items are automatically Non-Vanish",
+
+  "weaponleveling.midnightconfig.entities_title":"Entity Configuration",
+  "weaponleveling.midnightconfig.category.entities":"Entities",
+  "weaponleveling.midnightconfig.xp_for_generic_kill":"XP for killing a Generic Mob",
+  "weaponleveling.midnightconfig.xp_for_monster_kill":"XP for killing a Monster",
+  "weaponleveling.midnightconfig.xp_for_animal_kill":"XP for killing an Animal",
+  "weaponleveling.midnightconfig.xp_for_mini_boss_kill":"XP for killing a Mini Boss",
+  "weaponleveling.midnightconfig.xp_for_boss_kill":"XP for killing a Boss"
 }

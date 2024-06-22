@@ -38,7 +38,7 @@ public class MixinLivingEntity {
     @WrapOperation( method = "Lnet/minecraft/world/entity/LivingEntity;actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setHealth(F)V"))
     private void reduceDamage(LivingEntity instance, float originalcall, Operation<Float> original, DamageSource damageSource, float f) {
-        original.call(instance, instance.getHealth() - UpdateLevels.reduceDamageArmor(instance,f));
+//        original.call(instance, instance.getHealth() - UpdateLevels.reduceDamageArmor(instance,f)); TODO REMOVE
     }
 
     @Inject(

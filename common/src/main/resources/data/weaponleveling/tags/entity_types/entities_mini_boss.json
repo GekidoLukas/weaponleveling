@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:elder_guardian",
+      "required": false
+    },
+    {
+      "id": "minecraft:ravager",
+      "required": false
+    },
+    {
+      "id": "minecraft:evoker",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:warped_mosco",
+      "required": false
+    }
+  ]
+}

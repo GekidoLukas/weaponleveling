@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WLPlatformGetter;
+import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.util.ModUtils;
 
@@ -61,17 +62,17 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
                     String keyString = resourceLocation.getPath();
 
-                    if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Registering Tag: #" + resourceLocation);
+                    if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering Tag: #" + resourceLocation);
 
 
                     TagKey<Item> key = TagKey.create(Registries.ITEM, resourceLocation);
 
                     if (BuiltInRegistries.ITEM.getTag(key).isPresent()) {
-                        if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Tagkey exists: #" + resourceLocation.toString() );
+                        if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Tagkey exists: #" + resourceLocation.toString() );
 
                         BuiltInRegistries.ITEM.getTag(key).get().forEach((itemHolder) -> {
                             Item item = itemHolder.value();
-                            if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
+                            if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
 
                             LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, BuiltInRegistries.ITEM.getKey(item));
                             builder.put(BuiltInRegistries.ITEM.getKey(item), levelableItem);
@@ -87,7 +88,7 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                 try {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-                    if(WLPlatformGetter.sendRegistryInLog()) WeaponLevelingMod.LOGGER.info("Registering: " + resourceLocation);
+                    if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering: " + resourceLocation);
 
                     if (BuiltInRegistries.ITEM.containsKey(resourceLocation)) {
 
