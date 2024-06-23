@@ -8,7 +8,7 @@
   "weaponleveling.tooltip.overmaxlevel": "Погоди, это законно?",
   "weaponleveling.levelup": "достиг уровня ",
   "weaponleveling.command.setlevel": "Установлен %s уровень на %s",
-  "weaponleveling.command.setpoints": "Установленно %s очков опыта на %s",
+  "weaponleveling.command.setpoints": "Установлено %s очков опыта на %s",
   "weaponleveling.command.exception.novalidweapon": "%s не является допустимым предметом",
   "weaponleveling.command.exception.outofbounds": "%s выше максимального значения",
   "weaponleveling.tooltip.broken": "Сломан",
@@ -45,7 +45,7 @@
 
   "weaponleveling.midnightconfig.items_title":"Конфигурация предметов",
   "weaponleveling.midnightconfig.category.items":"Предметы",
-  "weaponleveling.midnightconfig.broken_items_wont_vanish":"Предметы не пропадают при разрушении",
+  "weaponleveling.midnightconfig.broken_items_wont_vanish":"Предметы не пропадают, если они ломаются",
   "weaponleveling.midnightconfig.send_registry_in_log":"Отправка информации о реестре в логи",
   "weaponleveling.midnightconfig.disable_unlisted_items":"Отключить незарегистрированные предметы (оружие/броня в коде)",
   "weaponleveling.midnightconfig.levelable_items_auto_unbreakable":"Все улучшаемые предметы автоматически не пропадают",
