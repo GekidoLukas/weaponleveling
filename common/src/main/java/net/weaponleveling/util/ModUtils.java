@@ -18,9 +18,11 @@ public class ModUtils {
     public static void modifyAttributeModifier(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, double amount) {
         if(multimap.get(attribute).stream().findFirst().isPresent()) {
             AttributeModifier modifier = multimap.get(attribute).stream().findFirst().get();
-            AttributeModifier newmodifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount()+ amount,modifier.getOperation());
-            multimap.remove(attribute,modifier);
-            multimap.put(attribute,newmodifier);
+            if (modifier.getAmount() > 0) {
+                AttributeModifier newmodifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount()+ amount,modifier.getOperation());
+                multimap.remove(attribute,modifier);
+                multimap.put(attribute,newmodifier);
+            }
         }
     }
 

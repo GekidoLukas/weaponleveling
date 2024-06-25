@@ -45,6 +45,8 @@ public class WeaponLevelingModForge {
 
     @SubscribeEvent
     public static void syncConfig(OnDatapackSyncEvent event) {
-        WLConfigReader.sync(event.getPlayer());
+        if(event.getPlayer() != null) {
+            WLConfigReader.sync(event.getPlayer());
+        }
     }
 }
