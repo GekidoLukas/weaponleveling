@@ -13,7 +13,7 @@ description = '''
 Leveling your items since 2022.
 Very customizable mod to make your equipment stronger over time.
 '''
-#logoFile = ""
+logoFile = "icon.png"
 
 [[dependencies.weaponleveling]]
 modId = "forge"

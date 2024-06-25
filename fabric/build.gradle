@@ -33,7 +33,7 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
 
-    modImplementation (shadowCommon ("maven.modrinth:midnightlib:${rootProject.midnightlib_version_fabric}"))
+    modImplementation (include ("maven.modrinth:midnightlib:${rootProject.midnightlib_version_fabric}"))
 
     modImplementation "maven.modrinth:modmenu:${rootProject.modmenu_fabric}" // Mod Menu
 
