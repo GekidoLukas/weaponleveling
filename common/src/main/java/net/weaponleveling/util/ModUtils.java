@@ -36,8 +36,7 @@ public class ModUtils {
     }
 
     public static boolean isLevelableJSON(ItemStack stack) {
-        LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        return LevelableItemsLoader.isValid(stack.getItem()) && !levelableitem.isDisabled();
+        return LevelableItemsLoader.isValid(stack.getItem());
     }
 
     public static boolean isLevelableFallback(ItemStack stack) {
@@ -120,9 +119,8 @@ public class ModUtils {
     }
 
     public static boolean isDisabled(ItemStack stack) {
-        LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("disabled")) return stack.getTag().getCompound("levelable").getBoolean("disabled");
-        if (LevelableItemsLoader.isValid(stack.getItem())) return levelableitem.isDisabled() ||  stack.is(DataGetter.blacklist_items);
+        if (LevelableItemsLoader.isValid(stack.getItem())) return stack.is(DataGetter.blacklist_items);
         else return stack.is(DataGetter.blacklist_items);
 
     }

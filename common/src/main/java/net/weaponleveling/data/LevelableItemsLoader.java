@@ -50,65 +50,62 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
     public static void applyNew(Map<ResourceLocation, JsonElement> jsonMap) {
 
 
+        WeaponLevelingMod.LOGGER.info("Starting Levelable Registry!");
+//        ImmutableMap.Builder<ResourceLocation, LevelableItem> builder = ImmutableMap.builder();
+        Map<ResourceLocation, LevelableItem> builder = new HashMap<>();
 
-        ImmutableMap.Builder<ResourceLocation, LevelableItem> builder = ImmutableMap.builder();
         jsonMap.forEach((resourceLocation, jsonElement) -> {
             JsonObject jsonElementAsJsonObject = jsonElement.getAsJsonObject();
 
-            if(jsonElementAsJsonObject.has("taglist") && jsonElementAsJsonObject.get("taglist").getAsBoolean()) {
 
-                try {
+            try {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                if(jsonElementAsJsonObject.has("item")) {
+                    boolean hasHasTag = jsonElementAsJsonObject.get("item").getAsString().startsWith("#");
+                    if(jsonElementAsJsonObject.get("item").getAsString().contains(":")) {
+                        String namespace = jsonElementAsJsonObject.get("item").getAsString().split(":")[0].replace("#","");
+                        String name = jsonElementAsJsonObject.get("item").getAsString().split(":")[1];
+                        ResourceLocation id = new ResourceLocation(namespace,name);
+                        TagKey<Item> itemTagKey = TagKey.create(Registries.ITEM, id);
 
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    String keyString = resourceLocation.getPath();
+                        if(hasHasTag && BuiltInRegistries.ITEM.getTag(itemTagKey).isPresent()) {
 
-                    if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering Tag: #" + resourceLocation);
+                            if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Tagkey exists: #" + resourceLocation.toString() );
 
+                            BuiltInRegistries.ITEM.getTag(itemTagKey).get().forEach((itemHolder) -> {
+                                Item item = itemHolder.value();
+                                if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
 
-                    TagKey<Item> key = TagKey.create(Registries.ITEM, resourceLocation);
+                                LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, BuiltInRegistries.ITEM.getKey(item));
+                                builder.put(BuiltInRegistries.ITEM.getKey(item), levelableItem);
+                            });
+                        }
+                        else if(BuiltInRegistries.ITEM.containsKey(id)){
+                            if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering: " + id);
 
-                    if (BuiltInRegistries.ITEM.getTag(key).isPresent()) {
-                        if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Tagkey exists: #" + resourceLocation.toString() );
+                            LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, id);
+                            builder.remove(id);
+                            builder.put(id, levelableItem);
+                        }
+                        else {
+                            WeaponLevelingMod.LOGGER.error("{} is not a valid Item or Item Tag", () -> id);
+                        }
+                    } else {
+                        WeaponLevelingMod.LOGGER.error("{} does not contain a VALID \"item\" field", () -> resourceLocation);
+                    }
 
-                        BuiltInRegistries.ITEM.getTag(key).get().forEach((itemHolder) -> {
-                            Item item = itemHolder.value();
-                            if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
-
-                            LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, BuiltInRegistries.ITEM.getKey(item));
-                            builder.put(BuiltInRegistries.ITEM.getKey(item), levelableItem);
-                        });
-
-
-                    } else WeaponLevelingMod.LOGGER.error("{} is not a valid Item Tag", () -> resourceLocation);
-
-                } catch (IllegalArgumentException | JsonParseException jsonparseexception) {
-                    WeaponLevelingMod.LOGGER.error("Parsing error loading Item Levels {}: {}", resourceLocation, jsonparseexception.getMessage());
+                } else {
+                    WeaponLevelingMod.LOGGER.error("{} Does not contain the field \"item\"", () -> resourceLocation);
                 }
-            } else {
-                try {
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-
-                    if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering: " + resourceLocation);
-
-                    if (BuiltInRegistries.ITEM.containsKey(resourceLocation)) {
-
-                        LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, resourceLocation);
-                        builder.put(resourceLocation, levelableItem);
 
 
-                    } else WeaponLevelingMod.LOGGER.error("{} is not a valid Item", () -> resourceLocation);
-
-                } catch (IllegalArgumentException | JsonParseException jsonparseexception) {
-                    WeaponLevelingMod.LOGGER.error("Parsing error loading Item Levels {}: {}", resourceLocation, jsonparseexception.getMessage());
-                }
+            } catch (IllegalArgumentException | JsonParseException jsonparseexception) {
+                WeaponLevelingMod.LOGGER.error("Parsing error loading Item Levels {}: {}", resourceLocation, jsonparseexception.getMessage());
             }
-
         });
 
-
-        Map<ResourceLocation, LevelableItem> map = builder.build();
-
-        itemmap = map;
+        WeaponLevelingMod.LOGGER.info("Levelable Registry has finished!");
+        itemmap = builder;
     }
 
 

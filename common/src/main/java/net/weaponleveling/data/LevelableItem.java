@@ -9,7 +9,6 @@ import net.weaponleveling.WeaponLevelingConfig;
 public class LevelableItem {
 
     private final Item item;
-    private final boolean disabled;
     private final boolean isMelee;
     private final boolean isProjectile;
     private final boolean isArmor;
@@ -32,9 +31,8 @@ public class LevelableItem {
     //private final String leveltype;
 
 
-    public LevelableItem(Item item, boolean disabled, boolean isMelee, boolean isProjectile, boolean isArmor, int maxLevel, int levelModifier, int levelStartAmount, int hitXPAmount, int hitXPChance, int critXPAmount, int critXPChance, double weaponDamagePerLevel, double armorArmorPerLevel,double armorToughnessPerLevel, double bowlikeModifier,  int armorXPRNGModifier) {
+    public LevelableItem(Item item, boolean isMelee, boolean isProjectile, boolean isArmor, int maxLevel, int levelModifier, int levelStartAmount, int hitXPAmount, int hitXPChance, int critXPAmount, int critXPChance, double weaponDamagePerLevel, double armorArmorPerLevel,double armorToughnessPerLevel, double bowlikeModifier,  int armorXPRNGModifier) {
         this.item = item;
-        this.disabled = disabled;
         this.isMelee = isMelee;
         this.isProjectile = isProjectile;
         this.isArmor = isArmor;
@@ -57,9 +55,6 @@ public class LevelableItem {
         return item;
     }
 
-    public boolean isDisabled() {
-        return disabled;
-    }
 
     public boolean isMelee() {
         return isMelee;
@@ -120,6 +115,7 @@ public class LevelableItem {
         return armorXPRNGModifier;
     }
 
+    //TODO CHECK FOR SAFE REMOVE
     public JsonObject serialize() {
 
         final JsonObject object = new JsonObject();
@@ -133,11 +129,10 @@ public class LevelableItem {
     public static LevelableItem fromJson(JsonObject object, ResourceLocation resourceLocation) {
         Item item = BuiltInRegistries.ITEM.get(resourceLocation);
 
-        boolean disabled = false;
-        if (object.has("disabled")) {
-            disabled = object.get("disabled").getAsBoolean();
-        }
 
+        //TODO Load Item attributes in general, so people can customize, as they see fit
+        //TODO MAYBE Move the default fallback to the datapack, and use the lists given as a way to register.
+        //TODO Find a good way for Projectiles to still work (Maybe Placeholder or keep isProjectile)
         //Type
         boolean isMeleeWeapon = false;
         if (object.has("isMeleeWeapon")) {
@@ -218,6 +213,6 @@ public class LevelableItem {
             armorXPRNGModifier = object.get("armorXPRNGModifier").getAsInt();
         }
 
-        return new LevelableItem(item, disabled, isMeleeWeapon, isProjectileWeapon, isArmor, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, critXPAmount, critXPChance, weaponDamagePerLevel, armorArmorPerLevel, armorToughnessPerLevel, bowlikeModifier, armorXPRNGModifier);
+        return new LevelableItem(item, isMeleeWeapon, isProjectileWeapon, isArmor, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, critXPAmount, critXPChance, weaponDamagePerLevel, armorArmorPerLevel, armorToughnessPerLevel, bowlikeModifier, armorXPRNGModifier);
     }
 }
