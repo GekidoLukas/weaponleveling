@@ -40,13 +40,10 @@ public class ClientEvents {
         Style TEXT = Style.EMPTY.withColor(WeaponLevelingConfig.textColor);
         Style VALUES = Style.EMPTY.withColor(WeaponLevelingConfig.valuesColor);
         Style SHIFT = Style.EMPTY.withColor(WeaponLevelingConfig.shiftColor);
-        Style BROKEN = Style.EMPTY.withColor(WeaponLevelingConfig.brokenColor);
 
 
 
-        if(ModUtils.isBroken(stack)) {
-            tooltip.add(Component.translatable("weaponleveling.tooltip.broken").setStyle(BROKEN));
-        }
+
         if (ModUtils.isLevelableItem(stack)) {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");

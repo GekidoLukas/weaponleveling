@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.weaponleveling.item.BrokenItem;
 import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
 import org.spongepowered.asm.mixin.Final;
@@ -18,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.List;
+
 @Mixin(Inventory.class)
 public abstract class InventoryMixin {
 
@@ -26,14 +29,48 @@ public abstract class InventoryMixin {
     public NonNullList<ItemStack> armor = NonNullList.withSize(4, ItemStack.EMPTY);
 
 
+    @Shadow @Final public NonNullList<ItemStack> offhand;
+
+    @Shadow @Final private List<NonNullList<ItemStack>> compartments;
 
     @Inject(
-            method = "hurtArmor",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/core/NonNullList;get(I)Ljava/lang/Object;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private <T extends LivingEntity> void preventBreak(DamageSource damageSource, float f, int[] is, CallbackInfo ci, int[] var4, int var5, int var6, int i) {
-        ItemStack itemStack = this.armor.get(i);
-        if(ModUtils.isBroken(itemStack)) {
-            ci.cancel();
+            method = "tick",
+            at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void swapBroken(CallbackInfo ci) {
+
+        for(int i = 0; i < this.armor.size(); i++) {
+            ItemStack stack = this.armor.get(i);
+            if(stack.getTag() != null && stack.getTag().getBoolean("isBroken")) {
+                stack.getTag().remove("isBroken");
+                ItemStack brokenItem = BrokenItem.of(stack);
+                brokenItem.setCount(1);
+                this.armor.set(i,brokenItem);
+            }
         }
+
+        for(int i = 0; i < this.offhand.size(); i++) {
+            ItemStack stack = this.offhand.get(i);
+            if(stack.getTag() != null && stack.getTag().getBoolean("isBroken")) {
+                stack.getTag().remove("isBroken");
+                ItemStack brokenItem = BrokenItem.of(stack);
+                brokenItem.setCount(1);
+                this.offhand.set(i,brokenItem);
+            }
+        }
+
+
+        for(int i = 0; i < this.compartments.size(); i++) {
+            for(int j = 0; j < this.compartments.get(i).size();j++) {
+                ItemStack stack = this.compartments.get(i).get(j);
+                if(stack.getTag() != null && stack.getTag().getBoolean("isBroken")) {
+                    stack.getTag().remove("isBroken");
+                    ItemStack brokenItem = BrokenItem.of(stack);
+                    brokenItem.setCount(1);
+                    this.compartments.get(i).set(j,brokenItem);
+                }
+            }
+        }
+
+
     }
 }

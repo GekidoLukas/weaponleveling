@@ -12,5 +12,6 @@
   "weaponleveling.command.setpoints": "Die Menge der XP Punkte von %s wurden zu %s geändert",
   "weaponleveling.command.exception.novalidweapon": "%s ist kein valider Gegenstand",
   "weaponleveling.command.exception.outofbounds": "%s ist größer als der Maximalwert",
-  "weaponleveling.tooltip.broken": "Kaputt"
+  "weaponleveling.tooltip.broken": "Kaputt",
+  "item.weaponleveling.broken": "Kaputter Gegendtand"
 }

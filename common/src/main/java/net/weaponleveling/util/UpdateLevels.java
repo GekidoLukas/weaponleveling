@@ -53,10 +53,10 @@ public class UpdateLevels {
                 ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
                 ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
                 ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
-                if (ModUtils.isAcceptedArmor(helmet) && !ModUtils.isBroken(helmet)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
-                if (ModUtils.isAcceptedArmor(chestplate) && !ModUtils.isBroken(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
-                if (ModUtils.isAcceptedArmor(leggings) && !ModUtils.isBroken(leggings)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
-                if (ModUtils.isAcceptedArmor(feet) && !ModUtils.isBroken(feet)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
+                if (ModUtils.isAcceptedArmor(helmet)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
+                if (ModUtils.isAcceptedArmor(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
+                if (ModUtils.isAcceptedArmor(leggings)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
+                if (ModUtils.isAcceptedArmor(feet)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
 
             }
         }
@@ -107,26 +107,6 @@ public class UpdateLevels {
 
         int xpamount = DataGetter.getXpGeneric();
         AtomicInteger liststate = new AtomicInteger();
-
-        //TODO Get Entity Tags here
-
-//        BuiltInRegistries.ENTITY_TYPE.getTags().forEach(tagKeyNamedPair -> {
-//            TagKey<EntityType<?>> tagKey = tagKeyNamedPair.getFirst();
-//            if(BuiltInRegistries.ENTITY_TYPE.getTag(tagKey).get().contains(entity.getType().arch$holder())) {
-//                if (WeaponLevelingConfig.entities_animal.contains("#" + tagKey.location().toString())) {
-//                    liststate.set(1);
-//                }
-//                if (WeaponLevelingConfig.entities_monster.contains("#" +tagKey.location().toString())) {
-//                    liststate.set(2);
-//                }
-//                if (WeaponLevelingConfig.entities_mini_boss.contains("#" +tagKey.location().toString())) {
-//                    liststate.set(3);
-//                }
-//                if (WeaponLevelingConfig.entities_boss.contains("#" +tagKey.location().toString())) {
-//                    liststate.set(4);
-//                }
-//            }
-//        });
 
 
         if(entity.getType().is(DataGetter.entities_boss) || isCustomBoss(entity)|| liststate.get() == 4) {

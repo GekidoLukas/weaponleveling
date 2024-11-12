@@ -8,6 +8,7 @@ import dev.architectury.registry.registries.RegistrarManager;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.server.packs.PackType;
 import net.weaponleveling.data.LevelableItemsLoader;
+import net.weaponleveling.item.ModItems;
 import net.weaponleveling.networking.Networking;
 import net.weaponleveling.server.command.ItemLevelCommand;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,7 @@ public class WeaponLevelingMod {
     public static void init() {
         CommandRegistrationEvent.EVENT.register(ItemLevelCommand::register);
         Networking.registerC2SPackets();
+        ModItems.register();
         ReloadListenerRegistry.register(PackType.SERVER_DATA,LevelableItemsLoader.INSTANCE);
         MidnightConfig.init(MODID, WeaponLevelingConfig.class);
         //TODO
