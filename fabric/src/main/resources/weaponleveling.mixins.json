@@ -8,8 +8,7 @@
   "mixins": [
     "MixinAnvilMenuFabric",
     "MixinItemStackFabric",
-    "MixinPlayerFabric",
-    "MixinWeaponRegistry"
+    "MixinPlayerFabric"
   ],
   "injectors": {
     "defaultRequire": 1

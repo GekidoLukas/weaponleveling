@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.weaponleveling.item.ModItems;
 import net.weaponleveling.util.ModUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,9 +27,9 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends 
     @Inject(
             method = "renderArmorPiece",
             at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void preventInteract(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel, CallbackInfo ci) {
+    private void preventArmor(PoseStack poseStack, MultiBufferSource multiBufferSource, T livingEntity, EquipmentSlot equipmentSlot, int i, A humanoidModel, CallbackInfo ci) {
         ItemStack itemStack = livingEntity.getItemBySlot(equipmentSlot);
-        if(ModUtils.isBroken(itemStack)) {
+        if(itemStack.is(ModItems.BROKEN_ITEM.get())) {
             ci.cancel();
         }
     }

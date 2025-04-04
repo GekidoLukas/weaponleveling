@@ -36,46 +36,4 @@ public class MixinPlayer {
     }
 
 
-
-    @Inject(
-            method = "blockActionRestricted",
-            at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void preventBlockTarget(Level level, BlockPos blockPos, GameType gameType, CallbackInfoReturnable<Boolean> cir) {
-        Player player = ((Player) ((Object) this));
-        if(ModUtils.isBroken(WLPlatformGetter.getAttackItem(player))) {
-            cir.setReturnValue(true);
-        }
-    }
-
-    @Inject(
-            method = "attack",
-            at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void preventAttack(Entity target, CallbackInfo ci) {
-        Player player = ((Player) ((Object) this));
-        if(ModUtils.isBroken(WLPlatformGetter.getAttackItem(player))) {
-            ci.cancel();
-        }
-    }
-
-    @Inject(
-            method = "interactOn",
-            at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void preventInteract(Entity entity, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
-        Player player = ((Player) ((Object) this));
-        if(ModUtils.isBroken(player.getMainHandItem())) {
-            cir.setReturnValue(InteractionResult.PASS);
-        }
-    }
-
-    @ModifyExpressionValue(
-            method = "tick",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"))
-    private boolean preventCooldown(boolean original) {
-        Player player = ((Player) ((Object) this));
-        return original || ModUtils.isBroken(WLPlatformGetter.getAttackItem(player));
-    }
-
-
-
-
 }

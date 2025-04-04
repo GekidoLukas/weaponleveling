@@ -11,7 +11,11 @@
   "weaponleveling.command.setpoints": "Set the XP Points of %s to %s",
   "weaponleveling.command.exception.novalidweapon": "%s is not a valid item",
   "weaponleveling.command.exception.outofbounds": "%s is higher than the Maximum Value",
-  "weaponleveling.tooltip.broken": "Broken",
+  "weaponleveling.tooltip.broken.prefix": "Broken",
+  "weaponleveling.tooltip.broken": "Item is Broken",
+  "weaponleveling.tooltip.broken.description": "Repair in Anvil to use again",
+  "item.weaponleveling.broken": "Broken Item",
+
 
 
   "weaponleveling.midnightconfig.client_title":"Client Configuration",

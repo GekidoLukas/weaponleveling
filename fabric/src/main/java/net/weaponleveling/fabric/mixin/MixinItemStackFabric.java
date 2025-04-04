@@ -3,11 +3,16 @@ package net.weaponleveling.fabric.mixin;
 import dev.architectury.platform.Platform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.item.BrokenItem;
 import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
 import org.jetbrains.annotations.Nullable;
@@ -41,9 +46,13 @@ public class MixinItemStackFabric {
                     CompoundTag tag = stack.getTag();
                     tag.putBoolean("isBroken", true);
                     stack.setTag(tag);
+                    stack.setDamageValue(0);
                     ci.cancel();
+
                 }
             }
         }
     }
+
+
 }

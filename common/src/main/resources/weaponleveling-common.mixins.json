@@ -4,8 +4,6 @@
   "package": "net.weaponleveling.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "client.MixinGameRenderer",
-    "client.MixinGuiGraphics",
     "client.MixinHumanoidArmorLayer",
     "client.MixinItemInHandRenderer",
     "client.MixinItemRenderer",
@@ -15,7 +13,6 @@
     "InventoryMixin",
     "MixinBowItem",
     "MixinCrossbowItem",
-    "MixinInventoryMenu",
     "MixinItemStack",
     "MixinLivingEntity",
     "MixinPlayer",
