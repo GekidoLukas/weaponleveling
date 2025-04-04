@@ -80,20 +80,13 @@ public class ModUtils {
         return (isClassItem || stack.is(DataGetter.armor_items));
     }
 
-    public static boolean isBroken(ItemStack stack) {
-        return stack.getTag() != null && stack.getTag().getBoolean("isBroken");
-    }
+
 
     public static boolean shouldBeUnbreakable(ItemStack stack) {
         AtomicBoolean isInTag = new AtomicBoolean(false);
         if(DataGetter.getLevelableAutoUnbreakable() && isLevelableItem(stack )&& !stack.is(DataGetter.non_vanish_items_blacklist)) isInTag.set(true);
         if(stack.is(DataGetter.non_vanish_items_whitelist) && !stack.is(DataGetter.non_vanish_items_blacklist)) isInTag.set(true);
 
-//        BuiltInRegistries.ITEM.getTags().forEach(tagKeyNamedPair -> {
-//            TagKey<Item> tagKey = tagKeyNamedPair.getFirst();
-//            if(WeaponLevelingConfig.unbreakable_items_whitelist.contains("#" +tagKey.location().toString())) isInTag.set(true);
-//            if(WeaponLevelingConfig.unbreakable_items_blacklist.contains("#" +tagKey.location().toString())) isInTag.set(false);
-//        });
         return isInTag.get();
     }
 

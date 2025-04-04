@@ -31,9 +31,9 @@ public class MixinItemInHandRenderer {
     @ModifyExpressionValue(
             method = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderArmWithItem(Lnet/minecraft/client/player/AbstractClientPlayer;FFLnet/minecraft/world/InteractionHand;FLnet/minecraft/world/item/ItemStack;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 0))
-    private static boolean modifyPose(boolean original, AbstractClientPlayer abstractClientPlayer, float f, float g,
-                                      InteractionHand interactionHand, float h, ItemStack stack,
-                                      float i, PoseStack poseStack, MultiBufferSource multiBufferSource, int j) {
+    private boolean modifyPose(boolean original, AbstractClientPlayer abstractClientPlayer, float f, float g,
+                               InteractionHand interactionHand, float h, ItemStack stack,
+                               float i, PoseStack poseStack, MultiBufferSource multiBufferSource, int j) {
         return original || stack.is(ModItems.BROKEN_ITEM.get());
     }
 }

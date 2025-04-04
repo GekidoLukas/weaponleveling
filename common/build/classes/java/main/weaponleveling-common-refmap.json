@@ -41,7 +41,8 @@
       "renderItem": "Lnet/minecraft/class_759;method_3233(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
     },
     "net/weaponleveling/mixin/client/MixinItemRenderer": {
-      "render": "Lnet/minecraft/class_918;method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V"
+      "render": "Lnet/minecraft/class_918;method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V",
+      "renderQuadList": "Lnet/minecraft/class_918;method_23180(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Ljava/util/List;Lnet/minecraft/class_1799;II)V"
     },
     "net/weaponleveling/mixin/client/MixinPlayerRenderer": {
       "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;getArmPose(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/client/model/HumanoidModel$ArmPose;": "Lnet/minecraft/class_1007;method_4210(Lnet/minecraft/class_742;Lnet/minecraft/class_1268;)Lnet/minecraft/class_572$class_573;",
@@ -91,7 +92,8 @@
         "renderItem": "Lnet/minecraft/class_759;method_3233(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
       },
       "net/weaponleveling/mixin/client/MixinItemRenderer": {
-        "render": "Lnet/minecraft/class_918;method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V"
+        "render": "Lnet/minecraft/class_918;method_23179(Lnet/minecraft/class_1799;Lnet/minecraft/class_811;ZLnet/minecraft/class_4587;Lnet/minecraft/class_4597;IILnet/minecraft/class_1087;)V",
+        "renderQuadList": "Lnet/minecraft/class_918;method_23180(Lnet/minecraft/class_4587;Lnet/minecraft/class_4588;Ljava/util/List;Lnet/minecraft/class_1799;II)V"
       },
       "net/weaponleveling/mixin/client/MixinPlayerRenderer": {
         "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;getArmPose(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/client/model/HumanoidModel$ArmPose;": "Lnet/minecraft/class_1007;method_4210(Lnet/minecraft/class_742;Lnet/minecraft/class_1268;)Lnet/minecraft/class_572$class_573;",

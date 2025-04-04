@@ -1,6 +1,5 @@
 package net.weaponleveling.mixin.client;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -10,7 +9,6 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.item.BrokenItem;
 import net.weaponleveling.item.ModItems;
-import net.weaponleveling.util.ModUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,5 +41,13 @@ public class MixinItemRenderer {
        return value;
     }
 
+    @ModifyVariable(method = "renderQuadList",
+            at = @At(value = "HEAD"), index = 4, argsOnly = true)
+    public ItemStack useItemDataColor(ItemStack itemStack) {
+        if (itemStack.is(ModItems.BROKEN_ITEM.get()) && (BrokenItem.getContainedItem(itemStack) != null)) {
+            return BrokenItem.getContainedItem(itemStack);
+        }
+        return itemStack;
+    }
 
 }
