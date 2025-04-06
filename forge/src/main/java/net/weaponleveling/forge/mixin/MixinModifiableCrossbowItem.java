@@ -23,10 +23,10 @@ public class MixinModifiableCrossbowItem {
             at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private static void injectedDamage(IToolStackView tool, Player player, InteractionHand hand, CompoundTag heldAmmo, CallbackInfo ci, Level level, int damage, float velocity, float inaccuracy, boolean creative, ItemStack ammo, float startAngle, int primaryIndex, int int1, AbstractArrow abstractarrow) {
         ItemStack stack = player.getItemInHand(hand);
-        if(ModUtils.isAcceptedProjectileWeapon(stack)) {
-            double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(stack) * ModUtils.getBowlikeModifier(stack);
-            abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
-        }
+//        if(ModUtils.isAcceptedProjectileWeapon(stack)) {
+//            double weaponlevelamount = stack.getOrCreateTag().getInt("level");
+//            weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(stack) * ModUtils.getBowlikeModifier(stack);
+//            abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
+//        }
     }
 }

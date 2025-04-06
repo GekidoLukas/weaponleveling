@@ -1,0 +1,9 @@
+{
+  "item": "#weaponleveling:crossbows",
+  "attributes": [
+    {
+      "attribute" : "weaponleveling:ranged_damage",
+      "levelingType": "RANGED"
+    }
+  ]
+}

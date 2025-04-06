@@ -1,0 +1,9 @@
+{
+  "item": "#minecraft:axes",
+  "attributes": [
+    {
+      "attribute" : "minecraft:generic.attack_damage",
+      "levelingType": "MELEE"
+    }
+  ]
+}

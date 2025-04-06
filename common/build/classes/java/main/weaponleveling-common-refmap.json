@@ -4,12 +4,10 @@
       "tick": "Lnet/minecraft/class_1661;method_7381()V"
     },
     "net/weaponleveling/mixin/MixinBowItem": {
-      "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V": "Lnet/minecraft/class_1665;method_24919(Lnet/minecraft/class_1297;FFFFF)V",
-      "releaseUsing": "Lnet/minecraft/class_1753;method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V"
+      "<init>": "Lnet/minecraft/class_1753;<init>(Lnet/minecraft/class_1792$class_1793;)V"
     },
     "net/weaponleveling/mixin/MixinCrossbowItem": {
-      "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V": "Lnet/minecraft/class_1665;method_7442(Z)V",
-      "getArrow": "Lnet/minecraft/class_1764;method_18814(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1665;"
+      "<init>": "Lnet/minecraft/class_1764;<init>(Lnet/minecraft/class_1792$class_1793;)V"
     },
     "net/weaponleveling/mixin/MixinItemStack": {
       "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;": "Lnet/minecraft/class_1799;method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",
@@ -19,10 +17,14 @@
     "net/weaponleveling/mixin/MixinLivingEntity": {
       "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F": "Lnet/minecraft/class_1309;method_6132(Lnet/minecraft/class_1282;F)F",
       "actuallyHurt": "Lnet/minecraft/class_1309;method_6074(Lnet/minecraft/class_1282;F)V",
+      "createLivingAttributes": "Lnet/minecraft/class_1309;method_26827()Lnet/minecraft/class_5132$class_5133;",
       "die": "Lnet/minecraft/class_1309;method_6078(Lnet/minecraft/class_1282;)V"
     },
     "net/weaponleveling/mixin/MixinPlayer": {
       "die": "Lnet/minecraft/class_1657;method_6078(Lnet/minecraft/class_1282;)V"
+    },
+    "net/weaponleveling/mixin/MixinServerLevel": {
+      "addEntity": "Lnet/minecraft/class_3218;method_14175(Lnet/minecraft/class_1297;)Z"
     },
     "net/weaponleveling/mixin/MixinServerPlayer": {
       "die": "Lnet/minecraft/class_3222;method_6078(Lnet/minecraft/class_1282;)V"
@@ -55,12 +57,10 @@
         "tick": "Lnet/minecraft/class_1661;method_7381()V"
       },
       "net/weaponleveling/mixin/MixinBowItem": {
-        "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V": "Lnet/minecraft/class_1665;method_24919(Lnet/minecraft/class_1297;FFFFF)V",
-        "releaseUsing": "Lnet/minecraft/class_1753;method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V"
+        "<init>": "Lnet/minecraft/class_1753;<init>(Lnet/minecraft/class_1792$class_1793;)V"
       },
       "net/weaponleveling/mixin/MixinCrossbowItem": {
-        "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V": "Lnet/minecraft/class_1665;method_7442(Z)V",
-        "getArrow": "Lnet/minecraft/class_1764;method_18814(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;)Lnet/minecraft/class_1665;"
+        "<init>": "Lnet/minecraft/class_1764;<init>(Lnet/minecraft/class_1792$class_1793;)V"
       },
       "net/weaponleveling/mixin/MixinItemStack": {
         "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;": "Lnet/minecraft/class_1799;method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",
@@ -70,10 +70,14 @@
       "net/weaponleveling/mixin/MixinLivingEntity": {
         "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F": "Lnet/minecraft/class_1309;method_6132(Lnet/minecraft/class_1282;F)F",
         "actuallyHurt": "Lnet/minecraft/class_1309;method_6074(Lnet/minecraft/class_1282;F)V",
+        "createLivingAttributes": "Lnet/minecraft/class_1309;method_26827()Lnet/minecraft/class_5132$class_5133;",
         "die": "Lnet/minecraft/class_1309;method_6078(Lnet/minecraft/class_1282;)V"
       },
       "net/weaponleveling/mixin/MixinPlayer": {
         "die": "Lnet/minecraft/class_1657;method_6078(Lnet/minecraft/class_1282;)V"
+      },
+      "net/weaponleveling/mixin/MixinServerLevel": {
+        "addEntity": "Lnet/minecraft/class_3218;method_14175(Lnet/minecraft/class_1297;)Z"
       },
       "net/weaponleveling/mixin/MixinServerPlayer": {
         "die": "Lnet/minecraft/class_3222;method_6078(Lnet/minecraft/class_1282;)V"

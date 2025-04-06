@@ -1,21 +1,17 @@
 package net.weaponleveling.util;
 
-import net.minecraft.core.Registry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -23,42 +19,44 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.data.mob_xp.MobXP;
+import net.weaponleveling.data.mob_xp.MobXPLoader;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Random;
+
 
 public class UpdateLevels {
     public static void applyXPOnItemStack(ItemStack stack, Player player, Entity target, Boolean critical) {
-        if (!player.level().isClientSide) {
-            int xpamountcrit = 0;
-            int xpamounthit = UpdateLevels.getXPForHit(stack);
-            int xpamount = 0;
-
-            if (critical) {
-                xpamountcrit = UpdateLevels.getXPForCrit(stack);
-            }
-
-            WLPlatformGetter.updateEpicFight(player, xpamount + xpamounthit + xpamountcrit);
-            UpdateLevels.applyXPForArmor(player,xpamount+ xpamounthit + xpamountcrit);
-            updateProgressItem(player, stack, xpamount + xpamounthit + xpamountcrit);
+        if (player.level().isClientSide) {
+            return;
         }
+        int xpamountcrit = 0;
+        int xpamounthit = UpdateLevels.getXPForHit(stack);
+        int xpamount = 0;
+
+
+        WLPlatformGetter.updateEpicFight(player, xpamount + xpamounthit + xpamountcrit);
+        UpdateLevels.applyXPForWorn(player,xpamount+ xpamounthit + xpamountcrit);
+        updateProgressItem(player, stack, xpamount + xpamounthit + xpamountcrit);
 
 
     }
 
-    public static void applyXPForArmor(Player player, int value) {
-        if(!player.level().isClientSide) {
-            if (player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.FEET) != ItemStack.EMPTY ) {
-                ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-                ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
-                ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
-                ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
-                if (ModUtils.isAcceptedArmor(helmet)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
-                if (ModUtils.isAcceptedArmor(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
-                if (ModUtils.isAcceptedArmor(leggings)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
-                if (ModUtils.isAcceptedArmor(feet)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
+    public static void applyXPForWorn(Player player, int value) {
+        if (player.level().isClientSide) {
+            return;
+        }
+        if (player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.FEET) != ItemStack.EMPTY ) {
+            ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+            ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
+            ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
+            if (ModUtils.isWornLeveling(helmet)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
+            if (ModUtils.isWornLeveling(chestplate)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
+            if (ModUtils.isWornLeveling(leggings)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
+            if (ModUtils.isWornLeveling(feet)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
 
-            }
         }
     }
 
@@ -70,103 +68,59 @@ public class UpdateLevels {
         int currentprogress = stack.getOrCreateTag().getInt("levelprogress");
         currentprogress += updateamount;
         if (currentlevel < ModUtils.getMaxLevel(stack) ) {
-            updateItem(player,stack,currentlevel,currentprogress);
-        }
-    }
-
-
-    private static void updateItem(Player player,ItemStack stack, int level, int progress) {
-        int maxprogress = getMaxLevel(level, stack);
-        if (progress >= maxprogress) {
-            while (progress >= maxprogress) {
-                progress -= maxprogress;
-                level++;
-                maxprogress = getMaxLevel(level, stack);
+            int maxprogress = getMaxProgress(currentlevel, stack);
+            if (currentprogress >= maxprogress) {
+                while (currentprogress >= maxprogress) {
+                    currentprogress -= maxprogress;
+                    currentlevel++;
+                    maxprogress = getMaxProgress(currentlevel, stack);
+                }
+                sendLevelUpNotification(player, stack, currentlevel);
             }
-            sendLevelUpNotification(player, stack, level);
+            stack.getOrCreateTag().putInt("level", currentlevel);
+            stack.getOrCreateTag().putInt("levelprogress", currentprogress);
         }
-        stack.getOrCreateTag().putInt("level", level);
-        stack.getOrCreateTag().putInt("levelprogress", progress);
     }
 
 
-    public static int getMaxLevel(int currentlevel, ItemStack stack) {
-        int maxlevel;
-        int levelmodifier = ModUtils.getLevelModifier(stack);
-        int startinglevel =  ModUtils.getLevelStartAmount(stack);
+    public static int getMaxProgress(int currentLevel, ItemStack stack) {
+        int maxProgress;
+        int levelModifier = ModUtils.getLevelModifier(stack);
+        int startingLevel =  ModUtils.getLevelStartAmount(stack);
 
-        if (currentlevel != 0) {
-            maxlevel = startinglevel + ((currentlevel - 1) + currentlevel) * levelmodifier;
+        if (currentLevel != 0) {
+            maxProgress = startingLevel + ((currentLevel - 1) + currentLevel) * levelModifier;
         } else {
-            maxlevel = startinglevel;
+            maxProgress = startingLevel;
         }
-        return maxlevel;
+        return maxProgress;
     }
 
     public static int getXPForEntity(Entity entity) {
 
-        int xpamount = DataGetter.getXpGeneric();
-        AtomicInteger liststate = new AtomicInteger();
+        int xpamount = WeaponLevelingConfig.kill_xp;
 
-
-        if(entity.getType().is(DataGetter.entities_boss) || isCustomBoss(entity)|| liststate.get() == 4) {
-            xpamount = DataGetter.getXpBoss();
+        if(MobXPLoader.isValid(entity.getType())) {
+            MobXP mobXP = MobXPLoader.get(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()));
+            xpamount = mobXP.getAmount();
         }
 
-        else if(entity.getType().is(DataGetter.entities_mini_boss) || isCustomMiniBoss(entity) || liststate.get() == 3) {
-            xpamount = DataGetter.getXpMiniboss();
-        }
-
-        else if(entity.getType().is(DataGetter.entities_monster) || isCustomMonster(entity) || liststate.get() == 2) {
-            xpamount = DataGetter.getXpMonster();
-        }
-
-        else if(entity.getType().is(DataGetter.entities_animal) || isCustomAnimal(entity) || liststate.get() == 1) {
-            xpamount = DataGetter.getXpAnimal();
-        }
-
-        else if(entity.getType().is(DataGetter.entities_blacklist)) {
+        if(entity.getType().is(DataGetter.entities_blacklist)) {
             xpamount = 0;
         }
 
-
         return xpamount;
-    }
-
-    private static boolean isCustomAnimal(Entity entity) {
-        return entity.getTags().contains("wl_animal");
-
-    }
-
-    private static boolean isCustomMonster(Entity entity) {
-        return entity.getTags().contains("wl_monster");
-
-    }
-
-
-    private static boolean isCustomMiniBoss(Entity entity) {
-        return entity.getTags().contains("wl_miniboss");
-    }
-    private static boolean isCustomBoss(Entity entity) {
-        return entity.getTags().contains("wl_boss");
-
     }
 
 
     public static int getXPForHit(ItemStack stack) {
         int xpamount = 0;
         int amount = ModUtils.getHitXPAmount(stack);
-        if (shouldGiveHitXP(ModUtils.getHitXPChance(stack))) {xpamount = amount;}
+        if (shouldGiveXP(ModUtils.getHitXPChance(stack))) {xpamount = amount;}
 
         return xpamount;
     }
 
-    public static int getXPForCrit(ItemStack stack) {
-        int xpamount = 0;
-        int amount = ModUtils.getCritXPAmount(stack);
-        if (shouldGiveHitXP(ModUtils.getCritXPChance(stack))) {xpamount = amount;}
-        return xpamount;
-    }
 
 
     public static void sendLevelUpNotification(Player player,ItemStack stack, int level) {
@@ -185,15 +139,16 @@ public class UpdateLevels {
         world.playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.7F, 2.0f);
     }
 
-    public static boolean shouldGiveHitXP(int probability) {
-        double randomValue = Math.random()*100;
+    public static boolean shouldGiveXP(int probability) {
+        Random random = new Random();
+        double randomValue = random.nextDouble(1,100);
         return randomValue <= probability;
     }
 
     public static int armorXPAmount(int initialxp, boolean taxFree, ItemStack stack) {
         if (taxFree) return initialxp;
 
-        double minamount = ((double) ModUtils.getArmorXPRNGModifier(stack))/100;
+        double minamount = ((double) ModUtils.getWornXPRNGModifier(stack))/100;
         double randomValue = minamount + (1.0 - minamount)*Math.random();
 
         if (randomValue < minamount) randomValue = minamount;
@@ -216,17 +171,17 @@ public class UpdateLevels {
             if(specificStack != null) {
                 updateProgressItem(player, specificStack, xpamount);
             } else if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-                if(ModUtils.isAcceptedProjectileWeapon(stack)) {
+                if(ModUtils.isRangedLeveling(stack)) {
                     updateProgressItem(player, stack, xpamount);
-                }else if(ModUtils.isAcceptedProjectileWeapon(offhandStack)) {
+                }else if(ModUtils.isRangedLeveling(offhandStack)) {
                     updateProgressItem(player, offhandStack, xpamount);
                 }
-            } else if(ModUtils.isAcceptedMeleeWeaponStack(stack)) {
+            } else if(ModUtils.isMeleeLeveling(stack)) {
                 updateProgressItem(player,stack,xpamount);
             }
 
             // For Armor and Potential Offhand Weapon with EFM
-            UpdateLevels.applyXPForArmor(player,xpamount);
+            UpdateLevels.applyXPForWorn(player,xpamount);
             WLPlatformGetter.updateEpicFight(player, xpamount);
         }
 
@@ -246,12 +201,12 @@ public class UpdateLevels {
             } else if(source.is(DamageTypeTags.IS_PROJECTILE)) {
                 ItemStack mainhand = player.getMainHandItem();
                 ItemStack offhand = player.getOffhandItem();
-                if(ModUtils.isAcceptedProjectileWeapon(mainhand)) {
+                if(ModUtils.isRangedLeveling(mainhand)) {
                     UpdateLevels.applyXPOnItemStack(mainhand, player, victim, crit);
-                } else if(ModUtils.isAcceptedProjectileWeapon(offhand)) {
+                } else if(ModUtils.isRangedLeveling(offhand)) {
                     UpdateLevels.applyXPOnItemStack(offhand, player, victim, crit);
                 }
-            } else if(ModUtils.isAcceptedMeleeWeaponStack(stack)) {
+            } else if(ModUtils.isMeleeLeveling(stack)) {
                 UpdateLevels.applyXPOnItemStack(stack, player, victim, crit);
             }
 

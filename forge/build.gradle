@@ -32,10 +32,15 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
+//    modImplementation("com.ptsmods:devlogin:3.5")
+
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
-    forgeRuntimeLibrary(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")))
+//    forgeRuntimeLibrary(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")))
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixinextras_version}"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:${rootProject.mixinextras_version}"))
     modImplementation (include ("maven.modrinth:midnightlib:${rootProject.midnightlib_version_forge}"))
 
     modCompileOnly "maven.modrinth:better-combat:${rootProject.bettercombat_forge_version}" // Better Combat

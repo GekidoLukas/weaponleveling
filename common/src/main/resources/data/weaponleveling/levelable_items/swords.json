@@ -1,0 +1,9 @@
+{
+  "item": "#minecraft:swords",
+  "attributes": [
+    {
+      "attribute" : "minecraft:generic.attack_damage",
+      "levelingType": "MELEE"
+    }
+  ]
+}

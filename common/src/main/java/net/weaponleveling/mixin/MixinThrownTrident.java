@@ -3,9 +3,12 @@ package net.weaponleveling.mixin;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.UpdateLevels;
@@ -18,9 +21,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ThrownTrident.class)
-public class MixinThrownTrident {
+public abstract class MixinThrownTrident  extends AbstractArrow {
     @Shadow
     private ItemStack tridentItem;
+
+    protected MixinThrownTrident(EntityType<? extends AbstractArrow> entityType, Level level) {
+        super(entityType, level);
+    }
 
     @Inject(
             method = "onHitEntity",
@@ -38,12 +45,8 @@ public class MixinThrownTrident {
             method = "onHitEntity",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"), index = 1)
     public float hurtModify(float f) {
-        if(ModUtils.isAcceptedProjectileWeapon(tridentItem)) {
-            double weaponlevelamount = tridentItem.getOrCreateTag().getInt("level");
-            weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(tridentItem);
-            return f + (float) weaponlevelamount;
-        }
-        return f;
+
+        return (float) getBaseDamage();
     }
 
 }

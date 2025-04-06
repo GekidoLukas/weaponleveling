@@ -1,0 +1,9 @@
+{
+  "item": "#weaponleveling:bows",
+  "attributes": [
+    {
+      "attribute" : "weaponleveling:ranged_damage",
+      "levelingType": "RANGED"
+    }
+  ]
+}

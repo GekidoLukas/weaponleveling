@@ -2,11 +2,17 @@ package net.weaponleveling.networking;
 
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.WeaponLevelingMod;
+import net.weaponleveling.data.levelable_item.LevelableItem;
+import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.util.CustomToast;
-import net.weaponleveling.util.DataGetter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class S2CRecievers {
 
@@ -20,29 +26,37 @@ public class S2CRecievers {
             Minecraft.getInstance().getToasts().addToast(new CustomToast(stack, level));
         });
 
-        NetworkManager.registerReceiver(NetworkManager.Side.S2C, Networking.CONFIG_SYNC_PACKET, (buf, context) -> {
 
-            DataGetter.HIT_XP_AMOUNT = buf.readInt();
-            DataGetter.HIT_PERCENTAGE = buf.readInt();
-            DataGetter.CRIT_XP_AMOUNT = buf.readInt();
-            DataGetter.CRIT_PERCENTAGE = buf.readInt();
-            DataGetter.MAX_LEVEL = buf.readInt();
-            DataGetter.LEVEL_MODIFIER = buf.readInt();
-            DataGetter.STARTING_XP = buf.readInt();
-            DataGetter.DAMAGE_PER_LEVEL = buf.readDouble();
-            DataGetter.ARMOR_PER_LEVEL = buf.readDouble();
-            DataGetter.TOUGHNESS_PER_LEVEL = buf.readDouble();
-            DataGetter.ARMOR_RNG = buf.readInt();;
-            DataGetter.BOW_LIKE_MODIFIER = buf.readDouble();
-            DataGetter.BROKEN_ITEMS_WONT_VANISH = buf.readBoolean();
-            DataGetter.DISABLE_UNLISTED = buf.readBoolean();
-            DataGetter.LEVELABLE_AUTO_UNBREAKABLE = buf.readBoolean();
-            DataGetter.XP_GENERIC = buf.readInt();
-            DataGetter.XP_ANIMAL = buf.readInt();
-            DataGetter.XP_MONSTER = buf.readInt();
-            DataGetter.XP_MINIBOSS = buf.readInt();
-            DataGetter.XP_BOSS = buf.readInt();
 
+
+        NetworkManager.registerReceiver(NetworkManager.Side.S2C, Networking.SYNC_CONFIG, (buf, context) -> {
+            WeaponLevelingConfig.broken_items_wont_vanish = buf.readBoolean();
+            WeaponLevelingConfig.levelable_items_auto_unbreakable = buf.readBoolean();
+            WeaponLevelingConfig.hit_xp_amount = buf.readInt();
+            WeaponLevelingConfig.hit_xp_chance = buf.readInt();
+            WeaponLevelingConfig.max_item_level = buf.readInt();
+            WeaponLevelingConfig.starting_xp_amount = buf.readInt();
+            WeaponLevelingConfig.xp_apply_chance = buf.readInt();
+            WeaponLevelingConfig.level_modifier = buf.readInt();
+            WeaponLevelingConfig.value_per_level = buf.readDouble();
+
+
+        });
+
+
+        NetworkManager.registerReceiver(NetworkManager.Side.S2C, Networking.SYNC_DATA, (buf, context) -> {
+            WeaponLevelingMod.LOGGER.info("Receiving Levelable Item Data from Server");
+            Map<ResourceLocation, LevelableItem> builder = new HashMap<>();
+            int count = buf.readInt();
+
+            for(int i = 0; i< count; i++) {
+                ResourceLocation resourceLocation = buf.readResourceLocation();
+                LevelableItem levelableItem = LevelableItem.read(buf);
+                builder.put(resourceLocation,levelableItem);
+            }
+
+            LevelableItemsLoader.setMap(builder);
+            WeaponLevelingMod.LOGGER.info("Received " + count + " Levelable Item Entries");
         });
     }
 }

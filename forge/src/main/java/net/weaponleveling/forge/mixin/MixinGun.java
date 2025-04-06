@@ -16,10 +16,10 @@ public abstract class MixinGun {
             method = "Lcom/mrcrayfish/guns/common/Gun;getAdditionalDamage(Lnet/minecraft/world/item/ItemStack;)F",
             at = @At(value = "RETURN"))
     private static float injectedDamage(float original, ItemStack stack) {
-        if(ModUtils.isAcceptedProjectileWeapon(stack)) {
-            double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(stack);
-            return original += weaponlevelamount;
+        if(ModUtils.isRangedLeveling(stack)) {
+//            double weaponlevelamount = stack.getOrCreateTag().getInt("level");
+//            weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(stack);
+//            return original += weaponlevelamount;
         }
         return original;
     }

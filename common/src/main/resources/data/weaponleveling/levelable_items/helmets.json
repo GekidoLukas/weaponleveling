@@ -1,0 +1,13 @@
+{
+  "item": "#weaponleveling:helmets",
+  "attributes": [
+    {
+      "attribute" : "minecraft:generic.armor",
+      "levelingType": "WEARING"
+    },
+    {
+      "attribute" : "minecraft:generic.armor_toughness",
+      "levelingType": "WEARING"
+    }
+  ]
+}

@@ -31,15 +31,15 @@ public abstract class MixinGunItem extends Item{
             method = "Lcom/mrcrayfish/guns/item/GunItem;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
             at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 1))
     private boolean wrapTooltip(List<Component> instance, Object object, Operation<Boolean> original, ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flag) {
-        if(ModUtils.isAcceptedProjectileWeapon(stack)) {
-            MutableComponent component = (MutableComponent) object;
-            Style DAMAGE = Style.EMPTY.withColor(12517240);
-            int level = stack.getOrCreateTag().getInt("level");
-            DecimalFormat doubleDecimalFormat = new DecimalFormat("#.##");
-            double extradamage = level * ModUtils.getWeaponDamagePerLevel(stack);
-            Component mycomponent = Component.literal(" +" + doubleDecimalFormat.format(extradamage)).withStyle(DAMAGE);
-            return original.call(instance, component.append(mycomponent));
-        }
+//        if(ModUtils.isAcceptedProjectileWeapon(stack)) {
+//            MutableComponent component = (MutableComponent) object;
+//            Style DAMAGE = Style.EMPTY.withColor(12517240);
+//            int level = stack.getOrCreateTag().getInt("level");
+//            DecimalFormat doubleDecimalFormat = new DecimalFormat("#.##");
+//            double extradamage = level * ModUtils.getWeaponDamagePerLevel(stack);
+//            Component mycomponent = Component.literal(" +" + doubleDecimalFormat.format(extradamage)).withStyle(DAMAGE);
+//            return original.call(instance, component.append(mycomponent));
+//        }
         return original.call(instance,object);
     }
 

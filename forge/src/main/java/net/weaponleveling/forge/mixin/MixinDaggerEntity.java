@@ -36,7 +36,7 @@ public abstract class MixinDaggerEntity extends AbstractArrow {
             method = "Lcom/theishiopian/parrying/Entity/DaggerEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
             at = @At(value = "INVOKE", target = "Lcom/theishiopian/parrying/Entity/DaggerEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedXP(EntityHitResult p_213868_1_, CallbackInfo ci, Entity entity, LivingEntity living, float damage, Entity owner, DamageSource src) {
-        if (ModUtils.isAcceptedProjectileWeapon(daggerItem) && owner instanceof Player) {
+        if (ModUtils.isRangedLeveling(daggerItem) && owner instanceof Player) {
             UpdateLevels.applyXPOnItemStack(daggerItem, (Player) owner, entity, false);
         }
     }
@@ -46,9 +46,9 @@ public abstract class MixinDaggerEntity extends AbstractArrow {
             method = "Lcom/theishiopian/parrying/Entity/DaggerEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"), index = 1)
     private float replaceEmpty(float pAmount) {
-        double weaponlevelamount = daggerItem.getOrCreateTag().getInt("level");
-        weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(daggerItem);
-        pAmount += weaponlevelamount;
+//        double weaponlevelamount = daggerItem.getOrCreateTag().getInt("level");
+//        weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(daggerItem);
+//        pAmount += weaponlevelamount;
 
         return pAmount;
     }

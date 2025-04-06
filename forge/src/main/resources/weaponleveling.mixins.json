@@ -13,7 +13,8 @@
     "MixinModifiableBowItem",
     "MixinModifiableCrossbowItem",
     "MixinPlayerForge",
-    "MixinSpearEntity"
+    "MixinSpearEntity",
+    "MixinTridentItemForge"
   ],
   "injectors": {
     "defaultRequire": 1

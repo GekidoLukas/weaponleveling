@@ -6,9 +6,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.weaponleveling.attribute.WLAttributes;
 import net.weaponleveling.item.BrokenItem;
 import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
@@ -18,6 +22,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.function.Consumer;
@@ -26,7 +31,12 @@ import java.util.function.Consumer;
 public abstract class MixinLivingEntity {
 
 
-
+    @Inject(
+            method = "createLivingAttributes",
+            at = @At(value = "RETURN"))
+    private static void addAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
+        cir.getReturnValue().add(WLAttributes.RANGED_DAMAGE);
+    }
 
     @Inject(
             method = "die",
