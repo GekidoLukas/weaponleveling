@@ -62,7 +62,7 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        annotationProcessor(implementation("com.github.LlamaLad7:MixinExtras:0.1.1"))
+//        annotationProcessor(implementation("com.github.LlamaLad7:MixinExtras:0.1.1"))
     }
 
     tasks.withType(JavaCompile) {

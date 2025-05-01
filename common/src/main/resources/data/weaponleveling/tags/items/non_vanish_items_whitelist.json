@@ -1,4 +1,37 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    {
+      "id": "#c:shields",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/shields",
+      "required": false
+    },
+    {
+      "id": "#c:pickaxes",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/pickaxes",
+      "required": false
+    },
+    {
+      "id": "#c:shovels",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/shovels",
+      "required": false
+    },
+    {
+      "id": "#c:hoes",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/shovels",
+      "required": false
+    }
+  ]
 }
