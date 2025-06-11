@@ -41,8 +41,8 @@ public class ClientEvents {
         if (ModUtils.isLevelableItem(stack)) {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
-                int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
-                int maxlevelprogress = LevelingAPI.getMaxProgress(stack);
+                long levelprogress = stack.getOrCreateTag().getLong("levelprogress");
+                long maxlevelprogress = LevelingAPI.getMaxProgress(stack);
 
 
                 tooltip.add(Component.translatable("weaponleveling.tooltip.itemlevel").setStyle(TITLE));

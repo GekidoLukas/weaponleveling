@@ -2,7 +2,11 @@ package net.weaponleveling.mixin;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import eu.midnightdust.lib.config.MidnightConfig;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -59,5 +63,20 @@ public abstract class MixinCrossbowItem
             }
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
+    }
+
+
+    @WrapOperation(
+            method = "shootProjectile",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"
+            )
+    )
+    private static boolean onArrowFired(Level level, Entity entity, Operation<Boolean> original, Level arg, LivingEntity arg2, InteractionHand arg3, ItemStack arg4) {
+        if (entity instanceof AbstractArrow arrow) {
+            LevelingAPI.referenceItemStackOnArrowEntity(arrow,arg4);
+        }
+        return original.call(level, entity);
     }
 }

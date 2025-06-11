@@ -11,12 +11,12 @@ import java.util.function.Consumer;
 public class ChooseAttackItemEvent {
 
     public static Event<Consumer<ChooseAttackItemEvent>> EVENT = EventFactory.createEventResult();
-    public final Player player;
+    public final LivingEntity killer;
 
     public ItemStack itemStack;
 
-    public ChooseAttackItemEvent(Player player,ItemStack itemStack) {
-        this.player = player;
+    public ChooseAttackItemEvent(LivingEntity killer,ItemStack itemStack) {
+        this.killer = killer;
         this.itemStack = itemStack;
     }
 }

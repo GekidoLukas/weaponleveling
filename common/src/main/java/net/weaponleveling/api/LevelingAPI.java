@@ -4,7 +4,9 @@ import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.weaponleveling.util.AbstractArrowAccessor;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.LevelingLogic;
 
@@ -32,7 +34,7 @@ public class LevelingAPI {
      * @param stack The ItemStack the level is queried from
      * @return The amount of XP an Item needs to level up to the next Level
      */
-    public static int getMaxProgress(ItemStack stack) {
+    public static long getMaxProgress(ItemStack stack) {
         return getMaxProgress(stack.getOrCreateTag().getInt("level"),stack);
 
     }
@@ -42,7 +44,7 @@ public class LevelingAPI {
      * @param stack The ItemStack the level is queried from
      * @return The amount of XP an Item needs to level up to the next Level
      */
-    public static int getMaxProgress(int currentLevel,ItemStack stack) {
+    public static long getMaxProgress(int currentLevel,ItemStack stack) {
         int maxProgress;
         int levelModifier = ModUtils.getLevelModifier(stack);
         int startingLevel =  ModUtils.getLevelStartAmount(stack);
@@ -69,6 +71,11 @@ public class LevelingAPI {
                 multimap.put(attribute,newModifier);
             }
         }
+    }
+
+
+    public static void referenceItemStackOnArrowEntity(AbstractArrow arrow, ItemStack source) {
+        ((AbstractArrowAccessor) arrow).setSourceWeapon(source);
     }
 
 }

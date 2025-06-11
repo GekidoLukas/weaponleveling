@@ -1,5 +1,6 @@
 package net.weaponleveling;
 
+import dev.architectury.event.CompoundEventResult;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.event.events.common.PlayerEvent;
@@ -37,7 +38,6 @@ public class WeaponLevelingMod {
         ReloadListenerRegistry.register(PackType.SERVER_DATA,LevelableItemsLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, MobXPLoader.INSTANCE);
 //        MidnightConfig.init(MODID, WeaponLevelingConfig.class);
-
 //        ItemLevelUpdateEvent.LEVEL_UP.register(((player, stack, currentLevel, currentProgress, maxProgress) -> {
 //
 //            WeaponLevelingMod.LOGGER.info("LEVELUP YIPPIE");
@@ -73,11 +73,12 @@ public class WeaponLevelingMod {
 //            return EventResult.interruptTrue();
 //        });
 
-//        KillXPGainEvent.POST.register((living,xpAmount) -> {
-//
-//            WeaponLevelingMod.LOGGER.info("KILL POST ITEM");
-//            return CompoundEventResult.interruptFalse(200);
-//        });
+        KillXPGainEvent.PRE_GAIN.register(preKillXPGainEvent -> {
+
+            WeaponLevelingMod.LOGGER.info("KILL POST ITEM");
+
+            preKillXPGainEvent.xpAmount = 2000;
+        });
 //        KillXPGainEvent.PRE_GAIN.register(preKillXPGainEvent -> {
 //            WeaponLevelingMod.LOGGER.info("KILL POST ITEM");
 //            preKillXPGainEvent.xpAmount = 2000;
@@ -101,10 +102,13 @@ public class WeaponLevelingMod {
 
         //TODO
         //- Example Datapacks
-        //- Fix remaining known bugs
+        //- Fix remaining known bugs ???
         //- Add Forge Item Tags
-        //- Toggleable Ranged Attribute
-        //- 
+        //- Toggleable Ranged Attribute XXX
+        //- Power Enchant Compat? XXX
+        //- Living Entity Leveling? XXX
+        //- Long for Progress instead of INT XXX
+        //- Percent Leveling for Attributes
 
     }
 

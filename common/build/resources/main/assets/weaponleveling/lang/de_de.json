@@ -12,7 +12,7 @@
   "weaponleveling.command.exception.outofbounds": "%s ist größer als der Maximalwert",
   "weaponleveling.tooltip.broken.prefix": "%s (Kaputt)",
   "weaponleveling.tooltip.broken": "Der Gegenstand ist kapputt",
-  "weaponleveling.tooltip.broken.description": "Im Amboss reparieren um es wiederzuverwenden",
+  "weaponleveling.tooltip.broken.description": "Am Amboss reparieren um es wiederzuverwenden",
   "item.weaponleveling.broken": "Kaputter Gegendtand",
 
   "item.modifiers.both_hands": "In der Hand:",

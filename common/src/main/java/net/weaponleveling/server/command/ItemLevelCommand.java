@@ -2,6 +2,7 @@ package net.weaponleveling.server.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
@@ -37,7 +38,7 @@ public class ItemLevelCommand {
                                         }))
 
                                         .then(Commands.literal("points").executes((command) -> {
-                                            return setPointCommand(command.getSource(), EntityArgument.getPlayer(command, "player"),IntegerArgumentType.getInteger(command,"value"),command);
+                                            return setPointCommand(command.getSource(), EntityArgument.getPlayer(command, "player"), LongArgumentType.getLong(command,"value"),command);
                                         }))))));
     }
 
@@ -62,13 +63,13 @@ public class ItemLevelCommand {
         return 1;
     }
 
-    private static int setPointCommand(CommandSourceStack source, ServerPlayer player, int points, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    private static int setPointCommand(CommandSourceStack source, ServerPlayer player, long points, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ItemStack stack = player.getMainHandItem();
-        int level = stack.getOrCreateTag().getInt("levelprogress");
-        int maxprogress = LevelingAPI.getMaxProgress(stack);
+        long level = stack.getOrCreateTag().getLong("levelprogress"); //TODO Check
+        long maxprogress = LevelingAPI.getMaxProgress(stack);
         if (ModUtils.isLevelableItem(stack)) {
             if(points <= maxprogress) {
-                stack.getOrCreateTag().putInt("levelprogress", points);
+                stack.getOrCreateTag().putLong("levelprogress", points);
                 source.sendSuccess(() -> {
                     return Component.translatable("weaponleveling.command.setpoints",stack.getHoverName(),points);
                 },true);

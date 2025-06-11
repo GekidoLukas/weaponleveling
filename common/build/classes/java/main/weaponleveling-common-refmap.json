@@ -6,11 +6,19 @@
     "net/weaponleveling/mixin/InventoryMixin": {
       "tick": "Lnet/minecraft/class_1661;method_7381()V"
     },
+    "net/weaponleveling/mixin/MixinAbstractArrow": {
+      "addAdditionalSaveData": "Lnet/minecraft/class_1665;method_5652(Lnet/minecraft/class_2487;)V",
+      "readAdditionalSaveData": "Lnet/minecraft/class_1665;method_5749(Lnet/minecraft/class_2487;)V"
+    },
     "net/weaponleveling/mixin/MixinBowItem": {
-      "<init>": "Lnet/minecraft/class_1753;<init>(Lnet/minecraft/class_1792$class_1793;)V"
+      "<init>": "Lnet/minecraft/class_1753;<init>(Lnet/minecraft/class_1792$class_1793;)V",
+      "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z": "Lnet/minecraft/class_1937;method_8649(Lnet/minecraft/class_1297;)Z",
+      "releaseUsing": "Lnet/minecraft/class_1753;method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V"
     },
     "net/weaponleveling/mixin/MixinCrossbowItem": {
-      "<init>": "Lnet/minecraft/class_1764;<init>(Lnet/minecraft/class_1792$class_1793;)V"
+      "<init>": "Lnet/minecraft/class_1764;<init>(Lnet/minecraft/class_1792$class_1793;)V",
+      "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z": "Lnet/minecraft/class_1937;method_8649(Lnet/minecraft/class_1297;)Z",
+      "shootProjectile": "Lnet/minecraft/class_1764;method_7763(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;FZFFF)V"
     },
     "net/weaponleveling/mixin/MixinItemStack": {
       "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;": "Lnet/minecraft/class_1799;method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",
@@ -62,11 +70,19 @@
       "net/weaponleveling/mixin/InventoryMixin": {
         "tick": "Lnet/minecraft/class_1661;method_7381()V"
       },
+      "net/weaponleveling/mixin/MixinAbstractArrow": {
+        "addAdditionalSaveData": "Lnet/minecraft/class_1665;method_5652(Lnet/minecraft/class_2487;)V",
+        "readAdditionalSaveData": "Lnet/minecraft/class_1665;method_5749(Lnet/minecraft/class_2487;)V"
+      },
       "net/weaponleveling/mixin/MixinBowItem": {
-        "<init>": "Lnet/minecraft/class_1753;<init>(Lnet/minecraft/class_1792$class_1793;)V"
+        "<init>": "Lnet/minecraft/class_1753;<init>(Lnet/minecraft/class_1792$class_1793;)V",
+        "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z": "Lnet/minecraft/class_1937;method_8649(Lnet/minecraft/class_1297;)Z",
+        "releaseUsing": "Lnet/minecraft/class_1753;method_7840(Lnet/minecraft/class_1799;Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;I)V"
       },
       "net/weaponleveling/mixin/MixinCrossbowItem": {
-        "<init>": "Lnet/minecraft/class_1764;<init>(Lnet/minecraft/class_1792$class_1793;)V"
+        "<init>": "Lnet/minecraft/class_1764;<init>(Lnet/minecraft/class_1792$class_1793;)V",
+        "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z": "Lnet/minecraft/class_1937;method_8649(Lnet/minecraft/class_1297;)Z",
+        "shootProjectile": "Lnet/minecraft/class_1764;method_7763(Lnet/minecraft/class_1937;Lnet/minecraft/class_1309;Lnet/minecraft/class_1268;Lnet/minecraft/class_1799;Lnet/minecraft/class_1799;FZFFF)V"
       },
       "net/weaponleveling/mixin/MixinItemStack": {
         "Lnet/minecraft/world/item/ItemStack;getAttributeModifiers(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;": "Lnet/minecraft/class_1799;method_7926(Lnet/minecraft/class_1304;)Lcom/google/common/collect/Multimap;",

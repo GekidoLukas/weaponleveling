@@ -3,6 +3,7 @@ package net.weaponleveling.api.event;
 import dev.architectury.event.Event;
 import dev.architectury.event.EventFactory;
 import dev.architectury.event.EventResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -15,16 +16,16 @@ public interface ItemLevelUpdateEvent {
 
 
     interface PreGainXP {
-        EventResult pre(Player player, ItemStack stack, int amount);
+        EventResult pre(LivingEntity attacker, ItemStack stack, int amount);
 
     }
     interface LevelUp {
-        EventResult levelUp(Player player, ItemStack stack, int currentLevel, int currentProgress, int maxProgress);
+        EventResult levelUp(LivingEntity attacker, ItemStack stack, int currentLevel, long currentProgress, long maxProgress);
 
     }
 
     interface SendNotification {
-        EventResult send(Player player, ItemStack stack, int currentLevel, int currentProgress, int maxProgress);
+        EventResult send(LivingEntity attacker, ItemStack stack, int currentLevel, long currentProgress, long maxProgress);
 
     }
 

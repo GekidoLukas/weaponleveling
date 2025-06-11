@@ -1,13 +1,13 @@
 modLoader = "javafml"
 loaderVersion = "[40,)"
 license = "All rights reserved"
-issueTrackerURL="https://github.com/GeradesoLukas/weaponleveling/issues"
+issueTrackerURL="https://github.com/GekidoLukas/weaponleveling/issues"
 
 [[mods]]
 modId = "weaponleveling"
 version = "${version}"
 displayName = "Lukas' Weapon Leveling"
-authors = "GeradesoLukas"
+authors = "GekidoLukas"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/weapon-leveling"
 description = '''
 Leveling your items since 2022.

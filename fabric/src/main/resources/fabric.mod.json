@@ -5,11 +5,11 @@
   "name": "Lukas' Weapon Leveling",
   "description": "Leveling your items since 2022.\nVery customizable mod to make your equipment stronger over time.",
   "authors": [
-    "GeradesoLukas"
+    "GekidoLukas"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/weapon-leveling",
-    "sources": "https://github.com/GeradesoLukas/weaponleveling"
+    "sources": "https://github.com/GekidoLukas/weaponleveling"
   },
   "license": "All rights reserved",
   "icon": "assets/weaponleveling/icon.png",

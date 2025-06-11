@@ -9,7 +9,7 @@ public class ItemUpgradeRegistryHelper {
         if(TetraCompat.isLoaded) {
             ItemUpgradeRegistry.instance.registerReplacementHook((ItemStack original, ItemStack replacement) -> {
                 replacement.getOrCreateTag().putInt("level", original.getOrCreateTag().getInt("level"));
-                replacement.getOrCreateTag().putInt("levelprogress", original.getOrCreateTag().getInt("levelprogress"));
+                replacement.getOrCreateTag().putLong("levelprogress", original.getOrCreateTag().getLong("levelprogress"));
                 return replacement;
             });
         }

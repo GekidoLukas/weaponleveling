@@ -1,6 +1,7 @@
 package net.weaponleveling.util;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,11 +32,11 @@ import java.util.Random;
 
 @ApiStatus.Internal
 public class LevelingLogic {
-    public static void applyHitXP(ItemStack stack, Player player, Entity target, Boolean critical) {
-        if (player.level().isClientSide) {
+    public static void applyHitXP(ItemStack stack, LivingEntity attacker, Entity target, Boolean critical) {
+        if (attacker.level().isClientSide) {
             return;
         }
-        if(HitXPGainEvent.ITEM_PRE.invoker().preItem(stack,player,target,critical).isTrue()) return;
+        if(HitXPGainEvent.ITEM_PRE.invoker().preItem(stack,attacker,target,critical).isTrue()) return;
 
 
         int xpamountcrit = 0;
@@ -44,72 +45,80 @@ public class LevelingLogic {
 
 
 //        WLPlatformGetter.updateEpicFight(player, xpamount + xpamounthit + xpamountcrit);
-        LevelingLogic.applyXPForWorn(player,xpamount+ xpamounthit + xpamountcrit);
-        updateProgressItem(player, stack, xpamount + xpamounthit + xpamountcrit);
-        HitXPGainEvent.ITEM_POST.invoker().postItem(stack,player,target,critical, xpamount + xpamounthit + xpamountcrit);
+        LevelingLogic.applyXPForWorn(attacker,xpamount+ xpamounthit + xpamountcrit);
+        updateProgressItem(attacker, stack, xpamount + xpamounthit + xpamountcrit);
+        HitXPGainEvent.ITEM_POST.invoker().postItem(stack,attacker,target,critical, xpamount + xpamounthit + xpamountcrit);
     }
 
-    private static void applyXPForWorn(Player player, int value) {
-        if (player.level().isClientSide) {
+    private static void applyXPForWorn(LivingEntity attacker, int value) {
+        if (attacker.level().isClientSide) {
             return;
         }
-        if (player.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY || player.getItemBySlot(EquipmentSlot.FEET) != ItemStack.EMPTY ) {
-            ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-            ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
-            ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
-            ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
-            if (ModUtils.isWornLeveling(helmet, EquipmentSlot.HEAD)) {updateProgressItem(player,helmet,armorXPAmount(value, false, helmet));}
-            if (ModUtils.isWornLeveling(chestplate, EquipmentSlot.CHEST)) {updateProgressItem(player,chestplate,armorXPAmount(value, false, chestplate));}
-            if (ModUtils.isWornLeveling(leggings, EquipmentSlot.LEGS)) {updateProgressItem(player,leggings,armorXPAmount(value, false, leggings));}
-            if (ModUtils.isWornLeveling(feet, EquipmentSlot.FEET)) {updateProgressItem(player,feet,armorXPAmount(value, false, feet));}
+        if (attacker.getItemBySlot(EquipmentSlot.HEAD) != ItemStack.EMPTY || attacker.getItemBySlot(EquipmentSlot.CHEST) != ItemStack.EMPTY || attacker.getItemBySlot(EquipmentSlot.LEGS) != ItemStack.EMPTY || attacker.getItemBySlot(EquipmentSlot.FEET) != ItemStack.EMPTY ) {
+            ItemStack helmet = attacker.getItemBySlot(EquipmentSlot.HEAD);
+            ItemStack chestplate = attacker.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack leggings = attacker.getItemBySlot(EquipmentSlot.LEGS);
+            ItemStack feet = attacker.getItemBySlot(EquipmentSlot.FEET);
+            if (ModUtils.isWornLeveling(helmet, EquipmentSlot.HEAD)) {updateProgressItem(attacker,helmet,armorXPAmount(value, false, helmet));}
+            if (ModUtils.isWornLeveling(chestplate, EquipmentSlot.CHEST)) {updateProgressItem(attacker,chestplate,armorXPAmount(value, false, chestplate));}
+            if (ModUtils.isWornLeveling(leggings, EquipmentSlot.LEGS)) {updateProgressItem(attacker,leggings,armorXPAmount(value, false, leggings));}
+            if (ModUtils.isWornLeveling(feet, EquipmentSlot.FEET)) {updateProgressItem(attacker,feet,armorXPAmount(value, false, feet));}
 
         }
     }
 
-    public static void updateProgressItem(Player player, ItemStack stack, int updateamount) {
-        if (player.level().isClientSide) {
+    public static void updateProgressItem(LivingEntity attacker, ItemStack stack, int updateamount) {
+        if (attacker.level().isClientSide) {
             return;
         }
 
-        if(ItemLevelUpdateEvent.PRE.invoker().pre(player,stack,updateamount).isTrue()) return;
+        if(ItemLevelUpdateEvent.PRE.invoker().pre(attacker,stack,updateamount).isTrue()) return;
 
 
         int currentlevel = stack.getOrCreateTag().getInt("level");
-        int currentprogress = stack.getOrCreateTag().getInt("levelprogress");
+        long currentprogress = stack.getOrCreateTag().getTagType("levelprogress") == Tag.TAG_LONG ? stack.getOrCreateTag().getLong("levelprogress") : (long) stack.getOrCreateTag().getInt("levelprogress");
         currentprogress += updateamount;
         if (currentlevel < ModUtils.getMaxLevel(stack) ) {
-            int maxprogress = LevelingAPI.getMaxProgress(currentlevel, stack);
+            long maxprogress = LevelingAPI.getMaxProgress(currentlevel, stack);
             if (currentprogress >= maxprogress) {
 
-                if(!ItemLevelUpdateEvent.LEVEL_UP.invoker().levelUp(player,stack,currentprogress,currentlevel,maxprogress).isFalse()) {
+                if(!ItemLevelUpdateEvent.LEVEL_UP.invoker().levelUp(attacker,stack,currentlevel,currentprogress,maxprogress).isFalse()) {
                     while (currentprogress >= maxprogress) {
                         currentprogress -= maxprogress;
                         currentlevel++;
                         maxprogress = LevelingAPI.getMaxProgress(currentlevel, stack);
                     }
-                    if(!ItemLevelUpdateEvent.SEND_NOTIFICATION.invoker().send(player,stack,currentprogress,currentlevel,maxprogress).isFalse()) sendLevelUpNotification(player, stack, currentlevel);
+
+                    if(!ItemLevelUpdateEvent.SEND_NOTIFICATION.invoker().send(attacker,stack,currentlevel,currentprogress,maxprogress).isFalse()) {
+                        if(attacker instanceof Player player) {
+                            sendLevelUpNotification(player, stack, currentlevel);
+                        } else {
+                            attacker.level().playSound(null, attacker.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.HOSTILE, 0.7F, 2.0f);
+                        }
+                    }
+
                 }
             }
             stack.getOrCreateTag().putInt("level", currentlevel);
-            stack.getOrCreateTag().putInt("levelprogress", currentprogress);
+            stack.getOrCreateTag().putLong("levelprogress", currentprogress);
         }
     }
 
 
-    private static int getXPForEntity(LivingEntity entity) {
+    private static int getXPForEntity(LivingEntity killed) {
 
         int xpamount = WeaponLevelingConfig.kill_xp;
 
-        if(MobXPLoader.isValid(entity.getType())) {
-            MobXP mobXP = MobXPLoader.get(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()));
+        if(MobXPLoader.isValid(killed.getType())) {
+            MobXP mobXP = MobXPLoader.get(BuiltInRegistries.ENTITY_TYPE.getKey(killed.getType()));
             xpamount = mobXP.getAmount();
         }
 
-        if(entity.getType().is(DataGetter.entities_blacklist)) {
+        if(killed.getType().is(DataGetter.entities_blacklist)) {
             xpamount = 0;
         }
 
-        KillXPGainEvent.PreKillXPGainEvent event = new KillXPGainEvent.PreKillXPGainEvent(entity,xpamount);
+        KillXPGainEvent.PreKillXPGainEvent event = new KillXPGainEvent.PreKillXPGainEvent(killed,xpamount);
         KillXPGainEvent.PRE_GAIN.invoker().accept(event);
         xpamount = event.xpAmount;
 
@@ -165,30 +174,30 @@ public class LevelingLogic {
         if (source.is(DamageTypes.EXPLOSION)) return;
         if (source.is(DamageTypes.MAGIC)) return;
 
-        if (killer instanceof Player player) {
-            ChooseAttackItemEvent event = new ChooseAttackItemEvent(player,player.getMainHandItem());
+        if (killer instanceof LivingEntity attacker) {
+            ChooseAttackItemEvent event = new ChooseAttackItemEvent(attacker,attacker.getMainHandItem());
             ChooseAttackItemEvent.EVENT.invoker().accept(event);
             ItemStack stack = event.itemStack;
 
-            ItemStack offhandStack = player.getOffhandItem();
+            ItemStack offhandStack = attacker.getOffhandItem();
 
             int xpamount = LevelingLogic.getXPForEntity(victim);
 
             if(specificStack != null) {
-                updateProgressItem(player, specificStack, xpamount);
+                updateProgressItem(attacker, specificStack, xpamount);
             } else if (source.is(DamageTypeTags.IS_PROJECTILE)) {
                 if(ModUtils.isRangedLeveling(stack)) {
-                    updateProgressItem(player, stack, xpamount);
+                    updateProgressItem(attacker, stack, xpamount);
                 }else if(ModUtils.isRangedLeveling(offhandStack)) {
-                    updateProgressItem(player, offhandStack, xpamount);
+                    updateProgressItem(attacker, offhandStack, xpamount);
                 }
             } else if(ModUtils.isMeleeLeveling(stack)) {
-                updateProgressItem(player,stack,xpamount);
+                updateProgressItem(attacker,stack,xpamount);
             }
 
             // For Armor and Potential Offhand Weapon with EFM
-            LevelingLogic.applyXPForWorn(player,xpamount);
-            WLPlatformGetter.updateEpicFight(player, xpamount);
+            LevelingLogic.applyXPForWorn(attacker,xpamount);
+//            WLPlatformGetter.updateEpicFight(attacker, xpamount);
         }
 
     }
@@ -202,27 +211,27 @@ public class LevelingLogic {
 
 
 
-        if(killer instanceof Player player) {
+        if(killer instanceof LivingEntity attacker) {
 
             //Event that can cancel the XP Gain
-            if(HitXPGainEvent.PRE.invoker().pre(player,victim,source,specificStack).isTrue()) return;
+            if(HitXPGainEvent.PRE.invoker().pre(attacker,victim,source,specificStack).isTrue()) return;
 
-            ChooseAttackItemEvent event = new ChooseAttackItemEvent(player,player.getMainHandItem());
+            ChooseAttackItemEvent event = new ChooseAttackItemEvent(attacker,attacker.getMainHandItem());
             ChooseAttackItemEvent.EVENT.invoker().accept(event);
             ItemStack stack = event.itemStack;
 
             if(specificStack != null) {
-                LevelingLogic.applyHitXP(specificStack, player, victim, crit);
+                LevelingLogic.applyHitXP(specificStack, attacker, victim, crit);
             } else if(source.is(DamageTypeTags.IS_PROJECTILE)) {
-                ItemStack mainhand = player.getMainHandItem();
-                ItemStack offhand = player.getOffhandItem();
+                ItemStack mainhand = attacker.getMainHandItem();
+                ItemStack offhand = attacker.getOffhandItem();
                 if(ModUtils.isRangedLeveling(mainhand)) {
-                    LevelingLogic.applyHitXP(mainhand, player, victim, crit);
+                    LevelingLogic.applyHitXP(mainhand, attacker, victim, crit);
                 } else if(ModUtils.isRangedLeveling(offhand)) {
-                    LevelingLogic.applyHitXP(offhand, player, victim, crit);
+                    LevelingLogic.applyHitXP(offhand, attacker, victim, crit);
                 }
             } else if(ModUtils.isMeleeLeveling(stack)) {
-                LevelingLogic.applyHitXP(stack, player, victim, crit);
+                LevelingLogic.applyHitXP(stack, attacker, victim, crit);
             }
 
         }

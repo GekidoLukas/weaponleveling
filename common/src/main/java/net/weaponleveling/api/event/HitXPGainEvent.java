@@ -19,16 +19,16 @@ public interface HitXPGainEvent {
 
 
     interface PreGainXP {
-        EventResult pre(Player player, LivingEntity victim, DamageSource source, @Nullable ItemStack specificStack);
+        EventResult pre(LivingEntity attacker, LivingEntity victim, DamageSource source, @Nullable ItemStack specificStack);
 
     }
 
     interface PreGainXPItem {
-        EventResult preItem(ItemStack stack, Player player, Entity victim, Boolean critical);
+        EventResult preItem(ItemStack stack, LivingEntity attacker, Entity victim, Boolean critical);
 
     }
     interface PostGainXPItem {
-        EventResult postItem(ItemStack stack, Player player, Entity victim, Boolean critical, int xp_amount);
+        EventResult postItem(ItemStack stack, LivingEntity attacker, Entity victim, Boolean critical, int xp_amount);
 
     }
 }

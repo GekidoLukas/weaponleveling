@@ -12,6 +12,7 @@
   "mixins": [
     "EarlyInitMixin",
     "InventoryMixin",
+    "MixinAbstractArrow",
     "MixinBowItem",
     "MixinCrossbowItem",
     "MixinItemStack",
