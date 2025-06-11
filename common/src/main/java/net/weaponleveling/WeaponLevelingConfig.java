@@ -32,6 +32,12 @@ public class WeaponLevelingConfig extends MidnightConfig {
     public static int brokenColor = 15422034;
 
 
+    @Comment(category = "general", centered = true)
+    public static Comment general_title;
+
+    @Entry(category = "general")
+    public static boolean apply_ranged_damage_attribute = true; //TODO Disconnect if not correct on server
+
     //LEVELING
     @Comment(category = "leveling", centered = true)
     public static Comment leveling_title;
@@ -76,5 +82,6 @@ public class WeaponLevelingConfig extends MidnightConfig {
 
     @Entry(category = "leveling")
     public static double value_per_level = 0.1d;
+
 
 }

@@ -4,6 +4,8 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.api.LevelingAPI;
 import net.weaponleveling.data.levelable_item.LevelableAttribute;
 import net.weaponleveling.data.levelable_item.LevelableItem;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
@@ -50,14 +53,29 @@ public abstract class MixinItemStack {
         HashMultimap<Attribute, AttributeModifier> hashmap = HashMultimap.create(cir.getReturnValue());
         ItemStack stack = ((ItemStack) ((Object) this));
 
-        if(ModUtils.isLevelableItem(stack) && stack.getTag() != null) {
-            LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
+        if(stack.getTag() != null) {
+            if(ModUtils.isNBTLevelable(stack)) {
+                for(var listItem : stack.getTag().getCompound("levelable").getList("attributes", Tag.TAG_COMPOUND)) {
+                    if(listItem instanceof CompoundTag tag) {
+                        LevelableAttribute levelableAttribute = LevelableAttribute.fromNBT(tag);
+                        if(levelableAttribute != null) {
+                            LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), levelableAttribute.getValuePerLevel() * stack.getTag().getInt("level"));
+                        }
+                    }
+                }
+            }
+            else if(ModUtils.isJSONLevelable(stack)) {
+                LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
 
-            for(LevelableAttribute levelableAttribute : levelableitem.getAttributes()) {
-                ModUtils.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), levelableAttribute.getValuePerLevel() * stack.getTag().getInt("level"));
+                if(levelableitem != null) {
+                    for(LevelableAttribute levelableAttribute : levelableitem.getAttributes()) {
+                        LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), levelableAttribute.getValuePerLevel() * stack.getTag().getInt("level"));
 
+                    }
+                }
             }
         }
+
         cir.setReturnValue(hashmap);
     }
 
@@ -98,7 +116,7 @@ public abstract class MixinItemStack {
         ItemStack stack = ((ItemStack) ((Object) this));
 
         if(stack.is(ModItems.BROKEN_ITEM.get())) {
-            return Component.empty().append(Component.translatable("weaponleveling.tooltip.broken.prefix")).append(" ").append(BrokenItem.getContainedItem(stack).getHoverName());
+            return Component.empty().append(Component.translatable("weaponleveling.tooltip.broken.prefix",BrokenItem.getContainedItem(stack).getHoverName()).setStyle(BrokenItem.getContainedItem(stack).getHoverName().getStyle()));
         }
 
         return original;

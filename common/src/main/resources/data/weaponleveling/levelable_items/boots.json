@@ -2,12 +2,17 @@
   "item": "#c:boots",
   "attributes": [
     {
-      "attribute" : "minecraft:generic.armor",
-      "levelingType": "WEARING"
+      "attribute" : "minecraft:generic.armor"
     },
     {
-      "attribute" : "minecraft:generic.armor_toughness",
-      "levelingType": "WEARING"
+      "attribute" : "minecraft:generic.armor_toughness"
     }
-  ]
+  ],
+
+  "leveling_type" : {
+    "type" : "weaponleveling:worn",
+    "slots": [
+      "feet"
+    ]
+  }
 }

@@ -2,12 +2,18 @@
   "item": "#weaponleveling:tridents",
   "attributes": [
     {
-      "attribute" : "weaponleveling:ranged_damage",
-      "levelingType": "RANGED"
+      "attribute" : "weaponleveling:ranged_damage"
     },
     {
-      "attribute" : "minecraft:generic.attack_damage",
-      "levelingType": "MELEE"
+      "attribute" : "minecraft:generic.attack_damage"
+    }
+  ],
+  "leveling_types" : [
+    {
+      "type" : "weaponleveling:melee"
+    },
+    {
+      "type" : "weaponleveling:ranged"
     }
   ]
 }

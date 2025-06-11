@@ -2,8 +2,10 @@
   "item": "#minecraft:axes",
   "attributes": [
     {
-      "attribute" : "minecraft:generic.attack_damage",
-      "levelingType": "MELEE"
+      "attribute" : "minecraft:generic.attack_damage"
     }
-  ]
+  ],
+  "leveling_type" : {
+      "type" : "weaponleveling:melee"
+  }
 }

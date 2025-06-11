@@ -2,6 +2,7 @@ package net.weaponleveling.mixin;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -11,6 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.weaponleveling.EarlyConfig;
+import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.WeaponLevelingMod;
+import net.weaponleveling.api.LevelingAPI;
 import net.weaponleveling.attribute.IRangedWeapon;
 import net.weaponleveling.attribute.WLAttributes;
 import net.weaponleveling.util.ModUtils;
@@ -37,12 +42,15 @@ public abstract class MixinBowItem
             method = "<init>",
             at = @At(value = "TAIL"))
     private void addAttribute(Item.Properties properties, CallbackInfo ci) {
-            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(ModUtils.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 4.0, AttributeModifier.Operation.ADDITION));
+//        MidnightConfig.init(WeaponLevelingMod.MODID, WeaponLevelingConfig.class);
+        if(EarlyConfig.USE_WL_RANGED_ATTRIBUTE) {
+                ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+                builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 4.0, AttributeModifier.Operation.ADDITION));
+                defaultModifiers = builder.build();
+        }
 
 
 
-            defaultModifiers = builder.build();
     }
 
 
@@ -50,8 +58,10 @@ public abstract class MixinBowItem
 
     @Override
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
-        if (equipmentSlot == EquipmentSlot.MAINHAND || equipmentSlot == EquipmentSlot.OFFHAND) {
-            return this.defaultModifiers;
+        if(EarlyConfig.USE_WL_RANGED_ATTRIBUTE) {
+            if (equipmentSlot == EquipmentSlot.MAINHAND || equipmentSlot == EquipmentSlot.OFFHAND) {
+                return this.defaultModifiers;
+            }
         }
         return super.getDefaultAttributeModifiers(equipmentSlot);
     }

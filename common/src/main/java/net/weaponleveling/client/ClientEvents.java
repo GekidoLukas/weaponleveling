@@ -6,9 +6,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.api.LevelingAPI;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.TooltipHelper;
-import net.weaponleveling.util.UpdateLevels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ClientEvents {
             if (shouldExtendTooltip()) {
                 int level = stack.getOrCreateTag().getInt("level");
                 int levelprogress = stack.getOrCreateTag().getInt("levelprogress");
-                int maxlevelprogress = UpdateLevels.getMaxProgress(level,stack);
+                int maxlevelprogress = LevelingAPI.getMaxProgress(stack);
 
 
                 tooltip.add(Component.translatable("weaponleveling.tooltip.itemlevel").setStyle(TITLE));

@@ -86,6 +86,8 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                                 if(levelableItem != null) {
                                     builder.remove(BuiltInRegistries.ITEM.getKey(item));
                                     builder.put(BuiltInRegistries.ITEM.getKey(item), levelableItem);
+                                } else {
+
                                 }
 
                             });

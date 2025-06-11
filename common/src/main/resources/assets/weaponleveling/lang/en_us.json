@@ -1,7 +1,6 @@
 {
   "weaponleveling.tooltip.itemlevel": "Item Level",
   "weaponleveling.tooltip.level": "Level ",
-  "weaponleveling.tooltip.projectile_weapon_level": "Extra Damage ",
   "weaponleveling.tooltip.levelprogress": "Progress ",
   "weaponleveling.tooltip.pressshift": "Press [Shift] to see the Level",
   "weaponleveling.tooltip.maxlevel": "Max Level",
@@ -11,7 +10,7 @@
   "weaponleveling.command.setpoints": "Set the XP Points of %s to %s",
   "weaponleveling.command.exception.novalidweapon": "%s is not a valid item",
   "weaponleveling.command.exception.outofbounds": "%s is higher than the Maximum Value",
-  "weaponleveling.tooltip.broken.prefix": "Broken",
+  "weaponleveling.tooltip.broken.prefix": "Broken %s",
   "weaponleveling.tooltip.broken": "Item is Broken",
   "weaponleveling.tooltip.broken.description": "Repair in Anvil to use again",
   "item.weaponleveling.broken": "Broken Item",
@@ -28,6 +27,10 @@
   "weaponleveling.midnightconfig.valuesColor":"Values Color",
   "weaponleveling.midnightconfig.shiftColor":"Shift Color",
   "weaponleveling.midnightconfig.brokenColor":"Broken Color",
+
+  "weaponleveling.midnightconfig.general_title":"General",
+  "weaponleveling.midnightconfig.category.general":"General",
+  "weaponleveling.midnightconfig.apply_ranged_damage_attribute":"[§cRequires Restart!§r] Apply the WeaponLeveling RangedAttribute to Bows, Crossbows, Tridents etc.",
 
   "weaponleveling.midnightconfig.leveling_title":"Leveling Configuration",
   "weaponleveling.midnightconfig.category.leveling":"Leveling",

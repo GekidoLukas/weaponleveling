@@ -3,7 +3,6 @@ package net.weaponleveling.forge.compat.epicfight;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.util.ModUtils;
-import net.weaponleveling.util.UpdateLevels;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
 
@@ -17,7 +16,7 @@ public class EpicFightMethods {
         ServerPlayerPatch serverPlayerPatch = (ServerPlayerPatch) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY).orElse(null);
         if(serverPlayerPatch.isOffhandItemValid() && ModUtils.isLevelableItem(player.getOffhandItem()) && serverPlayerPatch.getEntityState().attacking()) {
             ItemStack offhandItem = player.getOffhandItem();
-            UpdateLevels.updateProgressItem(player,offhandItem,xp);
+//            UpdateLevels.updateProgressItem(player,offhandItem,xp);
 
         }
     }

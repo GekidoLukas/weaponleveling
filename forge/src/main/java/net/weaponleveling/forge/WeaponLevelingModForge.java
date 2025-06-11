@@ -17,6 +17,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.weaponleveling.WLConfigReader;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.WeaponLevelingModClient;
+import net.weaponleveling.attribute.WLAttributes;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.mob_xp.MobXPLoader;
 import net.weaponleveling.forge.compat.tetra.TetraCompat;

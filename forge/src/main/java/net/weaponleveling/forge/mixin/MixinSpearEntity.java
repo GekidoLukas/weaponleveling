@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.weaponleveling.util.ModUtils;
-import net.weaponleveling.util.UpdateLevels;
+import net.weaponleveling.util.LevelingLogic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,7 +36,7 @@ public abstract class MixinSpearEntity extends AbstractArrow {
             at = @At(value = "INVOKE",  target = "Lcom/theishiopian/parrying/Entity/SpearEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedXP(EntityHitResult p_213868_1_, CallbackInfo ci, Entity entity, LivingEntity living, float damage, Entity owner, DamageSource src) {
         if(ModUtils.isRangedLeveling(spearItem) && owner instanceof Player) {
-            UpdateLevels.applyXPOnItemStack(spearItem, (Player) owner, entity, false);
+            LevelingLogic.applyHitXP(spearItem, (Player) owner, entity, false);
         }
     }
 

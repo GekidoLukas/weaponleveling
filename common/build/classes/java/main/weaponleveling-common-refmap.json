@@ -1,5 +1,8 @@
 {
   "mappings": {
+    "net/weaponleveling/mixin/EarlyInitMixin": {
+      "bootStrap": "Lnet/minecraft/class_2966;method_12851()V"
+    },
     "net/weaponleveling/mixin/InventoryMixin": {
       "tick": "Lnet/minecraft/class_1661;method_7381()V"
     },
@@ -53,6 +56,9 @@
   },
   "data": {
     "named:intermediary": {
+      "net/weaponleveling/mixin/EarlyInitMixin": {
+        "bootStrap": "Lnet/minecraft/class_2966;method_12851()V"
+      },
       "net/weaponleveling/mixin/InventoryMixin": {
         "tick": "Lnet/minecraft/class_1661;method_7381()V"
       },

@@ -9,7 +9,7 @@ import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.data.levelable_item.LevelableItem;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
-import net.weaponleveling.util.CustomToast;
+import net.weaponleveling.client.CustomToast;
 
 import java.util.HashMap;
 import java.util.Map;

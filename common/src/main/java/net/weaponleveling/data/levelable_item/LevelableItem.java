@@ -8,6 +8,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.WeaponLevelingMod;
+import net.weaponleveling.data.levelable_item.type.LevelingType;
+import net.weaponleveling.api.registry.LevelingTypeRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,7 @@ public class LevelableItem {
 
     private final Item item;
     private final List<LevelableAttribute> attributes;
+    private final List<LevelingType> types;
 
     private final int maxLevel;
     private final int levelModifier;
@@ -29,9 +33,10 @@ public class LevelableItem {
     //private final String leveltype;
 
 
-    public LevelableItem(Item item,List<LevelableAttribute> attributes, int maxLevel, int levelModifier, int levelStartAmount, int hitXPAmount, int hitXPChance, int critXPAmount) {
+    public LevelableItem(Item item,List<LevelableAttribute> attributes, List<LevelingType> types, int maxLevel, int levelModifier, int levelStartAmount, int hitXPAmount, int hitXPChance, int critXPAmount) {
         this.item = item;
         this.attributes = attributes;
+        this.types = types;
 
         this.maxLevel = maxLevel;
         this.levelModifier = levelModifier;
@@ -46,6 +51,10 @@ public class LevelableItem {
 
     public List<LevelableAttribute> getAttributes() {
         return attributes;
+    }
+
+    public List<LevelingType> getTypes() {
+        return types;
     }
 
     public Item getItem() {
@@ -77,7 +86,12 @@ public class LevelableItem {
         return XPRNGModifier;
     }
 
-
+    public boolean hasType(LevelingType type) {
+        for(var typeInItem : types) {
+            if(typeInItem.getClass() == type.getClass()) return true;
+        }
+        return false;
+    }
 
     public static LevelableItem fromJson(JsonObject object, ResourceLocation resourceLocation) {
         Item item = BuiltInRegistries.ITEM.get(resourceLocation);
@@ -95,6 +109,12 @@ public class LevelableItem {
             }
         }
 
+        //Types
+        List<LevelingType> types = new ArrayList<>();
+        if(object.has("leveling_types") || object.has("leveling_type"))
+        {
+            types = LevelingTypeRegistry.fromJson(object.has("leveling_types") ?  object.get("leveling_types") : object.get("leveling_type"));
+        }
 
         //Level
         int maxLevel = WeaponLevelingConfig.max_item_level;
@@ -129,11 +149,11 @@ public class LevelableItem {
         }
 
 
-        if(attributes.isEmpty()) {
+        if(attributes.isEmpty() || types.isEmpty()) {
             return null;
         }
 
-        return new LevelableItem(item,attributes, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, XPApplyChance);
+        return new LevelableItem(item,attributes, types, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, XPApplyChance);
     }
 
     public void write(FriendlyByteBuf buf) {
@@ -142,6 +162,12 @@ public class LevelableItem {
         buf.writeVarInt(this.attributes.size());
         for (LevelableAttribute attr : this.attributes) {
             attr.write(buf);
+        }
+        buf.writeVarInt(this.types.size());
+        for (LevelingType type : this.types) {
+            ResourceLocation id = LevelingTypeRegistry.getID(type);
+            buf.writeResourceLocation(id);
+            type.write(buf);
         }
 
         buf.writeVarInt(this.maxLevel);
@@ -159,12 +185,23 @@ public class LevelableItem {
         for (int i = 0; i < attrCount; i++) {
             attributes.add(LevelableAttribute.read(buf));
         }
+        int typeCount = buf.readVarInt();
+        List<LevelingType> types = new ArrayList<>();
+        for (int i = 0; i < typeCount; i++) {
+            LevelingType type = LevelingTypeRegistry.getByID(buf.readResourceLocation());
+            if(type != null) {
+                type.read(buf);
+                types.add(type);
+            }
+
+        }
+        WeaponLevelingMod.LOGGER.info("TYPES: " + item + types.toString());
         int maxLevel = buf.readVarInt();
         int levelModifier = buf.readVarInt();
         int levelStartAmount = buf.readVarInt();
         int hitXPAmount = buf.readVarInt();
         int hitXPChance = buf.readVarInt();
         int critXPAmount = buf.readVarInt();
-        return new LevelableItem(item, attributes, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, critXPAmount);
+        return new LevelableItem(item, attributes, types, maxLevel, levelModifier, levelStartAmount, hitXPAmount, hitXPChance, critXPAmount);
     }
 }
