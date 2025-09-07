@@ -31,26 +31,26 @@ public abstract class MixinSpearEntity extends AbstractArrow {
         super(pEntityType, pLevel);
     }
 
-    @Inject(
-            method = "Lcom/theishiopian/parrying/Entity/SpearEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
-            at = @At(value = "INVOKE",  target = "Lcom/theishiopian/parrying/Entity/SpearEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void injectedXP(EntityHitResult p_213868_1_, CallbackInfo ci, Entity entity, LivingEntity living, float damage, Entity owner, DamageSource src) {
-        if(ModUtils.isRangedLeveling(spearItem) && owner instanceof Player) {
-            LevelingLogic.applyHitXP(spearItem, (Player) owner, entity, false);
-        }
-    }
-
-
-    @ModifyArg(
-            method = "Lcom/theishiopian/parrying/Entity/SpearEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
-            at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index = 1)
-    private float replaceEmpty(float pAmount) {
-//        double weaponlevelamount = spearItem.getOrCreateTag().getInt("level");
-//        weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(spearItem);
-//        pAmount += weaponlevelamount;
-
-        return pAmount;
-    }
+//    @Inject(
+//            method = "Lcom/theishiopian/parrying/Entity/SpearEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
+//            at = @At(value = "INVOKE",  target = "Lcom/theishiopian/parrying/Entity/SpearEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+//    private void injectedXP(EntityHitResult p_213868_1_, CallbackInfo ci, Entity entity, LivingEntity living, float damage, Entity owner, DamageSource src) {
+//        if(ModUtils.isRangedLeveling(spearItem) && owner instanceof Player) {
+//            LevelingLogic.applyHitXP(spearItem, (Player) owner, entity, false);
+//        }
+//    }
+//
+//
+//    @ModifyArg(
+//            method = "Lcom/theishiopian/parrying/Entity/SpearEntity;onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
+//            at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),index = 1)
+//    private float replaceEmpty(float pAmount) {
+////        double weaponlevelamount = spearItem.getOrCreateTag().getInt("level");
+////        weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(spearItem);
+////        pAmount += weaponlevelamount;
+//
+//        return pAmount;
+//    }
 
 
 

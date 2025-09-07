@@ -15,7 +15,7 @@ import java.util.UUID;
 public class LevelingAPI {
 
 
-    public static final UUID BASE_RANGED_DAMAGE_UUID = UUID.fromString("D52CA663-D6DA-4D85-9CA9-485E4F549499"); //TODO Make it only apply if config is correct
+    public static final UUID BASE_RANGED_DAMAGE_UUID = UUID.fromString("D52CA663-D6DA-4D85-9CA9-485E4F549499");
 
 
     /**

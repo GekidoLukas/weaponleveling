@@ -83,8 +83,10 @@ public class LevelingTypeRegistry {
     }
 
     public static LevelingType fromNBT(CompoundTag tag) {
+        LevelingType levelingType =getByID(new ResourceLocation(tag.getString("type")));
+        if(levelingType != null) levelingType.setData(tag);
 
-        return getByID(new ResourceLocation(tag.getString("type")));
+        return levelingType;
     }
 
     public static boolean hasValidInNBT(ListTag tag) {

@@ -12,9 +12,9 @@ public class CGMCompat {
     public static final Boolean isLoaded = ModList.get().isLoaded(modId);
 
     public static boolean isGunItem(ItemStack stack) {
-        if(isLoaded) {
-            return CGMChecks.isGunItem(stack);
-        }
+//        if(isLoaded) {
+//            return CGMChecks.isGunItem(stack);
+//        }
         return false;
     }
 }

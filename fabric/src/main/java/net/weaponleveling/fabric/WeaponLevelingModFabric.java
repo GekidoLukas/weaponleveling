@@ -6,17 +6,26 @@ import dev.architectury.platform.Platform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerLoginConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.weaponleveling.WLConfigReader;
+import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.mob_xp.MobXPLoader;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class WeaponLevelingModFabric implements ModInitializer {
     @Override
@@ -49,6 +58,39 @@ public class WeaponLevelingModFabric implements ModInitializer {
                 }
             }
         }));
+
+        ServerLoginConnectionEvents.QUERY_START.register((handler, server, sender, synchronizer) -> {
+            boolean serverOption = WeaponLevelingConfig.apply_ranged_damage_attribute;
+
+            FriendlyByteBuf buf = PacketByteBufs.create();
+            buf.writeBoolean(serverOption);
+            sender.sendPacket(WLConfigReader.CONFIG_CHANNEL, buf);
+        });
+
+
+
+        ServerLoginNetworking.registerGlobalReceiver(WLConfigReader.CONFIG_CHANNEL, (server, listener, understood, buf, synchronizer, sender) -> {
+            if (!understood) {
+                listener.disconnect(Component.literal("Config check failed (no response)"));
+                return;
+            }
+
+            boolean clientOption = buf.readBoolean();
+            boolean serverOption = WeaponLevelingConfig.apply_ranged_damage_attribute;
+
+            if (clientOption != serverOption) {
+                listener.disconnect(Component.empty().withStyle(ChatFormatting.RED)
+                        .append(Component.literal("Config mismatch!\n Config Option \""))
+                        .append(Component.literal("apply_ranged_damage_attribute").withStyle(ChatFormatting.GOLD))
+                        .append(Component.literal("\" is set to \""))
+                        .append(Component.literal(""+ serverOption).withStyle(ChatFormatting.GOLD))
+                        .append(Component.literal("\" on the Server and set to \""))
+                        .append(Component.literal(""+ clientOption).withStyle(ChatFormatting.GOLD))
+                        .append(Component.literal("\" on the Client."))
+                );
+            }
+        });
+
     }
 
     @Environment(EnvType.CLIENT)

@@ -13,7 +13,7 @@ public class BetterCombatCompat {
     public static ItemStack getAttackItem (Player player) {
             if(isLoaded) {
 
-                return BetterCombatMethods.getAttackItem(player);
+                return player.getMainHandItem();
             }
             return player.getMainHandItem();
 

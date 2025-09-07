@@ -65,7 +65,6 @@ public class ItemLevelCommand {
 
     private static int setPointCommand(CommandSourceStack source, ServerPlayer player, long points, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ItemStack stack = player.getMainHandItem();
-        long level = stack.getOrCreateTag().getLong("levelprogress"); //TODO Check
         long maxprogress = LevelingAPI.getMaxProgress(stack);
         if (ModUtils.isLevelableItem(stack)) {
             if(points <= maxprogress) {

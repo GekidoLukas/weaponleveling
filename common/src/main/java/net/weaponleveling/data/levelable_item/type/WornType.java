@@ -2,6 +2,9 @@ package net.weaponleveling.data.levelable_item.type;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.weaponleveling.WeaponLevelingMod;
@@ -33,6 +36,25 @@ public class WornType extends LevelingType{
     }
 
     @Override
+    public void setData(CompoundTag tag) {
+        if(tag.contains("slots") && !tag.getList("slots", Tag.TAG_STRING).isEmpty()) {
+            for(var slot : tag.getList("slots", Tag.TAG_STRING)) {
+                if(slot instanceof StringTag stringTag) {
+
+                    try {
+                        EquipmentSlot equipmentSlot = EquipmentSlot.byName(stringTag.getAsString().toLowerCase());
+                        slots.add(equipmentSlot);
+                    }
+                    catch (Exception e) {
+                        WeaponLevelingMod.LOGGER.error(stringTag + " is not a correct EquipmentSlot");
+                    }
+                }
+
+            }
+        }
+    }
+
+    @Override
     public void read(FriendlyByteBuf buf) {
         List<EquipmentSlot> slotList = new ArrayList<>();
         int count = buf.readInt();
@@ -52,5 +74,9 @@ public class WornType extends LevelingType{
         for(var slot : slots) {
             buf.writeUtf(slot.getName());
         }
+    }
+
+    public List<EquipmentSlot> getSlots() {
+        return slots;
     }
 }

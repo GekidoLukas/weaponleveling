@@ -10,8 +10,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.data.levelable_item.*;
+import net.weaponleveling.data.levelable_item.type.LevelingType;
 import net.weaponleveling.data.levelable_item.type.LevelingTypes;
 import net.weaponleveling.api.registry.LevelingTypeRegistry;
+import net.weaponleveling.data.levelable_item.type.WornType;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -79,9 +81,11 @@ public class ModUtils {
         if(stack.getTag() != null && stack.getTag().contains("levelable")) {
             if(stack.getTag().getCompound("levelable").contains("leveling_types") && !stack.getTag().getCompound("levelable").getList("leveling_types", Tag.TAG_COMPOUND).isEmpty()) {
                 for(Tag tag : stack.getTag().getCompound("levelable").getList("leveling_types", Tag.TAG_COMPOUND)) {
-                    if(tag instanceof CompoundTag leveling_types) {
-                        if(leveling_types.contains("type") && leveling_types.getString("type").equals("weaponleveling:worn")) {
-                            isLeveling = true; //TODO Slot Check
+                    if(tag instanceof CompoundTag leveling_types && leveling_types.contains("type")) {
+                        LevelingType levelingType = LevelingTypeRegistry.fromNBT(leveling_types);
+                        if(levelingType instanceof WornType wornType && wornType.getSlots().contains(slot)) {
+                            isLeveling = true;
+                            break;
                         }
                     }
                 }
@@ -90,8 +94,13 @@ public class ModUtils {
         } else {
             LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
             if(levelableitem == null) return false;
-            if(levelableitem.hasType(LevelingTypes.WORN)) { //TODO Slot Check
-                isLeveling = true;
+            if(levelableitem.hasType(LevelingTypes.WORN)) {
+                for(var type : levelableitem.getTypes()) {
+                    if(type instanceof WornType wornType && wornType.getSlots().contains(slot)) {
+                        isLeveling = true;
+                        break;
+                    }
+                }
             }
         }
 

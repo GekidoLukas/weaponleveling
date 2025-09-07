@@ -14,7 +14,7 @@ public class WLPlatformGetterImpl {
 
 
     public static ItemStack getAttackItem(Player player) {
-        return BetterCombatCompat.getAttackItem(player);
+        return null;
     }
 
     public static boolean isCGMGunItem(ItemStack stack) {

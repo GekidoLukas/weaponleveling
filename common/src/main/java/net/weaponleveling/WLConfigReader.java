@@ -3,6 +3,7 @@ package net.weaponleveling;
 import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
@@ -10,6 +11,7 @@ import static net.weaponleveling.networking.Networking.SYNC_CONFIG;
 
 public class WLConfigReader {
 
+    public static final ResourceLocation CONFIG_CHANNEL = new ResourceLocation(WeaponLevelingMod.MODID, "config_check");
 
 
     public static void sync(ServerPlayer player) {

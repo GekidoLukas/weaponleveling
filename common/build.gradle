@@ -1,3 +1,6 @@
+plugins {
+    id 'maven-publish'
+}
 architectury {
     common(rootProject.enabled_platforms.split(","))
 }
@@ -18,16 +21,25 @@ dependencies {
 
 }
 
+
 publishing {
     publications {
-        mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
-            from components.java
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = "common"
+            version = "${project.version}"
+
         }
     }
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
-        // Add repositories to publish to here.
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/gekidolukas/weaponleveling")
+            credentials {
+                username = "GekidoLukas"
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }

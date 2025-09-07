@@ -73,12 +73,12 @@ public class WeaponLevelingMod {
 //            return EventResult.interruptTrue();
 //        });
 
-        KillXPGainEvent.PRE_GAIN.register(preKillXPGainEvent -> {
-
-            WeaponLevelingMod.LOGGER.info("KILL POST ITEM");
-
-            preKillXPGainEvent.xpAmount = 2000;
-        });
+//        KillXPGainEvent.PRE_GAIN.register(preKillXPGainEvent -> {
+//
+//            WeaponLevelingMod.LOGGER.info("KILL POST ITEM");
+//
+//            preKillXPGainEvent.xpAmount = 2000;
+//        });
 //        KillXPGainEvent.PRE_GAIN.register(preKillXPGainEvent -> {
 //            WeaponLevelingMod.LOGGER.info("KILL POST ITEM");
 //            preKillXPGainEvent.xpAmount = 2000;
@@ -100,15 +100,11 @@ public class WeaponLevelingMod {
 
 
 
-        //TODO
-        //- Example Datapacks
-        //- Fix remaining known bugs ???
-        //- Add Forge Item Tags
-        //- Toggleable Ranged Attribute XXX
-        //- Power Enchant Compat? XXX
-        //- Living Entity Leveling? XXX
-        //- Long for Progress instead of INT XXX
-        //- Percent Leveling for Attributes
+
+
+
+
+
 
     }
 

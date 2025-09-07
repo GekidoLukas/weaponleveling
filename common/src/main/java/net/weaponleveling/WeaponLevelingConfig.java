@@ -36,7 +36,7 @@ public class WeaponLevelingConfig extends MidnightConfig {
     public static Comment general_title;
 
     @Entry(category = "general")
-    public static boolean apply_ranged_damage_attribute = true; //TODO Disconnect if not correct on server
+    public static boolean apply_ranged_damage_attribute = true;
 
     //LEVELING
     @Comment(category = "leveling", centered = true)
