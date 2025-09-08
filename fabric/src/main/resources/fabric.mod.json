@@ -8,8 +8,24 @@
     "GekidoLukas"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/weapon-leveling",
-    "sources": "https://github.com/GekidoLukas/weaponleveling"
+    "homepage": "https://www.gekidolukas.com",
+    "sources": "https://github.com/GekidoLukas/weaponleveling",
+    "issues": "https://github.com/GekidoLukas/weaponleveling/issues"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/AKMkECwnqf"
+      }
+    },
+    "mcb": [
+      {
+        "name": "Data Driven",
+        "labelColor": -1,
+        "fillColor": -8560594,
+        "outlineColor": -2911683
+      }
+    ]
   },
   "license": "All rights reserved",
   "icon": "assets/weaponleveling/icon.png",

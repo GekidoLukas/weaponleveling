@@ -23,7 +23,6 @@ public class WLConfigReader {
         buf.writeInt(WeaponLevelingConfig.max_item_level);
         buf.writeInt(WeaponLevelingConfig.starting_xp_amount);
         buf.writeInt(WeaponLevelingConfig.xp_apply_chance);
-        buf.writeInt(WeaponLevelingConfig.level_modifier);
         buf.writeDouble(WeaponLevelingConfig.value_per_level);
 
         NetworkManager.sendToPlayer(player, SYNC_CONFIG, buf);

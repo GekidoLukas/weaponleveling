@@ -48,7 +48,7 @@ public class WeaponLevelingConfig extends MidnightConfig {
     @Entry(category = "leveling")
     public static ToastHelper.LevelUpType level_up_type = ToastHelper.LevelUpType.TOAST;
 
-    @Entry(category = "leveling")
+    @Entry(category = "leveling", min = 0, max = 10000000)
     public static int kill_xp = 1;
 
     //Syncable
@@ -59,28 +59,27 @@ public class WeaponLevelingConfig extends MidnightConfig {
     public static boolean levelable_items_auto_unbreakable = true;
 
 
-    @Entry(category = "leveling")
+    @Entry(category = "leveling", min = 0, max = 10000000)
     public static int hit_xp_amount = 1;
 
-    @Entry(category = "leveling")
+    @Entry(category = "leveling", min = 0, max = 100)
     public static int hit_xp_chance = 20;
 
-    @Entry(category = "leveling")
+    @Entry(category = "leveling", min = 0, max = 1000)
     public static int max_item_level = 500;
 
-    @Entry(category = "leveling")
+    @Entry(category = "leveling", min = 0, max = 10000000)
     public static int starting_xp_amount = 100;
 
-    @Entry(category = "leveling")
+    @Entry(category = "leveling", min = 0, max = 100)
     public static int xp_apply_chance = 50;
 
-    @Entry(category = "leveling")
-    public static int level_modifier = 80;
 
 
 
 
-    @Entry(category = "leveling")
+
+    @Entry(category = "leveling", min = 0, max = 100)
     public static double value_per_level = 0.1d;
 
 

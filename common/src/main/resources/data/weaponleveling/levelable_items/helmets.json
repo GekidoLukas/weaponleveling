@@ -13,5 +13,8 @@
     "slots": [
       "head"
     ]
+  },
+  "leveling_function": {
+    "type" : "weaponleveling:linear"
   }
 }

@@ -6,6 +6,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.weaponleveling.data.levelable_item.function.LevelingFunction;
 import net.weaponleveling.util.AbstractArrowAccessor;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.LevelingLogic;
@@ -45,16 +46,11 @@ public class LevelingAPI {
      * @return The amount of XP an Item needs to level up to the next Level
      */
     public static long getMaxProgress(int currentLevel,ItemStack stack) {
-        int maxProgress;
-        int levelModifier = ModUtils.getLevelModifier(stack);
-        int startingLevel =  ModUtils.getLevelStartAmount(stack);
+        int startingPoints =  ModUtils.getLevelStartAmount(stack);
+        LevelingFunction function = ModUtils.getLevelingFunction(stack);
 
-        if (currentLevel != 0) {
-            maxProgress = startingLevel + ((currentLevel - 1) + currentLevel) * levelModifier;
-        } else {
-            maxProgress = startingLevel;
-        }
-        return maxProgress;
+        //currentLevel == 0 ? startingPoints :
+        return function.calculateProgress(currentLevel,startingPoints);
 
     }
 

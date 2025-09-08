@@ -37,7 +37,6 @@ public class S2CRecievers {
             WeaponLevelingConfig.max_item_level = buf.readInt();
             WeaponLevelingConfig.starting_xp_amount = buf.readInt();
             WeaponLevelingConfig.xp_apply_chance = buf.readInt();
-            WeaponLevelingConfig.level_modifier = buf.readInt();
             WeaponLevelingConfig.value_per_level = buf.readDouble();
 
 

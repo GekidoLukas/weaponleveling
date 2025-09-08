@@ -9,7 +9,10 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.api.registry.LevelingFunctionRegistry;
 import net.weaponleveling.data.levelable_item.*;
+import net.weaponleveling.data.levelable_item.function.LevelingFunction;
+import net.weaponleveling.data.levelable_item.function.LevelingFunctions;
 import net.weaponleveling.data.levelable_item.type.LevelingType;
 import net.weaponleveling.data.levelable_item.type.LevelingTypes;
 import net.weaponleveling.api.registry.LevelingTypeRegistry;
@@ -143,17 +146,27 @@ public class ModUtils {
         else return WeaponLevelingConfig.max_item_level;
 
     }
-    public static int getLevelModifier(ItemStack stack) {
-        LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("levelModifier")) return stack.getTag().getCompound("levelable").getInt("levelModifier");
-        else if (isJSONLevelable(stack)) return levelableitem.getLevelModifier();
-        else return WeaponLevelingConfig.level_modifier;
-    }
+
+
     public static int getLevelStartAmount(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("levelStartAmount")) return stack.getTag().getCompound("levelable").getInt("levelStartAmount");
         else if (isJSONLevelable(stack)) return levelableitem.getLevelStartAmount();
         else return WeaponLevelingConfig.starting_xp_amount;
+    }
+
+    public static LevelingFunction getLevelingFunction(ItemStack stack) {
+        LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
+
+        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("function")) {
+            CompoundTag functionTag = stack.getTag().getCompound("levelable").getCompound("function");
+            LevelingFunction levelingFunction = LevelingFunctionRegistry.fromNBT(functionTag);
+            if(levelingFunction != null) {
+                return levelingFunction;
+            }
+        }
+        if (isJSONLevelable(stack)) return levelableitem.getFunction();
+        return LevelingFunctions.LINEAR;
     }
     public static int getHitXPAmount(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));

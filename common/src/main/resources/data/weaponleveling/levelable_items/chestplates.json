@@ -13,5 +13,8 @@
     "slots": [
       "chest"
     ]
+  },
+  "leveling_function": {
+    "type" : "weaponleveling:linear"
   }
 }

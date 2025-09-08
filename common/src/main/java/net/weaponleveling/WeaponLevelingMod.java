@@ -14,8 +14,10 @@ import net.weaponleveling.api.event.ChooseAttackItemEvent;
 import net.weaponleveling.api.event.HitXPGainEvent;
 import net.weaponleveling.api.event.ItemLevelUpdateEvent;
 import net.weaponleveling.api.event.KillXPGainEvent;
+import net.weaponleveling.api.registry.LevelingFunctionRegistry;
 import net.weaponleveling.attribute.WLAttributes;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
+import net.weaponleveling.data.levelable_item.function.LevelingFunctions;
 import net.weaponleveling.data.levelable_item.type.LevelingTypes;
 import net.weaponleveling.data.mob_xp.MobXPLoader;
 import net.weaponleveling.item.ModItems;
@@ -32,6 +34,7 @@ public class WeaponLevelingMod {
     public static void init() {
         WLAttributes.register();
         LevelingTypes.register();
+        LevelingFunctions.register();
         CommandRegistrationEvent.EVENT.register(ItemLevelCommand::register);
         Networking.registerC2SPackets();
         ModItems.register();

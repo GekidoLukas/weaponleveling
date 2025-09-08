@@ -74,7 +74,7 @@ public class CustomToast implements Toast {
 
 
 
-            guiGraphics.renderFakeItem(stack, 8,ypos+ 8);
+            guiGraphics.renderFakeItem(stack, 6,ypos+ 7);
             return visibilityTime >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
         } else {
             return Toast.Visibility.HIDE;

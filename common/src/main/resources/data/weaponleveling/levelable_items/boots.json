@@ -14,5 +14,8 @@
     "slots": [
       "feet"
     ]
+  },
+  "leveling_function": {
+    "type" : "weaponleveling:linear"
   }
 }

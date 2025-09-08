@@ -44,7 +44,7 @@ dependencies {
 
     modImplementation (include ("maven.modrinth:midnightlib:${rootProject.midnightlib_version_fabric}"))
 
-//    modImplementation "maven.modrinth:modmenu:${rootProject.modmenu_fabric}" // Mod Menu
+    modImplementation "maven.modrinth:modmenu:${rootProject.modmenu_fabric}" // Mod Menu
 
 //    modImplementation "maven.modrinth:better-combat:${rootProject.bettercombat_fabric_version}" // Better Combat
 //    modImplementation "maven.modrinth:cloth-config:${rootProject.clothconfig_fabric_version}" // Cloth Config

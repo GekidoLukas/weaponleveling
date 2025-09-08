@@ -32,14 +32,35 @@ public class ItemLevelCommand {
                 })
                 .then(Commands.literal("set")
                         .then(Commands.argument("player", EntityArgument.players())
-                                .then(Commands.argument("value", IntegerArgumentType.integer(0))
-                                        .then(Commands.literal("level").executes((command) -> {
-                                            return setLevelCommand(command.getSource(), EntityArgument.getPlayer(command, "player"),IntegerArgumentType.getInteger(command,"value"),command);
-                                        }))
+                                .then(Commands.literal("level")
+                                        .then(Commands.argument("value", IntegerArgumentType.integer(0))
+                                                .executes((command) -> setLevelCommand(command.getSource(), EntityArgument.getPlayer(command, "player"),IntegerArgumentType.getInteger(command,"value"),command))
+                                        )
+                                )
+                                .then(Commands.literal("points")
+                                        .then(Commands.argument("value", LongArgumentType.longArg(0))
+                                                .executes((command) -> setPointCommand(command.getSource(), EntityArgument.getPlayer(command, "player"), LongArgumentType.getLong(command,"value"),command))
+                                        )
+                                )
 
-                                        .then(Commands.literal("points").executes((command) -> {
-                                            return setPointCommand(command.getSource(), EntityArgument.getPlayer(command, "player"), LongArgumentType.getLong(command,"value"),command);
-                                        }))))));
+                        )
+                )
+                .then(Commands.literal("add")
+                        .then(Commands.argument("player", EntityArgument.players())
+                                .then(Commands.literal("level")
+                                        .then(Commands.argument("value", IntegerArgumentType.integer(0,1000))
+                                                .executes((command) -> addLevelCommand(command.getSource(), EntityArgument.getPlayer(command, "player"),IntegerArgumentType.getInteger(command,"value"),command))
+                                        )
+                                )
+                                .then(Commands.literal("points")
+                                        .then(Commands.argument("value", IntegerArgumentType.integer(0,10000000))
+                                                .executes((command) -> addPointCommand(command.getSource(), EntityArgument.getPlayer(command, "player"), IntegerArgumentType.getInteger(command,"value"),command))
+                                        )
+                                )
+
+                        )
+                )
+        );
     }
 
 
@@ -65,8 +86,8 @@ public class ItemLevelCommand {
 
     private static int setPointCommand(CommandSourceStack source, ServerPlayer player, long points, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ItemStack stack = player.getMainHandItem();
-        long maxprogress = LevelingAPI.getMaxProgress(stack);
         if (ModUtils.isLevelableItem(stack)) {
+        long maxprogress = LevelingAPI.getMaxProgress(stack);
             if(points <= maxprogress) {
                 stack.getOrCreateTag().putLong("levelprogress", points);
                 source.sendSuccess(() -> {
@@ -83,4 +104,32 @@ public class ItemLevelCommand {
     }
 
 
+    private static int addLevelCommand(CommandSourceStack source, ServerPlayer player, int level, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        ItemStack stack = player.getMainHandItem();
+        if (ModUtils.isLevelableItem(stack)) {
+
+            int currentlevel = stack.getOrCreateTag().getInt("level");
+
+            stack.getOrCreateTag().putInt("level", Math.min(currentlevel +level,ModUtils.getMaxLevel(stack)));
+            source.sendSuccess(() -> Component.translatable("weaponleveling.command.addlevel",stack.getHoverName(),level),true);
+
+        }else {
+            throw NOT_VALID_ITEM.create(stack);
+        }
+
+        return 1;
+    }
+
+    private static int addPointCommand(CommandSourceStack source, ServerPlayer player, int points, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        ItemStack stack = player.getMainHandItem();
+        if (ModUtils.isLevelableItem(stack)) {
+
+            LevelingAPI.applyXPToItem(player,stack,points);
+            source.sendSuccess(() -> Component.translatable("weaponleveling.command.addpoints",stack.getHoverName(),points),true);
+
+        }else {
+            throw NOT_VALID_ITEM.create(stack.getHoverName());
+        }
+        return 1;
+    }
 }
