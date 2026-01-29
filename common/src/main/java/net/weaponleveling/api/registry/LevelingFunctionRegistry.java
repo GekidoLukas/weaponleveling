@@ -26,7 +26,7 @@ public class LevelingFunctionRegistry {
 
 
     public static LevelingFunction getByID(ResourceLocation id) {
-        Class<? extends LevelingFunction> actionClass = FUNCTION_MAP.getOrDefault(id, null).getClass();
+        Class<? extends LevelingFunction> actionClass = FUNCTION_MAP.getOrDefault(id, LevelingFunctions.LINEAR).getClass();
         try {
             return actionClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
@@ -55,7 +55,7 @@ public class LevelingFunctionRegistry {
 
         if(parentElement.isJsonObject()) {
             try {
-                LevelingFunction jsonType = getByID(new ResourceLocation(parentElement.getAsJsonObject().get("type").getAsString()));
+                LevelingFunction jsonType = getByID(new ResourceLocation(parentElement.getAsJsonObject().get("function").getAsString()));
                 if(jsonType != null) {
                     jsonType.setData(parentElement.getAsJsonObject());
                     return jsonType;

@@ -73,7 +73,7 @@ public class WeaponLevelingMod {
 //        HitXPGainEvent.ITEM_POST.register((stack, player, victim, critical, xp_amount) -> {
 //
 //            WeaponLevelingMod.LOGGER.info("HITXP POST ITEM");
-//            return EventResult.interruptTrue();
+//
 //        });
 
 //        KillXPGainEvent.PRE_GAIN.register(preKillXPGainEvent -> {

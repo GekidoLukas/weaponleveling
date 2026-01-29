@@ -30,13 +30,13 @@ public class LevelableItem {
     private final int hitXPAmount;
     private final int hitXPChance;
 
-    private final int XPRNGModifier;
+    private final int armorXPRNGModifier;
 
     //private final String leveltype;
     private final LevelingFunction function;
 
 
-    public LevelableItem(Item item,List<LevelableAttribute> attributes, List<LevelingType> types,LevelingFunction function , int maxLevel, int levelStartAmount, int hitXPAmount, int hitXPChance, int critXPAmount) {
+    public LevelableItem(Item item,List<LevelableAttribute> attributes, List<LevelingType> types,LevelingFunction function , int maxLevel, int levelStartAmount, int hitXPAmount, int hitXPChance, int armorXPRNGModifier) {
         this.item = item;
         this.attributes = attributes;
         this.types = types;
@@ -49,7 +49,7 @@ public class LevelableItem {
         this.hitXPChance = hitXPChance;
 
 
-        this.XPRNGModifier = critXPAmount;
+        this.armorXPRNGModifier = armorXPRNGModifier;
     }
 
     public List<LevelableAttribute> getAttributes() {
@@ -83,8 +83,8 @@ public class LevelableItem {
         return hitXPChance;
     }
 
-    public int getXPRNGModifier() {
-        return XPRNGModifier;
+    public int getArmorXPRNGModifier() {
+        return armorXPRNGModifier;
     }
 
     public boolean hasType(LevelingType type) {
@@ -151,8 +151,8 @@ public class LevelableItem {
 
 
         int XPApplyChance = WeaponLevelingConfig.xp_apply_chance;
-        if (object.has("XPApplyChance")) {
-            XPApplyChance = Math.max(0,Math.min(object.get("XPApplyChance").getAsInt(),100));
+        if (object.has("armorXPRNGModifier")) {
+            XPApplyChance = Math.max(0,Math.min(object.get("armorXPRNGModifier").getAsInt(),100));
         }
 
 
@@ -184,7 +184,7 @@ public class LevelableItem {
         buf.writeVarInt(this.levelStartAmount);
         buf.writeVarInt(this.hitXPAmount);
         buf.writeVarInt(this.hitXPChance);
-        buf.writeVarInt(this.XPRNGModifier);
+        buf.writeVarInt(this.armorXPRNGModifier);
     }
 
     public static LevelableItem read(FriendlyByteBuf buf) {

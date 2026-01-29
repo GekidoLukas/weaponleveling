@@ -13,14 +13,8 @@ public class LinearFunction extends LevelingFunction{
     private int slope = 80;
 
 
-    public LinearFunction () {
-
-    }
-
-
     @Override
     public long calculateProgress(int level, int startingAmount) {
-
         return (long) slope * level  + startingAmount;
     }
 
@@ -47,14 +41,5 @@ public class LinearFunction extends LevelingFunction{
     @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(slope);
-    }
-
-
-    public int getSlope() {
-        return slope;
-    }
-
-    public void setSlope(int slope) {
-        this.slope = slope;
     }
 }

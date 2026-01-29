@@ -54,12 +54,19 @@ public class ClientEvents {
 
 
                 if (level < ModUtils.getMaxLevel(stack)) {
-                    tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
-                            .append(Component.translatable("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
-                            .append(Component.literal("" + levelprogress).setStyle(VALUES))
-                            .append(Component.literal("/").setStyle(TEXT))
-                            .append(Component.literal("" + maxlevelprogress).setStyle(VALUES))
-                    );
+                    if(tooltipFlag.isAdvanced()) {
+                        tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
+                                .append(Component.translatable("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
+                                .append(Component.literal("" + levelprogress).setStyle(VALUES))
+                                .append(Component.literal("/").setStyle(TEXT))
+                                .append(Component.literal("" + maxlevelprogress).setStyle(VALUES))
+                        );
+                    } else {
+                        tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
+                                .append(Component.translatable("weaponleveling.tooltip.levelprogress").setStyle(TEXT))
+                                .append(Component.literal(String.format("%.2f", ((float)levelprogress) /((float)maxlevelprogress) * 100) +"%").setStyle(VALUES))
+                        );
+                    }
                 } else if(level == ModUtils.getMaxLevel(stack)) {
                     tooltip.add(Component.literal(" ▶ ").setStyle(ARROW)
                             .append(Component.translatable("weaponleveling.tooltip.maxlevel").setStyle(VALUES))

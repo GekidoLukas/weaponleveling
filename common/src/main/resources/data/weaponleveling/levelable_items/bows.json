@@ -9,6 +9,6 @@
     "type" : "weaponleveling:ranged"
   },
   "leveling_function": {
-    "type" : "weaponleveling:linear"
+    "function" : "weaponleveling:linear"
   }
 }

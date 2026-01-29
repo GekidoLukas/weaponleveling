@@ -42,7 +42,7 @@
   "weaponleveling.midnightconfig.starting_xp_amount":"Anfängliche XP-Menge",
   "weaponleveling.midnightconfig.level_modifier":"Leveling Modifikator",
   "weaponleveling.midnightconfig.value_per_level":"Wert pro Level",
-  "weaponleveling.midnightconfig.xp_apply_chance":"XP RNG-Modifikatorr",
+  "weaponleveling.midnightconfig.xp_apply_chance":"XP RNG-Modifikator",
   "weaponleveling.midnightconfig.level_up_type":"Level Up Typ",
   "weaponleveling.midnightconfig.enum.LevelUpType.TOAST":"In Toast",
   "weaponleveling.midnightconfig.enum.LevelUpType.ACTIONBAR":"In Aktionsleiste",

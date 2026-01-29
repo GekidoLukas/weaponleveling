@@ -7,15 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 public class ExponentialFunction extends LevelingFunction{
 
 
-
-
-
     private double coefficient = 0.4d;
-
-    public ExponentialFunction() {
-
-    }
-
 
     @Override
     public long calculateProgress(int level, int startingAmount) {
@@ -46,11 +38,5 @@ public class ExponentialFunction extends LevelingFunction{
     public void write(FriendlyByteBuf buf) {
         buf.writeDouble(coefficient);
     }
-
-
-    public double getCoefficient() {
-        return coefficient;
-    }
-
 
 }

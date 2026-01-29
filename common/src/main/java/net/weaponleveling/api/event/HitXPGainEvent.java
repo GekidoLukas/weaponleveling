@@ -6,7 +6,6 @@ import dev.architectury.event.EventResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +27,7 @@ public interface HitXPGainEvent {
 
     }
     interface PostGainXPItem {
-        EventResult postItem(ItemStack stack, LivingEntity attacker, Entity victim, Boolean critical, int xp_amount);
+        void postItem(ItemStack stack, LivingEntity attacker, Entity victim, Boolean critical, int xp_amount);
 
     }
 }

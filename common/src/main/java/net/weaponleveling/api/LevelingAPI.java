@@ -1,17 +1,26 @@
 package net.weaponleveling.api;
 
 import com.google.common.collect.Multimap;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.weaponleveling.api.registry.LevelingTypeRegistry;
+import net.weaponleveling.data.levelable_item.LevelableItem;
+import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.levelable_item.function.LevelingFunction;
+import net.weaponleveling.data.levelable_item.type.LevelingType;
 import net.weaponleveling.util.AbstractArrowAccessor;
+import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.LevelingLogic;
 
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class LevelingAPI {
 
@@ -37,7 +46,6 @@ public class LevelingAPI {
      */
     public static long getMaxProgress(ItemStack stack) {
         return getMaxProgress(stack.getOrCreateTag().getInt("level"),stack);
-
     }
 
     /**
@@ -45,13 +53,11 @@ public class LevelingAPI {
      * @param stack The ItemStack the level is queried from
      * @return The amount of XP an Item needs to level up to the next Level
      */
-    public static long getMaxProgress(int currentLevel,ItemStack stack) {
+    public static long getMaxProgress(int currentLevel, ItemStack stack) {
         int startingPoints =  ModUtils.getLevelStartAmount(stack);
         LevelingFunction function = ModUtils.getLevelingFunction(stack);
 
-        //currentLevel == 0 ? startingPoints :
         return function.calculateProgress(currentLevel,startingPoints);
-
     }
 
 
@@ -74,4 +80,28 @@ public class LevelingAPI {
         ((AbstractArrowAccessor) arrow).setSourceWeapon(source);
     }
 
+
+    public static boolean isLevelableItem(ItemStack stack) {
+        return ModUtils.isLevelableItem(stack);
+    }
+
+    public static boolean isNBTLevelable(ItemStack stack) {
+        return ModUtils.isNBTLevelable(stack);
+    }
+
+    public static boolean isJSONLevelable(ItemStack stack) {
+        return ModUtils.isJSONLevelable(stack);
+    }
+
+    public static boolean isNBTDisabled(ItemStack stack) {
+        return ModUtils.isNBTDisabled(stack);
+    }
+
+    public static boolean isLevelingAsType(ItemStack stack, LevelingType type) {
+        return ModUtils.isLevelingAsType(stack,type);
+    }
+
+    public static boolean isLevelingAsType(ItemStack stack, LevelingType type, Predicate<LevelingType> extraCondition) {
+        return ModUtils.isLevelingAsType(stack,type,extraCondition);
+    }
 }

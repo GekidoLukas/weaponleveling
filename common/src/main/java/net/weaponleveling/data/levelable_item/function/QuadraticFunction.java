@@ -12,9 +12,6 @@ public class QuadraticFunction extends LevelingFunction{
 
     private double coefficient = 0.4d;
 
-    public QuadraticFunction() {
-
-    }
 
 
     @Override
@@ -46,11 +43,5 @@ public class QuadraticFunction extends LevelingFunction{
     public void write(FriendlyByteBuf buf) {
         buf.writeDouble(coefficient);
     }
-
-
-    public double getCoefficient() {
-        return coefficient;
-    }
-
 
 }

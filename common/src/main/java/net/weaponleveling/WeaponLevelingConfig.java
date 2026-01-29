@@ -38,12 +38,17 @@ public class WeaponLevelingConfig extends MidnightConfig {
     @Entry(category = "general")
     public static boolean apply_ranged_damage_attribute = true;
 
+    @Entry(category = "general")
+    public static boolean send_registry_in_log;
+
+    @Entry(category = "general")
+    public static boolean broken_items_wont_vanish = true;
+
     //LEVELING
     @Comment(category = "leveling", centered = true)
     public static Comment leveling_title;
 
-    @Entry(category = "leveling")
-    public static boolean send_registry_in_log;
+
 
     @Entry(category = "leveling")
     public static ToastHelper.LevelUpType level_up_type = ToastHelper.LevelUpType.TOAST;
@@ -52,8 +57,6 @@ public class WeaponLevelingConfig extends MidnightConfig {
     public static int kill_xp = 1;
 
     //Syncable
-    @Entry(category = "leveling")
-    public static boolean broken_items_wont_vanish = true;
 
     @Entry(category = "leveling")
     public static boolean levelable_items_auto_unbreakable = true;
