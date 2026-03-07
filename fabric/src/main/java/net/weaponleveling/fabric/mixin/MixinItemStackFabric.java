@@ -49,6 +49,7 @@ public class MixinItemStackFabric {
                     tag.putBoolean("isBroken", true);
                     stack.setTag(tag);
                     stack.setDamageValue(0);
+
                     ci.cancel();
 
                 }

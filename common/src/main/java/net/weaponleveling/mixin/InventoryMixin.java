@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.weaponleveling.api.event.ItemReplaceBrokenEvent;
 import net.weaponleveling.item.BrokenItem;
 import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
@@ -44,6 +45,9 @@ public abstract class InventoryMixin {
                 stack.getTag().remove("isBroken");
                 ItemStack brokenItem = BrokenItem.of(stack);
                 brokenItem.setCount(1);
+
+                ItemReplaceBrokenEvent.REPLACE.invoker().replace(stack,brokenItem);
+
                 this.armor.set(i,brokenItem);
             }
         }
@@ -54,6 +58,10 @@ public abstract class InventoryMixin {
                 stack.getTag().remove("isBroken");
                 ItemStack brokenItem = BrokenItem.of(stack);
                 brokenItem.setCount(1);
+
+                ItemReplaceBrokenEvent.REPLACE.invoker().replace(stack,brokenItem);
+
+
                 this.offhand.set(i,brokenItem);
             }
         }
@@ -66,6 +74,10 @@ public abstract class InventoryMixin {
                     stack.getTag().remove("isBroken");
                     ItemStack brokenItem = BrokenItem.of(stack);
                     brokenItem.setCount(1);
+
+                    ItemReplaceBrokenEvent.REPLACE.invoker().replace(stack,brokenItem);
+
+
                     this.compartments.get(i).set(j,brokenItem);
                 }
             }

@@ -6,6 +6,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.api.event.ItemReplaceBrokenEvent;
 import net.weaponleveling.api.registry.LevelingFunctionRegistry;
 import net.weaponleveling.data.levelable_item.*;
 import net.weaponleveling.data.levelable_item.function.LevelingFunction;
@@ -53,7 +54,12 @@ public class ModUtils {
         if(DataGetter.getLevelableAutoUnbreakable() && isLevelableItem(stack )&& !stack.is(DataGetter.non_vanish_items_blacklist)) isInTag.set(true);
         if(stack.is(DataGetter.non_vanish_items_whitelist) && !stack.is(DataGetter.non_vanish_items_blacklist)) isInTag.set(true);
 
-        return isInTag.get();
+        if(isInTag.get()) {
+            return !ItemReplaceBrokenEvent.PRE.invoker().pre(stack).isFalse();
+        } else {
+            return false;
+        }
+
     }
 
     public static boolean isMeleeLeveling(ItemStack stack) {
