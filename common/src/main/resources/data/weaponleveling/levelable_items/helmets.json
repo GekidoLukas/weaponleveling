@@ -1,0 +1,20 @@
+{
+  "item": "#c:helmets",
+  "attributes": [
+    {
+      "attribute" : "minecraft:generic.armor"
+    },
+    {
+      "attribute" : "minecraft:generic.armor_toughness"
+    }
+  ],
+  "leveling_type" : {
+    "type" : "weaponleveling:worn",
+    "slots": [
+      "head"
+    ]
+  },
+  "leveling_function": {
+    "function" : "weaponleveling:linear"
+  }
+}

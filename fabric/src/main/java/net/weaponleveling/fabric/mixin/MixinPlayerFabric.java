@@ -4,7 +4,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.weaponleveling.util.UpdateLevels;
+import net.weaponleveling.util.LevelingLogic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,7 +21,7 @@ public class MixinPlayerFabric {
         LivingEntity attacker = ((LivingEntity) ((Object) this));
         if(victim instanceof LivingEntity living) {
             DamageSource source = living.damageSources().playerAttack((Player) attacker);
-            UpdateLevels.updateForHit(living, source, crit, null);
+            LevelingLogic.updateForHit(living, source, crit, null);
         }
     }
 }

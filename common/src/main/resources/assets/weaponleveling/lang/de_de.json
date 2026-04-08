@@ -1,8 +1,6 @@
 {
   "weaponleveling.tooltip.itemlevel": "Gegenstandslevel",
   "weaponleveling.tooltip.level": "Level ",
-  "weaponleveling.tooltip.reduction": "Schadensverringerung ",
-  "weaponleveling.tooltip.projectile_weapon_level": "Extra Schaden ",
   "weaponleveling.tooltip.levelprogress": "Fortschritt ",
   "weaponleveling.tooltip.pressshift": "Drücke [Umschalt] um das Level zu sehen",
   "weaponleveling.tooltip.maxlevel": "Maximallevel",
@@ -10,8 +8,50 @@
   "weaponleveling.levelup": "erreichte das Level ",
   "weaponleveling.command.setlevel": "Das Level von %s wurde zu %s geändert",
   "weaponleveling.command.setpoints": "Die Menge der XP Punkte von %s wurden zu %s geändert",
+  "weaponleveling.command.addlevel": "Dem Level von %1$s wurden %2$s hinzugefügt",
+  "weaponleveling.command.addpoints": "Den XP Punkten von %1$s wurden %2$s hinzugefügt",
   "weaponleveling.command.exception.novalidweapon": "%s ist kein valider Gegenstand",
   "weaponleveling.command.exception.outofbounds": "%s ist größer als der Maximalwert",
-  "weaponleveling.tooltip.broken": "Kaputt",
-  "item.weaponleveling.broken": "Kaputter Gegendtand"
+  "weaponleveling.tooltip.broken.prefix": "%s (Kaputt)",
+  "weaponleveling.tooltip.broken": "Der Gegenstand ist kapputt",
+  "weaponleveling.tooltip.broken.description": "Am Amboss reparieren um es wiederzuverwenden",
+  "item.weaponleveling.broken": "Kaputter Gegendtand",
+
+  "item.modifiers.both_hands": "In der Hand:",
+  "attribute.name.generic.ranged_damage" : "Fernkampfschaden",
+
+  "weaponleveling.midnightconfig.client_title":"Client Konfiguration",
+  "weaponleveling.midnightconfig.category.client":"Client",
+  "weaponleveling.midnightconfig.holdShiftToShow":"Drücke Umschalt um das Level/XP zu sehen",
+  "weaponleveling.midnightconfig.titleColor":"Titelfarbe",
+  "weaponleveling.midnightconfig.arrowColor":"Pfeilfarbe",
+  "weaponleveling.midnightconfig.textColor":"Textfarbe",
+  "weaponleveling.midnightconfig.valuesColor":"Wertefarbe",
+  "weaponleveling.midnightconfig.shiftColor":"Umschaltfarbe",
+  "weaponleveling.midnightconfig.brokenColor":"Kaputtfarbe",
+
+  "weaponleveling.midnightconfig.general_title":"Allgemein",
+  "weaponleveling.midnightconfig.category.general":"Allgemein",
+  "weaponleveling.midnightconfig.apply_ranged_damage_attribute":"[§cBenötigt Neustart!§r] Wendet das WeaponLeveling RangedAttribute auf Bögen, Armbrüste, Dreizacke usw. an.",
+
+  "weaponleveling.midnightconfig.leveling_title":"Leveling Konfiguration",
+  "weaponleveling.midnightconfig.category.leveling":"Leveling",
+  "weaponleveling.midnightconfig.hit_xp_amount":"XP Menge für Treffer",
+  "weaponleveling.midnightconfig.hit_xp_chance":"Chance, dass ein Treffer XP verursacht",
+  "weaponleveling.midnightconfig.max_item_level":"Max Item Level",
+  "weaponleveling.midnightconfig.starting_xp_amount":"Anfängliche XP-Menge",
+  "weaponleveling.midnightconfig.level_modifier":"Leveling Modifikator",
+  "weaponleveling.midnightconfig.value_per_level":"Wert pro Level",
+  "weaponleveling.midnightconfig.xp_apply_chance":"XP RNG-Modifikator",
+  "weaponleveling.midnightconfig.level_up_type":"Level Up Typ",
+  "weaponleveling.midnightconfig.enum.LevelUpType.TOAST":"In Toast",
+  "weaponleveling.midnightconfig.enum.LevelUpType.ACTIONBAR":"In Aktionsleiste",
+
+
+  "weaponleveling.midnightconfig.broken_items_wont_vanish":"Gegenstände verschwinden nicht beim Zerbrechen",
+  "weaponleveling.midnightconfig.send_registry_in_log":"Sende Registry-Informationen in Log",
+  "weaponleveling.midnightconfig.levelable_items_auto_unbreakable":"Alle Levelable Gegenstände sind automatisch Non-Vanish",
+
+  "weaponleveling.midnightconfig.kill_xp":"Standard XP für das Töten eines Mobs"
+
 }

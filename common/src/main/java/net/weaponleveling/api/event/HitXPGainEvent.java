@@ -1,0 +1,33 @@
+package net.weaponleveling.api.event;
+
+import dev.architectury.event.Event;
+import dev.architectury.event.EventFactory;
+import dev.architectury.event.EventResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
+
+public interface HitXPGainEvent {
+
+
+    Event<PreGainXP> PRE = EventFactory.createEventResult();
+    Event<PreGainXPItem> ITEM_PRE = EventFactory.createEventResult();
+    Event<PostGainXPItem> ITEM_POST = EventFactory.createEventResult();
+
+
+    interface PreGainXP {
+        EventResult pre(LivingEntity attacker, LivingEntity victim, DamageSource source, @Nullable ItemStack specificStack);
+
+    }
+
+    interface PreGainXPItem {
+        EventResult preItem(ItemStack stack, LivingEntity attacker, Entity victim, Boolean critical);
+
+    }
+    interface PostGainXPItem {
+        void postItem(ItemStack stack, LivingEntity attacker, Entity victim, Boolean critical, int xp_amount);
+
+    }
+}

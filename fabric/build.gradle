@@ -1,7 +1,17 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id 'maven-publish'
 }
-
+loom {
+    runs {
+        client {
+            runDir = "run/client"
+        }
+        server {
+            runDir = "run/server"
+        }
+    }
+}
 architectury {
     platformSetupLoomIde()
     fabric()
@@ -23,12 +33,11 @@ configurations {
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
-
+    modImplementation "com.ptsmods:devlogin:3.5"
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 
-    implementation(shadowCommon(annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")))
-
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${rootProject.mixinextras_version}")))
 
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
@@ -37,9 +46,9 @@ dependencies {
 
     modImplementation "maven.modrinth:modmenu:${rootProject.modmenu_fabric}" // Mod Menu
 
-    modImplementation "maven.modrinth:better-combat:${rootProject.bettercombat_fabric_version}" // Better Combat
-    modImplementation "maven.modrinth:cloth-config:${rootProject.clothconfig_fabric_version}" // Cloth Config
-    modImplementation "maven.modrinth:playeranimator:${rootProject.playeranim_fabric_version}" // playerAnimator
+//    modImplementation "maven.modrinth:better-combat:${rootProject.bettercombat_fabric_version}" // Better Combat
+//    modImplementation "maven.modrinth:cloth-config:${rootProject.clothconfig_fabric_version}" // Cloth Config
+//    modImplementation "maven.modrinth:playeranimator:${rootProject.playeranim_fabric_version}" // playerAnimator
 
 
 
@@ -60,16 +69,12 @@ shadowJar {
 
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
-    relocate("com.llamalad7.mixinextras", "net.geradesolukas.mixinextras")
-    //relocate("fuzs.forgeconfigapiport", "net.geradesolukas.forgeconfigapiport")
-    //relocate("com.electronwill.nightconfig", "net.geradesolukas.nightconfig")
+
     mergeServiceFiles()
 }
 
 remapJar {
-//    include ("com.electronwill.night-config:core:${rootProject.night_config_version}")
-//    include ("com.electronwill.night-config:toml:${rootProject.night_config_version}")
-//    include ("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigapi_version}")
+
 
     injectAccessWidener = true
     input.set shadowJar.archiveFile
@@ -94,17 +99,38 @@ components.java {
     }
 }
 
+
+
 publishing {
     publications {
-        mavenFabric(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-fabric-" + project.name
-            from components.java
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = "fabric"
+            version = "${project.version}"
+
+            if (tasks.findByName("remapJar") != null) {
+                artifact(tasks.named("remapJar").get())
+            } else if (tasks.findByName("reobfJar") != null) {
+                artifact(tasks.named("reobfJar").get())
+            } else {
+                from components.java
+            }
+
+            if (tasks.findByName("remapSourcesJar") != null) {
+                artifact(tasks.named("remapSourcesJar").get()) { classifier = "sources" }
+            }
         }
     }
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
-        // Add repositories to publish to here.
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/gekidolukas/weaponleveling")
+            credentials {
+                username = "GekidoLukas"
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
 

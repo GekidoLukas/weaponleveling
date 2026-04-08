@@ -1,0 +1,14 @@
+{
+  "item": "#weaponleveling:crossbows",
+  "attributes": [
+    {
+      "attribute" : "weaponleveling:ranged_damage"
+    }
+  ],
+  "leveling_type" : {
+    "type" : "weaponleveling:ranged"
+  },
+  "leveling_function": {
+    "function" : "weaponleveling:linear"
+  }
+}

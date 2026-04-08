@@ -34,7 +34,9 @@ public class MixinItemStackFabric {
         return false;
     }
 
-
+    /**
+     * Sets the "isBroken" Tag, so we can replace it immediately after
+     */
     @Inject(
             method = "hurtAndBreak",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
@@ -43,10 +45,11 @@ public class MixinItemStackFabric {
         if(livingEntity instanceof ServerPlayer player) {
             if(this.hurt(i, livingEntity.getRandom(), player)) {
                 if(DataGetter.getBrokenItemsWontVanish() && ModUtils.shouldBeUnbreakable(stack)) {
-                    CompoundTag tag = stack.getTag();
+                    CompoundTag tag = stack.getTag() != null ? stack.getTag() : new CompoundTag();
                     tag.putBoolean("isBroken", true);
                     stack.setTag(tag);
                     stack.setDamageValue(0);
+
                     ci.cancel();
 
                 }

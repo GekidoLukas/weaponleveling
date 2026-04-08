@@ -10,14 +10,18 @@
     "client.MixinPlayerRenderer"
   ],
   "mixins": [
+    "EarlyInitMixin",
     "InventoryMixin",
+    "MixinAbstractArrow",
     "MixinBowItem",
     "MixinCrossbowItem",
     "MixinItemStack",
     "MixinLivingEntity",
     "MixinPlayer",
+    "MixinServerLevel",
     "MixinServerPlayer",
-    "MixinThrownTrident"
+    "MixinThrownTrident",
+    "MixinTridentItem"
   ],
   "plugin": "net.weaponleveling.mixin.MixinConfigPlugin",
   "injectors": {

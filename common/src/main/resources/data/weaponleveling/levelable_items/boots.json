@@ -1,0 +1,21 @@
+{
+  "item": "#c:boots",
+  "attributes": [
+    {
+      "attribute" : "minecraft:generic.armor"
+    },
+    {
+      "attribute" : "minecraft:generic.armor_toughness"
+    }
+  ],
+
+  "leveling_type" : {
+    "type" : "weaponleveling:worn",
+    "slots": [
+      "feet"
+    ]
+  },
+  "leveling_function": {
+    "function" : "weaponleveling:linear"
+  }
+}

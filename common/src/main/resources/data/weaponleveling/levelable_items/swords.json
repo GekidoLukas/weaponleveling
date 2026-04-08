@@ -1,0 +1,14 @@
+{
+  "item": "#minecraft:swords",
+  "attributes": [
+    {
+      "attribute" : "minecraft:generic.attack_damage"
+    }
+  ],
+  "leveling_type" : {
+    "type" : "weaponleveling:melee"
+  },
+  "leveling_function": {
+    "function" : "weaponleveling:linear"
+  }
+}

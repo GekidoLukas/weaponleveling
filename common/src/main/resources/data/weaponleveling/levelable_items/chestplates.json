@@ -1,0 +1,20 @@
+{
+  "item": "#c:chestplates",
+  "attributes": [
+    {
+      "attribute" : "minecraft:generic.armor"
+    },
+    {
+      "attribute" : "minecraft:generic.armor_toughness"
+    }
+  ],
+  "leveling_type" : {
+    "type" : "weaponleveling:worn",
+    "slots": [
+      "chest"
+    ]
+  },
+  "leveling_function": {
+    "function" : "weaponleveling:linear"
+  }
+}

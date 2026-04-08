@@ -1,3 +1,6 @@
+plugins {
+    id 'maven-publish'
+}
 architectury {
     common(rootProject.enabled_platforms.split(","))
 }
@@ -10,23 +13,33 @@ dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    include("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")
+//    include("com.github.LlamaLad7:MixinExtras:${rootProject.mixinextras_version}")
+    include(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     modImplementation ("maven.modrinth:midnightlib:${rootProject.midnightlib_version_fabric}")
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
 
 }
 
+
 publishing {
     publications {
-        mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
-            from components.java
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = "common"
+            version = "${project.version}"
+
         }
     }
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
-        // Add repositories to publish to here.
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/gekidolukas/weaponleveling")
+            credentials {
+                username = "GekidoLukas"
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }

@@ -1,0 +1,20 @@
+{
+  "item": "#c:leggings",
+  "attributes": [
+    {
+      "attribute" : "minecraft:generic.armor"
+    },
+    {
+      "attribute" : "minecraft:generic.armor_toughness"
+    }
+  ],
+  "leveling_type" : {
+    "type" : "weaponleveling:worn",
+    "slots": [
+      "legs"
+    ]
+  },
+  "leveling_function": {
+    "function" : "weaponleveling:linear"
+  }
+}

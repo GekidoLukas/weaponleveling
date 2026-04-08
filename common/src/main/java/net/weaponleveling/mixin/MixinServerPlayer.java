@@ -3,7 +3,7 @@ package net.weaponleveling.mixin;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.weaponleveling.util.UpdateLevels;
+import net.weaponleveling.util.LevelingLogic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,6 +18,6 @@ public class MixinServerPlayer {
             at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void injectedDie(DamageSource source, CallbackInfo ci) {
         LivingEntity victim = ((LivingEntity) ((Object) this));
-        UpdateLevels.updateForKill(victim, source, null);
+        LevelingLogic.updateForKill(victim, source, null);
     }
 }

@@ -1,28 +1,82 @@
 package net.weaponleveling.mixin;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import eu.midnightdust.lib.config.MidnightConfig;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.ArrowItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.weaponleveling.EarlyConfig;
+import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.WeaponLevelingMod;
+import net.weaponleveling.api.LevelingAPI;
+import net.weaponleveling.attribute.IRangedWeapon;
+import net.weaponleveling.attribute.WLAttributes;
 import net.weaponleveling.util.ModUtils;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(CrossbowItem.class)
-public class MixinCrossbowItem {
+public abstract class MixinCrossbowItem
+        extends ProjectileWeaponItem
+        implements Vanishable, IRangedWeapon {
+
+    @Unique
+    private Multimap<Attribute, AttributeModifier> defaultModifiers;
+
+    public MixinCrossbowItem(Properties properties) {
+        super(properties);
+    }
+
+
+
     @Inject(
-            method = "getArrow",
-            at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;setShotFromCrossbow(Z)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private static void injectedDamage(Level p_40915_, LivingEntity p_40916_, ItemStack stack, ItemStack p_40918_, CallbackInfoReturnable<AbstractArrow> cir, ArrowItem arrowitem, AbstractArrow abstractarrow) {
-        if(ModUtils.isAcceptedProjectileWeapon(stack)) {
-            double weaponlevelamount = stack.getOrCreateTag().getInt("level");
-            weaponlevelamount *= ModUtils.getWeaponDamagePerLevel(stack) * ModUtils.getBowlikeModifier(stack);
-            abstractarrow.setBaseDamage(abstractarrow.getBaseDamage() + weaponlevelamount);
+            method = "<init>",
+            at = @At(value = "TAIL"))
+    private void addAttribute(Item.Properties properties, CallbackInfo ci) {
+        //Had to make a different way here, because forge just would not accept it having and if statement. Forge, stop making me cry :(
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 5.0, AttributeModifier.Operation.ADDITION));
+        defaultModifiers = builder.build();
+
+
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
+        if (EarlyConfig.USE_WL_RANGED_ATTRIBUTE) {
+            if (equipmentSlot == EquipmentSlot.MAINHAND || equipmentSlot == EquipmentSlot.OFFHAND) {
+                return this.defaultModifiers;
+            }
         }
+        return super.getDefaultAttributeModifiers(equipmentSlot);
+    }
+
+
+    @WrapOperation(
+            method = "shootProjectile",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"
+            )
+    )
+    private static boolean onArrowFired(Level level, Entity entity, Operation<Boolean> original, Level arg, LivingEntity arg2, InteractionHand arg3, ItemStack arg4) {
+        if (entity instanceof AbstractArrow arrow) {
+            LevelingAPI.referenceItemStackOnArrowEntity(arrow,arg4);
+        }
+        return original.call(level, entity);
     }
 }
