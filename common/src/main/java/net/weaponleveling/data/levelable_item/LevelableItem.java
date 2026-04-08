@@ -204,7 +204,6 @@ public class LevelableItem {
             }
 
         }
-        WeaponLevelingMod.LOGGER.info("TYPES: " + item + types.toString());
 
         LevelingFunction levelingFunction = LevelingFunctionRegistry.getByID(buf.readResourceLocation());
         if(levelingFunction != null) {

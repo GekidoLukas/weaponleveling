@@ -44,7 +44,7 @@ public class S2CRecievers {
 
 
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, Networking.SYNC_DATA, (buf, context) -> {
-            WeaponLevelingMod.LOGGER.info("Receiving Levelable Item Data from Server");
+//            WeaponLevelingMod.LOGGER.info("Receiving Levelable Item Data from Server");
             Map<ResourceLocation, LevelableItem> builder = new HashMap<>();
             int count = buf.readInt();
 
@@ -55,7 +55,7 @@ public class S2CRecievers {
             }
 
             LevelableItemsLoader.setMap(builder);
-            WeaponLevelingMod.LOGGER.info("Received " + count + " Levelable Item Entries");
+//            WeaponLevelingMod.LOGGER.info("Received " + count + " Levelable Item Entries");
         });
     }
 }

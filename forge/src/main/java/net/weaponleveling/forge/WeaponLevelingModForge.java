@@ -32,7 +32,6 @@ import net.weaponleveling.WeaponLevelingModClient;
 import net.weaponleveling.attribute.WLAttributes;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.mob_xp.MobXPLoader;
-import net.weaponleveling.forge.compat.tetra.TetraCompat;
 import net.weaponleveling.forge.networking.ConfigCheckS2CPacket;
 import net.weaponleveling.forge.networking.ForgeNetworking;
 
@@ -55,7 +54,6 @@ public class WeaponLevelingModForge {
         }
     }
     private void setup(final FMLCommonSetupEvent event) {
-        TetraCompat.init();
         ForgeNetworking.register();
 
         PlayerEvent.PLAYER_JOIN.register((player -> {
