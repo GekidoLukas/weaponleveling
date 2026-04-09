@@ -4,6 +4,30 @@
     {
       "id": "minecraft:trident",
       "required": false
+    },
+    {
+      "id": "#c:tridents",
+      "required": false
+    },
+    {
+      "id": "#c:tools/trident",
+      "required": false
+    },
+    {
+      "id": "#c:tools/tridents",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/trident",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/tridents",
+      "required": false
+    },
+    {
+      "id": "#minecraft:tridents",
+      "required": false
     }
   ]
 }
