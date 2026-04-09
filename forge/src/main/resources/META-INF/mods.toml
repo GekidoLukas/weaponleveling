@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[40,)"
 license = "All rights reserved"
-issueTrackerURL="https://github.com/GekidoLukas/weaponleveling/issues"
+issueTrackerURL= "https://github.com/GekidoLukas/weaponleveling/issues"
 
 [[mods]]
 modId = "weaponleveling"
@@ -39,4 +39,4 @@ ordering = "AFTER"
 side = "BOTH"
 [modproperties.weaponleveling]
 catalogueImageIcon = "icon.png"
-configuredBackground = "banner.png"
+catalogueBackground = "background.png"
