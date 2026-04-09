@@ -25,7 +25,11 @@
         "fillColor": -8560594,
         "outlineColor": -2911683
       }
-    ]
+    ],
+    "catalogue": {
+      "banner": "assets/weaponleveling/banner.png",
+      "background": "assets/weaponleveling/background.png"
+    }
   },
   "license": "All rights reserved",
   "icon": "assets/weaponleveling/icon.png",
