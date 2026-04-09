@@ -47,7 +47,6 @@ public class WeaponLevelingModForge {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Submit our event bus to let architectury register our content on the right time
         EventBuses.registerModEventBus(WeaponLevelingMod.MODID, FMLJavaModLoadingContext.get().getModEventBus());
-//        MinecraftForge.EVENT_BUS.addListener(this::onPlayerLogin);
         WeaponLevelingMod.init();
         if(Platform.getEnv() == Dist.CLIENT) {
             WeaponLevelingModClient.init();
@@ -93,26 +92,7 @@ public class WeaponLevelingModForge {
         }
     }
 
-    public void onPlayerLogin(PlayerNegotiationEvent event) {
 
-        Connection connection = event.getConnection();
-        GameProfile profile = event.getProfile();
-
-        boolean serverOption = WeaponLevelingConfig.apply_ranged_damage_attribute;
-//        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-//
-//        var original = new ConfigCheckS2CPacket(serverOption);
-//        original.encode(buf);
-//
-//        ClientboundCustomPayloadPacket packet = new ClientboundCustomPayloadPacket(
-//                WLConfigReader.CONFIG_CHANNEL,
-//                buf
-//        );
-//        connection.send(packet);
-//        ForgeNetworking.CONFIG_CHANNEL.send(PacketDistributor.NMLIST.with(() -> List.of(connection)),new ConfigCheckS2CPacket(serverOption));
-
-
-    }
 
 
 
