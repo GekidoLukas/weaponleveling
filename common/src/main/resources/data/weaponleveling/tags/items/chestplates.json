@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:chestplates",
+      "required": false
+    },
+    {
+      "id": "#c:armors/chestplate",
+      "required": false
+    },
+    {
+      "id": "#c:armors/chestplates",
+      "required": false
+    },
+    {
+      "id": "#forge:armors/chestplate",
+      "required": false
+    },
+    {
+      "id": "#forge:armors/chestplates",
+      "required": false
+    },
+    {
+      "id": "#minecraft:chestplates",
+      "required": false
+    },
+    {
+      "id": "#fabric:chestplates",
+      "required": false
+    }
+  ]
+}

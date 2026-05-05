@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#minecraft:axes",
+      "required": false
+    },
+    {
+      "id": "#c:axes",
+      "required": false
+    },
+    {
+      "id": "#c:tools/axe",
+      "required": false
+    },
+    {
+      "id": "#c:tools/axes",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/axe",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/axes",
+      "required": false
+    },
+    {
+      "id": "#minecraft:axes",
+      "required": false
+    },
+    {
+      "id": "#fabric:axes",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:boots",
+      "required": false
+    },
+    {
+      "id": "#c:armors/boot",
+      "required": false
+    },
+    {
+      "id": "#c:armors/boots",
+      "required": false
+    },
+    {
+      "id": "#forge:armors/boot",
+      "required": false
+    },
+    {
+      "id": "#forge:armors/boots",
+      "required": false
+    },
+    {
+      "id": "#minecraft:boots",
+      "required": false
+    },
+    {
+      "id": "#fabric:boots",
+      "required": false
+    }
+  ]
+}

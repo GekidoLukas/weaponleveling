@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:helmets",
+      "required": false
+    },
+    {
+      "id": "#c:armors/helmet",
+      "required": false
+    },
+    {
+      "id": "#c:armors/helmets",
+      "required": false
+    },
+    {
+      "id": "#forge:armors/helmet",
+      "required": false
+    },
+    {
+      "id": "#forge:armors/helmets",
+      "required": false
+    },
+    {
+      "id": "#minecraft:helmets",
+      "required": false
+    },
+    {
+      "id": "#fabric:helmets",
+      "required": false
+    }
+  ]
+}

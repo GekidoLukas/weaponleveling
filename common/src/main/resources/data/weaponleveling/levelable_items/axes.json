@@ -1,5 +1,5 @@
 {
-  "item": "#minecraft:axes",
+  "item": "#weaponleveling:axes",
   "attributes": [
     {
       "attribute" : "minecraft:generic.attack_damage"

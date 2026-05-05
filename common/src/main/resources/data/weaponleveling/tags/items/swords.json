@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#minecraft:swords",
+      "required": false
+    },
+    {
+      "id": "#c:swords",
+      "required": false
+    },
+    {
+      "id": "#c:tools/sword",
+      "required": false
+    },
+    {
+      "id": "#c:tools/swords",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/sword",
+      "required": false
+    },
+    {
+      "id": "#forge:tools/swords",
+      "required": false
+    },
+    {
+      "id": "#minecraft:swords",
+      "required": false
+    },
+    {
+      "id": "#fabric:swords",
+      "required": false
+    }
+  ]
+}

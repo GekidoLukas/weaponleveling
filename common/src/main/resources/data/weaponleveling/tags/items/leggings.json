@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:leggings",
+      "required": false
+    },
+    {
+      "id": "#c:armors/legging",
+      "required": false
+    },
+    {
+      "id": "#c:armors/leggings",
+      "required": false
+    },
+    {
+      "id": "#forge:armors/legging",
+      "required": false
+    },
+    {
+      "id": "#forge:armors/leggings",
+      "required": false
+    },
+    {
+      "id": "#minecraft:leggings",
+      "required": false
+    },
+    {
+      "id": "#fabric:leggings",
+      "required": false
+    }
+  ]
+}
