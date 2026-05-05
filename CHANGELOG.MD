@@ -14,7 +14,7 @@ ___
 
 ### Fixed
 - Tooltips not showing for other players on local servers due to a missing sync
-
+- More Syncing issues
 ___
 
 ## Version 3.0.0
