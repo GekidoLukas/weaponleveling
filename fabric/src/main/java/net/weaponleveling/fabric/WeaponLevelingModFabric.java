@@ -39,6 +39,7 @@ public class WeaponLevelingModFabric implements ModInitializer {
     private void registerEvents() {
 
         CommonLifecycleEvents.TAGS_LOADED.register((phase, listener) -> {
+
             if(Platform.getEnv() == EnvType.SERVER) {
                 Map<ResourceLocation, JsonElement> itemMap = LevelableItemsLoader.MAP;
                 LevelableItemsLoader.applyNew(itemMap);
@@ -51,11 +52,12 @@ public class WeaponLevelingModFabric implements ModInitializer {
 
 
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(((player, joined) -> {
-            if(Platform.getEnv() == EnvType.SERVER) {
-                if(player.server.isDedicatedServer()) {
-                    WLConfigReader.sync(player);
-                    LevelableItemsLoader.sync(player);
-                }
+            if(player.server.isDedicatedServer()) {
+                WLConfigReader.sync(player);
+                LevelableItemsLoader.sync(player);
+            } else if(player.server.isSingleplayer() && !player.server.isSingleplayerOwner(player.getGameProfile())) {
+                WLConfigReader.sync(player);
+                LevelableItemsLoader.sync(player);
             }
         }));
 

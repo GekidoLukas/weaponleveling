@@ -83,11 +83,13 @@ public class WeaponLevelingModForge {
     @SubscribeEvent
     public static void syncConfig(OnDatapackSyncEvent event) {
         if(event.getPlayer() != null) {
-            if(Platform.getEnvironment() == Env.SERVER) {
-                if(event.getPlayer().server.isDedicatedServer()) {
-                    WLConfigReader.sync(event.getPlayer());
-                    LevelableItemsLoader.sync(event.getPlayer());
-                }
+            ServerPlayer player = event.getPlayer();
+            if(player.server.isDedicatedServer()) {
+                WLConfigReader.sync(player);
+                LevelableItemsLoader.sync(player);
+            } else if(player.server.isSingleplayer() && !player.server.isSingleplayerOwner(player.getGameProfile())) {
+                WLConfigReader.sync(player);
+                LevelableItemsLoader.sync(player);
             }
         }
     }
