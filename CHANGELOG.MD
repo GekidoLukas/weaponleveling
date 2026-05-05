@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-___
+
 
 ## Version 3.0.1
 ### Added
@@ -15,7 +15,7 @@ ___
 ### Fixed
 - Tooltips not showing for other players on local servers due to a missing sync
 - More Syncing issues
-___
+
 
 ## Version 3.0.0
 ### Added
@@ -29,4 +29,3 @@ ___
 
 ### Removed
 - builtin Mod Support in Favour of Addons
-___
