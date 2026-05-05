@@ -132,7 +132,6 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
     }
 
 
-    @Environment(EnvType.SERVER)
     public static void sync(ServerPlayer player) {
 //        WeaponLevelingMod.LOGGER.info("Sending Levelable Item Data to " + player.getName());
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());

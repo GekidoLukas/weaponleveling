@@ -40,11 +40,12 @@ public class WeaponLevelingMod {
 
 
         PlayerEvent.PLAYER_JOIN.register((player -> {
-            if(Platform.getEnv() == EnvType.SERVER) {
-                if(player.server.isDedicatedServer()) {
-                    WLConfigReader.sync(player);
-                    LevelableItemsLoader.sync(player);
-                }
+            if(player.server.isDedicatedServer()) {
+                WLConfigReader.sync(player);
+                LevelableItemsLoader.sync(player);
+            } else if(player.server.isSingleplayer() && !player.server.isSingleplayerOwner(player.getGameProfile())) {
+                WLConfigReader.sync(player);
+                LevelableItemsLoader.sync(player);
             }
         }));
 
