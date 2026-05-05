@@ -28,6 +28,10 @@
     {
       "id": "#minecraft:crossbows",
       "required": false
+    },
+    {
+      "id": "#fabric:crossbows",
+      "required": false
     }
   ]
 }

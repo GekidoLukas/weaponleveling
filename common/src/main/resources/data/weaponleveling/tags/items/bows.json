@@ -28,6 +28,10 @@
     {
       "id": "#minecraft:bows",
       "required": false
+    },
+    {
+      "id": "#fabric:bows",
+      "required": false
     }
   ]
 }

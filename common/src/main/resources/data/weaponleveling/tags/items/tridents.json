@@ -28,6 +28,10 @@
     {
       "id": "#minecraft:tridents",
       "required": false
+    },
+    {
+      "id": "#fabric:tridents",
+      "required": false
     }
   ]
 }
