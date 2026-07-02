@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - NBT Support for single item shorthand `leveling_type`
+- Adding Attributes to weapons that don't have them by default by filling out the parameters `addIfNonExistent` and `slotsForNonExistent`/`slotForNonExistent` in the `attributes` section
 
 ### Fixed
 - Entity blacklist not applying

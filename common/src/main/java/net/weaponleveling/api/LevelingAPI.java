@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.api.registry.LevelingTypeRegistry;
 import net.weaponleveling.data.levelable_item.LevelableItem;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
@@ -19,6 +20,7 @@ import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.LevelingLogic;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -62,8 +64,12 @@ public class LevelingAPI {
 
 
 
-
+    @Deprecated
     public static void modifyAttributeModifier(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, double amount) {
+        modifyAttributeModifier(multimap,attribute,amount,false);
+    }
+
+    public static void modifyAttributeModifier(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, double amount, boolean addIfNonExistent) {
         if(multimap.get(attribute).stream().findFirst().isPresent()) {
             AttributeModifier modifier = multimap.get(attribute).stream().findFirst().get();
 
@@ -72,6 +78,10 @@ public class LevelingAPI {
                 multimap.remove(attribute,modifier);
                 multimap.put(attribute,newModifier);
             }
+        } else if(addIfNonExistent && amount > 0) {
+            String name = WeaponLevelingMod.MODID + "_temp_" + attribute.getDescriptionId();
+            AttributeModifier newModifier = new AttributeModifier(UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8)),name,amount, AttributeModifier.Operation.ADDITION);
+            multimap.put(attribute,newModifier);
         }
     }
 

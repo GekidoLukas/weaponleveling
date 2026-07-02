@@ -12,6 +12,10 @@ import net.minecraft.world.item.Item;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.item.BrokenItem;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class WLAttributes {
 
 
@@ -24,4 +28,6 @@ public class WLAttributes {
 //        ATTRIBUTES.register();
 
     }
+
+    public static final Set<Attribute> greenAttributes = new HashSet<>(List.of(RANGED_DAMAGE,Attributes.ATTACK_DAMAGE,Attributes.ATTACK_SPEED));
 }

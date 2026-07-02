@@ -60,7 +60,7 @@ public class WornType extends LevelingType{
         int count = buf.readInt();
         for(int i = 0; i< count; i++) {
             try {
-                slotList.add(EquipmentSlot.byName(buf.readUtf()));
+                slotList.add(buf.readEnum(EquipmentSlot.class));
             } catch (Exception e) {
                 WeaponLevelingMod.LOGGER.error(e);
             }
@@ -72,7 +72,7 @@ public class WornType extends LevelingType{
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(slots.size());
         for(var slot : slots) {
-            buf.writeUtf(slot.getName());
+            buf.writeEnum(slot);
         }
     }
 
