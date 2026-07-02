@@ -1,6 +1,7 @@
 package net.weaponleveling.util;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -8,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingConfig;
+import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.api.LevelingAPI;
 import net.weaponleveling.api.event.ChooseAttackItemEvent;
 import net.weaponleveling.api.event.HitXPGainEvent;
@@ -33,6 +36,7 @@ import java.util.Random;
 @ApiStatus.Internal
 public class LevelingLogic {
     public static void applyHitXP(ItemStack stack, LivingEntity attacker, Entity target, Boolean critical) {
+        if(target.getType().is(TagKey.create(Registries.ENTITY_TYPE, WeaponLevelingMod.id("entities_blacklist")))) return;
         if (attacker.level().isClientSide) {
             return;
         }
@@ -44,7 +48,6 @@ public class LevelingLogic {
         int xpamount = 0;
 
 
-//        WLPlatformGetter.updateEpicFight(player, xpamount + xpamounthit + xpamountcrit);
         LevelingLogic.applyXPForWorn(attacker,xpamount+ xpamounthit + xpamountcrit);
         updateProgressItem(attacker, stack, xpamount + xpamounthit + xpamountcrit);
         HitXPGainEvent.ITEM_POST.invoker().postItem(stack,attacker,target,critical, xpamount + xpamounthit + xpamountcrit);

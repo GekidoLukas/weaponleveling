@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-
+## Version 3.1.0
+### Fixed
+- Entity blacklist not applying
 
 ## Version 3.0.1
 ### Added

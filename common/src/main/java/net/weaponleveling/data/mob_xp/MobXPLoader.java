@@ -111,6 +111,7 @@ public class MobXPLoader extends SimpleJsonResourceReloadListener {
     }
 
     public static boolean isValid(EntityType<?> entity) {
+        if(entity.is(TagKey.create(Registries.ENTITY_TYPE,WeaponLevelingMod.id("entities_blacklist")))) return false;
         return get(BuiltInRegistries.ENTITY_TYPE.getKey(entity)) != null;
     }
 }
