@@ -9,8 +9,11 @@ import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
+import net.weaponleveling.api.LevelingAPI;
 import net.weaponleveling.attribute.IRangedWeapon;
 import net.weaponleveling.attribute.WLAttributes;
+import net.weaponleveling.data.levelable_item.LevelableAttribute;
+import net.weaponleveling.data.levelable_item.LevelableItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,11 @@ public class TooltipHelper {
         if (itemStack.getItem() instanceof IRangedWeapon) {
             mergeAttributeLines_MainHandOffHand(lines);
             replaceAttributeLines_BlueWithGreen(lines);
+        }
+
+        LevelableItem levelableItem = LevelingAPI.getLevelableItem(itemStack);
+        if(levelableItem != null && levelableItem.getAttributes().stream().anyMatch(LevelableAttribute::addIfNonExistent)) {
+            mergeAttributeLines_MainHandOffHand(lines);
         }
     }
 

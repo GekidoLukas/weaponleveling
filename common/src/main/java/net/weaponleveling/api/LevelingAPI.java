@@ -114,4 +114,8 @@ public class LevelingAPI {
     public static boolean isLevelingAsType(ItemStack stack, LevelingType type, Predicate<LevelingType> extraCondition) {
         return ModUtils.isLevelingAsType(stack,type,extraCondition);
     }
+
+    public static LevelableItem getLevelableItem(ItemStack stack) {
+        return ModUtils.getLevelableItem(stack);
+    }
 }

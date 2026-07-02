@@ -31,6 +31,12 @@ public class ModUtils {
         return isJSONLevelable(stack) || LevelableItem.fromNBT(stack) != null;
     }
 
+    public static LevelableItem getLevelableItem(ItemStack stack) {
+        LevelableItem fromNBT = LevelableItem.fromNBT(stack);
+
+        return fromNBT != null ? fromNBT : LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
+    }
+
 
     public static boolean isNBTDisabled(ItemStack stack) {
         if(stack.getTag() == null) return false;

@@ -11,6 +11,8 @@ public class LevelingTypes {
     public static final MeleeType MELEE = new MeleeType();
     public static final RangedType RANGED = new RangedType();
     public static final WornType WORN = new WornType();
+    public static final PassiveHandType PASSIVE_HAND = new PassiveHandType();
+    public static final PassiveInventoryType PASSIVE_INV = new PassiveInventoryType();
 
 
     public static void register() {
@@ -18,6 +20,8 @@ public class LevelingTypes {
         LevelingTypeRegistry.register(WeaponLevelingMod.id("melee"),MELEE);
         LevelingTypeRegistry.register(WeaponLevelingMod.id("ranged"),RANGED);
         LevelingTypeRegistry.register(WeaponLevelingMod.id("worn"),WORN);
+        LevelingTypeRegistry.register(WeaponLevelingMod.id("passive_hand"), PASSIVE_HAND);
+        LevelingTypeRegistry.register(WeaponLevelingMod.id("passive_inv"), PASSIVE_INV);
     }
 
 }

@@ -18,7 +18,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.weaponleveling.WLPlatformGetter;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.api.LevelingAPI;
@@ -26,6 +25,7 @@ import net.weaponleveling.api.event.ChooseAttackItemEvent;
 import net.weaponleveling.api.event.HitXPGainEvent;
 import net.weaponleveling.api.event.ItemLevelUpdateEvent;
 import net.weaponleveling.api.event.KillXPGainEvent;
+import net.weaponleveling.data.levelable_item.type.LevelingTypes;
 import net.weaponleveling.data.mob_xp.MobXP;
 import net.weaponleveling.data.mob_xp.MobXPLoader;
 import org.jetbrains.annotations.ApiStatus;
@@ -62,11 +62,10 @@ public class LevelingLogic {
             ItemStack chestplate = attacker.getItemBySlot(EquipmentSlot.CHEST);
             ItemStack leggings = attacker.getItemBySlot(EquipmentSlot.LEGS);
             ItemStack feet = attacker.getItemBySlot(EquipmentSlot.FEET);
-            if (ModUtils.isWornLeveling(helmet, EquipmentSlot.HEAD)) {updateProgressItem(attacker,helmet,armorXPAmount(value, false, helmet));}
-            if (ModUtils.isWornLeveling(chestplate, EquipmentSlot.CHEST)) {updateProgressItem(attacker,chestplate,armorXPAmount(value, false, chestplate));}
-            if (ModUtils.isWornLeveling(leggings, EquipmentSlot.LEGS)) {updateProgressItem(attacker,leggings,armorXPAmount(value, false, leggings));}
-            if (ModUtils.isWornLeveling(feet, EquipmentSlot.FEET)) {updateProgressItem(attacker,feet,armorXPAmount(value, false, feet));}
-
+            if (ModUtils.isWornLeveling(helmet, EquipmentSlot.HEAD)) updateProgressItem(attacker,helmet,armorXPAmount(value, false, helmet));
+            if (ModUtils.isWornLeveling(chestplate, EquipmentSlot.CHEST)) updateProgressItem(attacker,chestplate,armorXPAmount(value, false, chestplate));
+            if (ModUtils.isWornLeveling(leggings, EquipmentSlot.LEGS)) updateProgressItem(attacker,leggings,armorXPAmount(value, false, leggings));
+            if (ModUtils.isWornLeveling(feet, EquipmentSlot.FEET)) updateProgressItem(attacker,feet,armorXPAmount(value, false, feet));
         }
     }
 
@@ -198,9 +197,20 @@ public class LevelingLogic {
                 updateProgressItem(attacker,stack,xpamount);
             }
 
-            // For Armor and Potential Offhand Weapon with EFM
+            // For Armor and Passive
             LevelingLogic.applyXPForWorn(attacker,xpamount);
-//            WLPlatformGetter.updateEpicFight(attacker, xpamount);
+            ItemStack passiveStack = offhandStack == stack ? attacker.getMainHandItem() : offhandStack;
+            if (ModUtils.isLevelingAsType(passiveStack, LevelingTypes.PASSIVE_HAND))  updateProgressItem(attacker,passiveStack,armorXPAmount(xpamount, false, passiveStack));
+            if(attacker instanceof Player player) {
+                ItemStack attackItem = specificStack != null ? specificStack : stack;
+                for(var item : player.getInventory().items) {
+                    if(item != attackItem && item != passiveStack) {
+                        if (ModUtils.isLevelingAsType(item, LevelingTypes.PASSIVE_INV))  updateProgressItem(attacker,item,armorXPAmount(xpamount, false, item));
+                    }
+                }
+            }
+
+
         }
 
     }
