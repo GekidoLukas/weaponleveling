@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.api.registry.LevelingTypeRegistry;
+import net.weaponleveling.data.levelable_item.LevelableAttribute;
 import net.weaponleveling.data.levelable_item.LevelableItem;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.levelable_item.function.LevelingFunction;
@@ -66,20 +68,26 @@ public class LevelingAPI {
 
     @Deprecated
     public static void modifyAttributeModifier(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, double amount) {
-        modifyAttributeModifier(multimap,attribute,amount,false);
+        WeaponLevelingMod.LOGGER.error("Cannot modify Attribute, deprecated API is used! Check Changelog!");
     }
 
-    public static void modifyAttributeModifier(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, double amount, boolean addIfNonExistent) {
+    public static void modifyAttributeModifier(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, int level, LevelableAttribute levelableAttribute, EquipmentSlot equipmentSlot) {
+        boolean addIfNonExistent = levelableAttribute.addIfNonExistent() && levelableAttribute.getSlotForNonExistent().contains(equipmentSlot);
         if(multimap.get(attribute).stream().findFirst().isPresent()) {
             AttributeModifier modifier = multimap.get(attribute).stream().findFirst().get();
 
             if (modifier.getAmount() > 0) {
-                AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount()+ amount,modifier.getOperation());
+                double percentOfOriginal = modifier.getAmount() * levelableAttribute.getValuePerLevel();
+                double amount = levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.getValuePerLevel() * level;
+
+                AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount() + amount,modifier.getOperation());
                 multimap.remove(attribute,modifier);
                 multimap.put(attribute,newModifier);
             }
-        } else if(addIfNonExistent && amount > 0) {
+        } else if(addIfNonExistent && level > 0) {
             String name = WeaponLevelingMod.MODID + "_temp_" + attribute.getDescriptionId();
+            double percentOfOriginal = 1 * levelableAttribute.getValuePerLevel();
+            double amount = levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.getValuePerLevel() * level;
             AttributeModifier newModifier = new AttributeModifier(UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8)),name,amount, AttributeModifier.Operation.ADDITION);
             multimap.put(attribute,newModifier);
         }

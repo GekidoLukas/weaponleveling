@@ -64,7 +64,7 @@ public abstract class MixinItemStack {
             LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
             if(nbtLevelable != null) {
                 for(LevelableAttribute levelableAttribute : nbtLevelable.getAttributes()) {
-                    LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), levelableAttribute.getValuePerLevel() * stack.getTag().getInt("level"), levelableAttribute.addIfNonExistent() && levelableAttribute.getSlotForNonExistent().contains(equipmentSlot));
+                    LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), stack.getTag().getInt("level"),levelableAttribute, equipmentSlot);
                 }
             }
             else if(ModUtils.isJSONLevelable(stack)) {
@@ -72,7 +72,7 @@ public abstract class MixinItemStack {
 
                 if(levelableitem != null) {
                     for(LevelableAttribute levelableAttribute : levelableitem.getAttributes()) {
-                        LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), levelableAttribute.getValuePerLevel() * stack.getTag().getInt("level"), levelableAttribute.addIfNonExistent() && levelableAttribute.getSlotForNonExistent().contains(equipmentSlot));
+                        LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(),stack.getTag().getInt("level"), levelableAttribute, equipmentSlot);
                     }
                 }
             }

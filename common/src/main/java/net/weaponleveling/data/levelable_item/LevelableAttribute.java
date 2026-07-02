@@ -28,21 +28,24 @@ public class LevelableAttribute {
     @NotNull
     private final Set<EquipmentSlot>  slotsForNonExistent;
     private final Attribute attribute;
+    private final boolean isPercent;
 
 
 
 
-    public LevelableAttribute(double valuePerLevel, Attribute attribute, boolean addIfNonExistent, Set<EquipmentSlot>  slotsForNonExistent) {
+    public LevelableAttribute(double valuePerLevel, Attribute attribute, boolean addIfNonExistent, Set<EquipmentSlot> slotsForNonExistent, boolean isPercent) {
         this.valuePerLevel = valuePerLevel;
         this.attribute = attribute;
         this.addIfNonExistent = addIfNonExistent;
         this.slotsForNonExistent = slotsForNonExistent;
+        this.isPercent = isPercent;
     }
 
 
     public static LevelableAttribute fromJSON(JsonObject object) {
         double valuePerLevel = object.has("valuePerLevel") ? object.get("valuePerLevel").getAsDouble() : WeaponLevelingConfig.value_per_level;
         boolean addIfNonExistent  = object.has("addIfNonExistent") ? object.get("addIfNonExistent").getAsBoolean() : false;
+        boolean isPercent  = object.has("isPercent") ? object.get("isPercent").getAsBoolean() : false;
         Set<EquipmentSlot> slotsForNonExistent = new HashSet<>();
 
         if(object.has("slotForNonExistent")) {
@@ -71,11 +74,12 @@ public class LevelableAttribute {
         Attribute attribute = BuiltInRegistries.ATTRIBUTE.get(new ResourceLocation(object.get("attribute").getAsString()));
 
 
-        return attribute != null ? new LevelableAttribute(valuePerLevel,attribute,addIfNonExistent,slotsForNonExistent) : null;
+        return attribute != null ? new LevelableAttribute(valuePerLevel,attribute,addIfNonExistent,slotsForNonExistent,isPercent) : null;
     }
     public static LevelableAttribute fromNBT(CompoundTag tag) {
         double valuePerLevel = tag.contains("valuePerLevel") ? tag.getDouble("valuePerLevel") : WeaponLevelingConfig.value_per_level;
         boolean addIfNonExistent = tag.contains("addIfNonExistent") ? tag.getBoolean("addIfNonExistent") : false;
+        boolean isPercent = tag.contains("isPercent") ? tag.getBoolean("isPercent") : false;
         Set<EquipmentSlot> slotsForNonExistent = new HashSet<>();
         if(tag.contains("slotForNonExistent")) {
             try {
@@ -106,7 +110,7 @@ public class LevelableAttribute {
         attribute =  BuiltInRegistries.ATTRIBUTE.get(id);
 
 
-        return attribute != null ? new LevelableAttribute(valuePerLevel,attribute,addIfNonExistent,slotsForNonExistent) : null;
+        return attribute != null ? new LevelableAttribute(valuePerLevel,attribute,addIfNonExistent,slotsForNonExistent,isPercent) : null;
     }
 
     public static boolean hasValidInNBT(ListTag tag) {
@@ -128,6 +132,10 @@ public class LevelableAttribute {
         return attribute;
     }
 
+    public boolean isPercent() {
+        return isPercent;
+    }
+
     /**
      * Adds the attribute if it doesn't exist yet
      */
@@ -142,6 +150,7 @@ public class LevelableAttribute {
     public void write(FriendlyByteBuf buf) {
         buf.writeDouble(this.valuePerLevel);
         buf.writeBoolean(this.addIfNonExistent);
+        buf.writeBoolean(this.isPercent);
         buf.writeResourceLocation(BuiltInRegistries.ATTRIBUTE.getKey(this.attribute));
         buf.writeInt(slotsForNonExistent.size());
         for(EquipmentSlot slot : slotsForNonExistent) {
@@ -152,6 +161,7 @@ public class LevelableAttribute {
     public static LevelableAttribute read(FriendlyByteBuf buf) {
         double valuePerLevel = buf.readDouble();
         boolean addIfNonExistent = buf.readBoolean();
+        boolean isPercent = buf.readBoolean();
         Attribute attribute = BuiltInRegistries.ATTRIBUTE.get(buf.readResourceLocation());
         Set<EquipmentSlot> slots = new HashSet<>();
         int count = buf.readInt();
@@ -162,6 +172,6 @@ public class LevelableAttribute {
                 WeaponLevelingMod.LOGGER.error(e);
             }
         }
-        return new LevelableAttribute(valuePerLevel, attribute,addIfNonExistent,slots);
+        return new LevelableAttribute(valuePerLevel, attribute,addIfNonExistent,slots,isPercent);
     }
 }
