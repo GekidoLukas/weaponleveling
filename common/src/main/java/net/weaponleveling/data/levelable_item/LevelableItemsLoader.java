@@ -18,6 +18,8 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
+import net.weaponleveling.api.event.AfterLevelableLoadedEvent;
+import net.weaponleveling.api.event.ItemReplaceBrokenEvent;
 import net.weaponleveling.item.ModItems;
 
 import java.util.HashMap;
@@ -58,7 +60,6 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
 
 
         WeaponLevelingMod.LOGGER.info("Starting Levelable Registry!");
-//        ImmutableMap.Builder<ResourceLocation, LevelableItem> builder = ImmutableMap.builder();
         Map<ResourceLocation, LevelableItem> builder = new HashMap<>();
 
         jsonMap.forEach((resourceLocation, jsonElement) -> {
@@ -120,6 +121,11 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
 
         WeaponLevelingMod.LOGGER.info("Levelable Registry has finished!");
         itemmap = builder;
+
+
+        //Event for addons adding data after the load
+        AfterLevelableLoadedEvent.POST.invoker().post(new HashMap<>(itemmap));
+
     }
 
 

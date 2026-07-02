@@ -9,6 +9,7 @@ import net.fabricmc.api.EnvType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.util.RandomSource;
+import net.weaponleveling.api.event.AfterLevelableLoadedEvent;
 import net.weaponleveling.api.event.ItemReplaceBrokenEvent;
 import net.weaponleveling.attribute.WLAttributes;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
