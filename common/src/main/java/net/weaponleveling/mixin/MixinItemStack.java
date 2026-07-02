@@ -54,14 +54,10 @@ public abstract class MixinItemStack {
         ItemStack stack = ((ItemStack) ((Object) this));
 
         if(stack.getTag() != null) {
-            if(ModUtils.isNBTLevelable(stack)) {
-                for(var listItem : stack.getTag().getCompound("levelable").getList("attributes", Tag.TAG_COMPOUND)) {
-                    if(listItem instanceof CompoundTag tag) {
-                        LevelableAttribute levelableAttribute = LevelableAttribute.fromNBT(tag);
-                        if(levelableAttribute != null) {
-                            LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), levelableAttribute.getValuePerLevel() * stack.getTag().getInt("level"));
-                        }
-                    }
+            LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
+            if(nbtLevelable != null) {
+                for(LevelableAttribute levelableAttribute : nbtLevelable.getAttributes()) {
+                    LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), levelableAttribute.getValuePerLevel() * stack.getTag().getInt("level"));
                 }
             }
             else if(ModUtils.isJSONLevelable(stack)) {
@@ -70,7 +66,6 @@ public abstract class MixinItemStack {
                 if(levelableitem != null) {
                     for(LevelableAttribute levelableAttribute : levelableitem.getAttributes()) {
                         LevelingAPI.modifyAttributeModifier(hashmap,levelableAttribute.getAttribute(), levelableAttribute.getValuePerLevel() * stack.getTag().getInt("level"));
-
                     }
                 }
             }

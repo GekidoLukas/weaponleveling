@@ -4,9 +4,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.api.registry.LevelingFunctionRegistry;
@@ -14,6 +18,7 @@ import net.weaponleveling.data.levelable_item.function.LevelingFunction;
 import net.weaponleveling.data.levelable_item.function.LevelingFunctions;
 import net.weaponleveling.data.levelable_item.type.LevelingType;
 import net.weaponleveling.api.registry.LevelingTypeRegistry;
+import net.weaponleveling.data.levelable_item.type.WornType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,6 +164,92 @@ public class LevelableItem {
         if(attributes.isEmpty() || types.isEmpty()) {
             return null;
         }
+
+        return new LevelableItem(item,attributes, types,levelingFunction, maxLevel, levelStartAmount, hitXPAmount, hitXPChance, XPApplyChance);
+    }
+
+    public static LevelableItem fromNBT(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        if(tag == null) return null;
+        if(!tag.contains("levelable")) return null;
+        CompoundTag levelableTag = tag.getCompound("levelable");
+        if(levelableTag.contains("disabled") && levelableTag.getBoolean("disabled")) return null;
+        Item item = stack.getItem();
+        LevelableItem jsonItem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(item));
+
+        //Attributes
+        List<LevelableAttribute> attributes = new ArrayList<>();
+        if(levelableTag.contains("attributes"))
+        {
+            for(var element : levelableTag.getList("attributes", Tag.TAG_COMPOUND)) {
+                if(element instanceof CompoundTag compoundTag) {
+                    LevelableAttribute levelableAttribute = LevelableAttribute.fromNBT(compoundTag);
+                    if(levelableAttribute != null) attributes.add(levelableAttribute);
+                }
+            }
+        }
+        if(attributes.isEmpty() && jsonItem != null) {
+            attributes.addAll(jsonItem.getAttributes());
+        }
+
+        //Types
+        List<LevelingType> types =  new ArrayList<>();
+        if(levelableTag.contains("leveling_type"))
+        {
+            LevelingType levelingType = LevelingTypeRegistry.fromNBT(levelableTag.getCompound("leveling_type"));
+            if(levelingType != null) types.add(levelingType);
+        } else if(levelableTag.contains("leveling_types"))
+        {
+            for(Tag element : levelableTag.getList("leveling_types", Tag.TAG_COMPOUND)) {
+                if(element instanceof CompoundTag leveling_type && leveling_type.contains("type")) {
+                    LevelingType levelingType = LevelingTypeRegistry.fromNBT(leveling_type);
+                    if(levelingType != null) types.add(levelingType);
+                }
+            }
+        }
+        if(types.isEmpty() && jsonItem != null) {
+            types.addAll(jsonItem.getTypes());
+        }
+
+        //Function
+        LevelingFunction levelingFunction = jsonItem != null ? jsonItem.getFunction() : LevelingFunctions.LINEAR;
+        if(levelableTag.contains("leveling_function")) {
+            levelingFunction = LevelingFunctionRegistry.fromNBT(levelableTag.getCompound("leveling_function"));
+        }
+
+        //Level
+        int maxLevel = jsonItem != null ? jsonItem.getMaxLevel() : WeaponLevelingConfig.max_item_level;
+        if (levelableTag.contains("maxLevel")) {
+            maxLevel = Math.max(0,Math.min(levelableTag.getInt("maxLevel"),1000));
+        }
+
+
+        int levelStartAmount = jsonItem != null ? jsonItem.getLevelStartAmount() : WeaponLevelingConfig.starting_xp_amount;
+        if (levelableTag.contains("levelStartAmount")) {
+            levelStartAmount = Math.max(0,Math.min(levelableTag.getInt("levelStartAmount"),10000000));
+        }
+
+        int hitXPAmount = jsonItem != null ? jsonItem.getHitXPAmount() : WeaponLevelingConfig.hit_xp_amount;
+        if (levelableTag.contains("hitXPAmount")) {
+            hitXPAmount = Math.max(0,Math.min(levelableTag.getInt("hitXPAmount"),10000000));
+        }
+
+        int hitXPChance = jsonItem != null ? jsonItem.getHitXPChance() : WeaponLevelingConfig.hit_xp_chance;
+        if (levelableTag.contains("hitXPChance")) {
+            hitXPChance = Math.max(0,Math.min(levelableTag.getInt("hitXPChance"),100));
+        }
+
+
+        int XPApplyChance = jsonItem != null ? jsonItem.getArmorXPRNGModifier() : WeaponLevelingConfig.xp_apply_chance;
+        if (levelableTag.contains("armorXPRNGModifier")) {
+            XPApplyChance = Math.max(0,Math.min(levelableTag.getInt("armorXPRNGModifier"),100));
+        }
+
+
+        if(attributes.isEmpty() || types.isEmpty()) {
+            return null;
+        }
+
 
         return new LevelableItem(item,attributes, types,levelingFunction, maxLevel, levelStartAmount, hitXPAmount, hitXPChance, XPApplyChance);
     }

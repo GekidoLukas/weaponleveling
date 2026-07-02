@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 
 ## Version 3.1.0
+### Changed
+- Internal Refactoring to potentially improve performance for NBT Leveling
+
+### Added
+- NBT Support for single item shorthand `leveling_type`
+
 ### Fixed
 - Entity blacklist not applying
 

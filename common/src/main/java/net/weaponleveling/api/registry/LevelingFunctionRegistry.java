@@ -68,7 +68,7 @@ public class LevelingFunctionRegistry {
     }
 
     public static LevelingFunction fromNBT(CompoundTag tag) {
-        LevelingFunction levelingFunction =getByID(new ResourceLocation(tag.getString("function")));
+        LevelingFunction levelingFunction = getByID(new ResourceLocation(tag.getString("function")));
         if(levelingFunction != null) levelingFunction.setData(tag);
 
         return levelingFunction;

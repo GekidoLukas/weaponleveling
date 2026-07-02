@@ -86,7 +86,7 @@ public class LevelingAPI {
     }
 
     public static boolean isNBTLevelable(ItemStack stack) {
-        return ModUtils.isNBTLevelable(stack);
+        return LevelableItem.fromNBT(stack) != null;
     }
 
     public static boolean isJSONLevelable(ItemStack stack) {

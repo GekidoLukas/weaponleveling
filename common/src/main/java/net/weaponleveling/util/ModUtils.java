@@ -27,19 +27,8 @@ public class ModUtils {
         return LevelableItemsLoader.isValid(stack.getItem()) && !stack.is(DataGetter.blacklist_items) && !isNBTDisabled(stack);
     }
 
-    public static boolean isNBTLevelable(ItemStack stack) {
-        if(stack.getTag() == null) return false;
-        CompoundTag tag = stack.getTag().getCompound("levelable");
-        if(isNBTDisabled(stack)) return false;
-
-        return ((tag.contains("attributes", Tag.TAG_LIST)  && LevelableAttribute.hasValidInNBT(tag.getList("attributes",Tag.TAG_COMPOUND)))) //&& !tag.getList("attributes",Tag.TAG_COMPOUND).isEmpty()
-                &&
-                ((tag.contains("leveling_types",Tag.TAG_LIST) && LevelingTypeRegistry.hasValidInNBT(tag.getList("leveling_types",Tag.TAG_COMPOUND))))  //&& !tag.getList("leveling_types",Tag.TAG_COMPOUND).isEmpty())
-                ;
-    }
-
     public static boolean isLevelableItem(ItemStack stack) {
-        return isJSONLevelable(stack) || isNBTLevelable(stack);
+        return isJSONLevelable(stack) || LevelableItem.fromNBT(stack) != null;
     }
 
 
@@ -67,35 +56,6 @@ public class ModUtils {
     }
 
     public static boolean isWornLeveling(ItemStack stack, EquipmentSlot slot) {
-        boolean isLeveling = false;
-
-        if(stack.getTag() != null && isNBTLevelable(stack)) {
-            if(stack.getTag().getCompound("levelable").contains("leveling_types") && !stack.getTag().getCompound("levelable").getList("leveling_types", Tag.TAG_COMPOUND).isEmpty()) {
-                for(Tag tag : stack.getTag().getCompound("levelable").getList("leveling_types", Tag.TAG_COMPOUND)) {
-                    if(tag instanceof CompoundTag leveling_types && leveling_types.contains("type")) {
-                        LevelingType levelingType = LevelingTypeRegistry.fromNBT(leveling_types);
-                        if(levelingType instanceof WornType wornType && wornType.getSlots().contains(slot)) {
-                            isLeveling = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-        } else {
-            LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-            if(levelableitem == null) return false;
-            if(levelableitem.hasType(LevelingTypes.WORN)) {
-                for(var type : levelableitem.getTypes()) {
-                    if(type instanceof WornType wornType && wornType.getSlots().contains(slot)) {
-                        isLeveling = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-
         return isLevelingAsType(stack,LevelingTypes.WORN,levelingType -> {
             return levelingType instanceof WornType wornType && wornType.getSlots().contains(slot);
         });
@@ -110,30 +70,23 @@ public class ModUtils {
     }
 
     public static boolean isLevelingAsType(ItemStack stack, LevelingType type, Predicate<LevelingType> extraCondition) {
-        boolean isLeveling = false;
 
-        if(stack.getTag() != null && isNBTLevelable(stack)) {
-            CompoundTag levelableTag = stack.getTag().getCompound("levelable");
-
-            if(levelableTag.contains("leveling_types") && !levelableTag.getList("leveling_types", Tag.TAG_COMPOUND).isEmpty()) {
-                for(Tag tag : levelableTag.getList("leveling_types", Tag.TAG_COMPOUND)) {
-                    if(tag instanceof CompoundTag leveling_type) {
-                        LevelingType levelingType = LevelingTypeRegistry.fromNBT(leveling_type);
-                        if(levelingType.equals(type) && extraCondition.test(levelingType)) {
-                            isLeveling = true;
-                        }
+        LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
+        if(nbtLevelable != null) {
+            if(nbtLevelable.hasType(type)) {
+                for(var levelingType : nbtLevelable.getTypes()) {
+                    if(levelingType.equals(type) && extraCondition.test(levelingType)) {
+                        return true;
                     }
                 }
             }
-
         } else {
             LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
             if(levelableitem == null) return false;
             if(levelableitem.hasType(type)) {
                 for(var levelingType : levelableitem.getTypes()) {
                     if(levelingType.equals(type) && extraCondition.test(levelingType)) {
-                        isLeveling = true;
-                        break;
+                        return true;
                     }
                 }
             }
@@ -141,14 +94,15 @@ public class ModUtils {
 
 
 
-        return isLeveling;
+        return false;
     }
 
 
 
     public static int getMaxLevel(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("maxLevel")) return stack.getTag().getCompound("levelable").getInt("maxLevel");
+        LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
+        if (nbtLevelable != null) return nbtLevelable.getMaxLevel();
         else if (isJSONLevelable(stack)) return levelableitem.getMaxLevel();
         else return WeaponLevelingConfig.max_item_level;
 
@@ -157,39 +111,37 @@ public class ModUtils {
 
     public static int getLevelStartAmount(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("levelStartAmount")) return stack.getTag().getCompound("levelable").getInt("levelStartAmount");
+        LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
+        if (nbtLevelable != null) return nbtLevelable.getLevelStartAmount();
         else if (isJSONLevelable(stack)) return levelableitem.getLevelStartAmount();
         else return WeaponLevelingConfig.starting_xp_amount;
     }
 
     public static LevelingFunction getLevelingFunction(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-
-        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("leveling_function")) {
-            CompoundTag functionTag = stack.getTag().getCompound("levelable").getCompound("leveling_function");
-            LevelingFunction levelingFunction = LevelingFunctionRegistry.fromNBT(functionTag);
-            if(levelingFunction != null) {
-                return levelingFunction;
-            }
-        }
+        LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
+        if (nbtLevelable != null) return nbtLevelable.getFunction();
         if (isJSONLevelable(stack)) return levelableitem.getFunction();
         return LevelingFunctions.LINEAR;
     }
     public static int getHitXPAmount(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("hitXPAmount")) return stack.getTag().getCompound("levelable").getInt("hitXPAmount");
+        LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
+        if (nbtLevelable != null) return nbtLevelable.getHitXPAmount();
         else if (isJSONLevelable(stack)) return levelableitem.getHitXPAmount();
         else return WeaponLevelingConfig.hit_xp_chance;
     }
     public static int getHitXPChance(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("hitXPChance")) return stack.getTag().getCompound("levelable").getInt("hitXPChance");
+        LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
+        if (nbtLevelable != null) return nbtLevelable.getHitXPChance();
         else if (isJSONLevelable(stack)) return levelableitem.getHitXPChance();
         else return WeaponLevelingConfig.hit_xp_chance;
     }
     public static int getWornXPRNGModifier(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        if (stack.getTag() != null && stack.getTag().getCompound("levelable").contains("armorXPRNGModifier")) return stack.getTag().getCompound("levelable").getInt("armorXPRNGModifier");
+        LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
+        if (nbtLevelable != null) return nbtLevelable.getArmorXPRNGModifier();
         else if (isJSONLevelable(stack)) return levelableitem.getArmorXPRNGModifier();
         else return WeaponLevelingConfig.xp_apply_chance;
     }
