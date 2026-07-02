@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - Entity blacklist not applying
+- `weaponleveling:broken` being able to get registered as a levelable item
 
 ## Version 3.0.1
 ### Added

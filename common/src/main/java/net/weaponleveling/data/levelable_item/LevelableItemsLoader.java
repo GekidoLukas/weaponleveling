@@ -18,6 +18,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
+import net.weaponleveling.item.ModItems;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,19 +81,18 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
 
                             BuiltInRegistries.ITEM.getTag(itemTagKey).get().forEach((itemHolder) -> {
                                 Item item = itemHolder.value();
+                                if(item.equals(ModItems.BROKEN_ITEM)) return;
                                 if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
 
                                 LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, BuiltInRegistries.ITEM.getKey(item));
                                 if(levelableItem != null) {
                                     builder.remove(BuiltInRegistries.ITEM.getKey(item));
                                     builder.put(BuiltInRegistries.ITEM.getKey(item), levelableItem);
-                                } else {
-
                                 }
 
                             });
                         }
-                        else if(BuiltInRegistries.ITEM.containsKey(id)){
+                        else if(BuiltInRegistries.ITEM.containsKey(id) && !id.equals(WeaponLevelingMod.id("broken"))){
                             if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering: " + id);
 
                             LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, id);
