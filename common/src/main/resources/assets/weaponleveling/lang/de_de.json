@@ -12,6 +12,8 @@
   "weaponleveling.command.addpoints": "Den XP Punkten von %1$s wurden %2$s hinzugefügt",
   "weaponleveling.command.exception.novalidweapon": "%s ist kein valider Gegenstand",
   "weaponleveling.command.exception.outofbounds": "%s ist größer als der Maximalwert",
+  "weaponleveling.command.print_tag_list.success": "%s hat die Tags: %s",
+  "weaponleveling.command.print_tag_list.failure.no_entity_in_view": "Kein Entity im Blickfeld oder der Rechweite!",
   "weaponleveling.tooltip.broken.prefix": "%s (Kaputt)",
   "weaponleveling.tooltip.broken": "Der Gegenstand ist kapputt",
   "weaponleveling.tooltip.broken.description": "Am Amboss reparieren um es wiederzuverwenden",

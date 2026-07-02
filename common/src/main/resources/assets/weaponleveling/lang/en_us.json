@@ -12,6 +12,8 @@
   "weaponleveling.command.addpoints": "Added %2$s to the XP Points of %1$s",
   "weaponleveling.command.exception.novalidweapon": "%s is not a valid item",
   "weaponleveling.command.exception.outofbounds": "%s is higher than the Maximum Value",
+  "weaponleveling.command.print_tag_list.success": "%s has the tags: %s",
+  "weaponleveling.command.print_tag_list.failure.no_entity_in_view": "No entity in view or range!",
   "weaponleveling.tooltip.broken.prefix": "Broken %s",
   "weaponleveling.tooltip.broken": "Item is Broken",
   "weaponleveling.tooltip.broken.description": "Repair in Anvil to use again",

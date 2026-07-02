@@ -18,6 +18,7 @@ import net.weaponleveling.data.mob_xp.MobXPLoader;
 import net.weaponleveling.item.ModItems;
 import net.weaponleveling.networking.Networking;
 import net.weaponleveling.server.command.ItemLevelCommand;
+import net.weaponleveling.server.command.PrintTagListsCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,6 +34,7 @@ public class WeaponLevelingMod {
         LevelingTypes.register();
         LevelingFunctions.register();
         CommandRegistrationEvent.EVENT.register(ItemLevelCommand::register);
+        CommandRegistrationEvent.EVENT.register(PrintTagListsCommand::register);
         Networking.registerC2SPackets();
         ModItems.register();
         ReloadListenerRegistry.register(PackType.SERVER_DATA,LevelableItemsLoader.INSTANCE);
