@@ -77,22 +77,21 @@ public class LevelingAPI {
             AttributeModifier modifier = multimap.get(attribute).stream().findFirst().get();
 
             if (modifier.getAmount() > 0) {
-                double percentOfOriginal = modifier.getAmount() * levelableAttribute.getValuePerLevel();
-                double amount = levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.getValuePerLevel() * level;
-
-                AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount() + amount,modifier.getOperation());
+                AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount() + calculateDamageAmount(modifier.getAmount(),level,levelableAttribute),modifier.getOperation());
                 multimap.remove(attribute,modifier);
                 multimap.put(attribute,newModifier);
             }
         } else if(addIfNonExistent && level > 0) {
             String name = WeaponLevelingMod.MODID + "_temp_" + attribute.getDescriptionId();
-            double percentOfOriginal = 1 * levelableAttribute.getValuePerLevel();
-            double amount = levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.getValuePerLevel() * level;
-            AttributeModifier newModifier = new AttributeModifier(UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8)),name,amount, AttributeModifier.Operation.ADDITION);
+            AttributeModifier newModifier = new AttributeModifier(UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8)),name,calculateDamageAmount(1,level,levelableAttribute), AttributeModifier.Operation.ADDITION);
             multimap.put(attribute,newModifier);
         }
     }
 
+    public static double calculateDamageAmount(double originalAmount, int level,LevelableAttribute levelableAttribute) {
+        double percentOfOriginal = originalAmount * levelableAttribute.getValuePerLevel();
+        return levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.getValuePerLevel() * level;
+    }
 
     public static void referenceItemStackOnArrowEntity(AbstractArrow arrow, ItemStack source) {
         ((AbstractArrowAccessor) arrow).setSourceWeapon(source);
