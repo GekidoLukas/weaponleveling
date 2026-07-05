@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 - 2 new leveling types: `weaponleveling:passive_hand` for the offhand (or main if the offhand is used as the attack hand) and `weaponleveling:passive_inv` for all items in the inventory besides the attack item (excludes offhand and armor) 
 - debug command `/print_tag_list` to print the tag lists of an item or entity
 - Event to LevelingAPI to execute code directly after all levelable items have loaded called `AfterLevelableLoadedEvent`
+- Changed the parameters of the `modifyAttributeModifier` method in LevelingAPI. Old Method is deprecated
+- Method to LevelingAPI to calculate an AttributeModifiers amount for a level called `calculateModifierAmount`
 
 ### Fixed
 - Entity blacklist not applying

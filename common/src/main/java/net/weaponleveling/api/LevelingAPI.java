@@ -1,9 +1,6 @@
 package net.weaponleveling.api;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -11,14 +8,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.weaponleveling.WeaponLevelingMod;
-import net.weaponleveling.api.registry.LevelingTypeRegistry;
 import net.weaponleveling.data.levelable_item.LevelableAttribute;
 import net.weaponleveling.data.levelable_item.LevelableItem;
-import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.levelable_item.function.LevelingFunction;
 import net.weaponleveling.data.levelable_item.type.LevelingType;
 import net.weaponleveling.util.AbstractArrowAccessor;
-import net.weaponleveling.util.DataGetter;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.LevelingLogic;
 
@@ -77,18 +71,18 @@ public class LevelingAPI {
             AttributeModifier modifier = multimap.get(attribute).stream().findFirst().get();
 
             if (modifier.getAmount() > 0) {
-                AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount() + calculateDamageAmount(modifier.getAmount(),level,levelableAttribute),modifier.getOperation());
+                AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount() + calculateModifierAmount(modifier.getAmount(),level,levelableAttribute),modifier.getOperation());
                 multimap.remove(attribute,modifier);
                 multimap.put(attribute,newModifier);
             }
         } else if(addIfNonExistent && level > 0) {
             String name = WeaponLevelingMod.MODID + "_temp_" + attribute.getDescriptionId();
-            AttributeModifier newModifier = new AttributeModifier(UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8)),name,calculateDamageAmount(1,level,levelableAttribute), AttributeModifier.Operation.ADDITION);
+            AttributeModifier newModifier = new AttributeModifier(UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8)),name, calculateModifierAmount(1,level,levelableAttribute), AttributeModifier.Operation.ADDITION);
             multimap.put(attribute,newModifier);
         }
     }
 
-    public static double calculateDamageAmount(double originalAmount, int level,LevelableAttribute levelableAttribute) {
+    public static double calculateModifierAmount(double originalAmount, int level, LevelableAttribute levelableAttribute) {
         double percentOfOriginal = originalAmount * levelableAttribute.getValuePerLevel();
         return levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.getValuePerLevel() * level;
     }
