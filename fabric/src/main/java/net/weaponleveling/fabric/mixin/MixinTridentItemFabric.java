@@ -29,7 +29,7 @@ public class MixinTridentItemFabric {
             ), locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
     private void addAttribute(Item.Properties properties, CallbackInfo ci, ImmutableMultimap.Builder<Attribute, AttributeModifier> builder) {
         if(EarlyConfig.USE_WL_RANGED_ATTRIBUTE) {
-            builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 6.0, AttributeModifier.Operation.ADDITION));
+            builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 0, AttributeModifier.Operation.ADDITION));
         }
     }
 }

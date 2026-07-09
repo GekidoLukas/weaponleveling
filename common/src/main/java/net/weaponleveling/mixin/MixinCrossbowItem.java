@@ -49,7 +49,7 @@ public abstract class MixinCrossbowItem
     private void addAttribute(Item.Properties properties, CallbackInfo ci) {
         //Had to make a different way here, because forge just would not accept it having and if statement. Forge, stop making me cry :(
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 5.0, AttributeModifier.Operation.ADDITION));
+        builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 0, AttributeModifier.Operation.ADDITION));
         defaultModifiers = builder.build();
 
 

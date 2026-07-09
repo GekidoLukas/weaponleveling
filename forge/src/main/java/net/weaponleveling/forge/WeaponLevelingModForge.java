@@ -32,6 +32,7 @@ import net.weaponleveling.WeaponLevelingModClient;
 import net.weaponleveling.attribute.WLAttributes;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.mob_xp.MobXPLoader;
+import net.weaponleveling.data.ranged_damage.RangedDamageLoader;
 import net.weaponleveling.forge.networking.ConfigCheckS2CPacket;
 import net.weaponleveling.forge.networking.ForgeNetworking;
 
@@ -74,6 +75,8 @@ public class WeaponLevelingModForge {
             LevelableItemsLoader.applyNew(itemMap);
             Map<ResourceLocation, JsonElement> mobMap = MobXPLoader.MAP;
             MobXPLoader.applyNew(mobMap);
+            Map<ResourceLocation, JsonElement> rangedDamageMap = RangedDamageLoader.MAP;
+            RangedDamageLoader.applyNew(rangedDamageMap);
         } else {
             localServerLoad();
 
@@ -107,6 +110,8 @@ public class WeaponLevelingModForge {
             LevelableItemsLoader.applyNew(itemMap);
             Map<ResourceLocation, JsonElement> mobMap = MobXPLoader.MAP;
             MobXPLoader.applyNew(mobMap);
+            Map<ResourceLocation, JsonElement> rangedDamageMap = RangedDamageLoader.MAP;
+            RangedDamageLoader.applyNew(rangedDamageMap);
         }
     }
 

@@ -50,7 +50,7 @@ public abstract class MixinBowItem
 //        MidnightConfig.init(WeaponLevelingMod.MODID, WeaponLevelingConfig.class);
         if(EarlyConfig.USE_WL_RANGED_ATTRIBUTE) {
                 ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-                builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 4.0, AttributeModifier.Operation.ADDITION));
+                builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 0, AttributeModifier.Operation.ADDITION));
                 defaultModifiers = builder.build();
         }
 

@@ -87,6 +87,17 @@ public class LevelingAPI {
         return levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.getValuePerLevel() * level;
     }
 
+
+    public static void setAttributeModifierAmount(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, UUID modifierID, double amount) {
+        var opt = multimap.get(attribute).stream().filter(attributeModifier -> attributeModifier.getId().equals(modifierID)).findFirst();
+        if(opt.isPresent()) {
+            AttributeModifier modifier = opt.get();
+            AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),amount,modifier.getOperation());
+            multimap.remove(attribute,modifier);
+            multimap.put(attribute,newModifier);
+        }
+    }
+
     public static void referenceItemStackOnArrowEntity(AbstractArrow arrow, ItemStack source) {
         ((AbstractArrowAccessor) arrow).setSourceWeapon(source);
     }

@@ -21,6 +21,7 @@ import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.mob_xp.MobXPLoader;
+import net.weaponleveling.data.ranged_damage.RangedDamageLoader;
 
 import java.util.Map;
 
@@ -42,6 +43,8 @@ public class WeaponLevelingModFabric implements ModInitializer {
                 LevelableItemsLoader.applyNew(itemMap);
                 Map<ResourceLocation, JsonElement> mobMap = MobXPLoader.MAP;
                 MobXPLoader.applyNew(mobMap);
+                Map<ResourceLocation, JsonElement> rangedDamageMap = RangedDamageLoader.MAP;
+                RangedDamageLoader.applyNew(rangedDamageMap);
             } else {
                 localServerLoad();
             }
@@ -99,6 +102,8 @@ public class WeaponLevelingModFabric implements ModInitializer {
             LevelableItemsLoader.applyNew(itemMap);
             Map<ResourceLocation, JsonElement> mobMap = MobXPLoader.MAP;
             MobXPLoader.applyNew(mobMap);
+            Map<ResourceLocation, JsonElement> rangedDamageMap = RangedDamageLoader.MAP;
+            RangedDamageLoader.applyNew(rangedDamageMap);
         }
     }
 

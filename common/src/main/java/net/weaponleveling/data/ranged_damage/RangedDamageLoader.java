@@ -1,55 +1,48 @@
-package net.weaponleveling.data.levelable_item;
+package net.weaponleveling.data.ranged_damage;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
-import dev.architectury.networking.NetworkManager;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
-import net.weaponleveling.api.event.AfterLevelableLoadedEvent;
-import net.weaponleveling.api.event.ItemReplaceBrokenEvent;
+import net.weaponleveling.attribute.IRangedWeapon;
+import net.weaponleveling.data.levelable_item.LevelableItem;
+import net.weaponleveling.data.mob_xp.MobXP;
 import net.weaponleveling.item.ModItems;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.weaponleveling.networking.Networking.SYNC_CONFIG;
-import static net.weaponleveling.networking.Networking.SYNC_DATA;
-
-public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
+public class RangedDamageLoader extends SimpleJsonResourceReloadListener {
 
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
-    public static final String directory = "levelable_items";
+    public static final String directory = "ranged_damage";
 
-    public static final LevelableItemsLoader INSTANCE = new LevelableItemsLoader();
+    public static final RangedDamageLoader INSTANCE = new RangedDamageLoader();
     public static Map<ResourceLocation, JsonElement> MAP = new HashMap<>();
 
-    public LevelableItemsLoader() {
+    public RangedDamageLoader() {
         super(GSON, directory);
     }
 
 
 
-    public static void setMap(Map<ResourceLocation, LevelableItem> newmap) {
-        itemmap = newmap;
+    public void setMap(Map<ResourceLocation, RangedDamageEntry> newmap) {
+        rangedDamageMap = newmap;
     }
 
 
 
-    private static Map<ResourceLocation, LevelableItem> itemmap = ImmutableMap.of();
+    private static Map<ResourceLocation, RangedDamageEntry> rangedDamageMap = ImmutableMap.of();
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
@@ -59,15 +52,16 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
     public static void applyNew(Map<ResourceLocation, JsonElement> jsonMap) {
 
 
-        WeaponLevelingMod.LOGGER.info("Starting Levelable Registry!");
-        Map<ResourceLocation, LevelableItem> builder = new HashMap<>();
+        WeaponLevelingMod.LOGGER.info("Starting Ranged Damage Registry!");
+        Map<ResourceLocation, RangedDamageEntry> builder = new HashMap<>();
 
         jsonMap.forEach((resourceLocation, jsonElement) -> {
             JsonObject jsonElementAsJsonObject = jsonElement.getAsJsonObject();
 
 
             try {
-                 JsonObject jsonObject = jsonElement.getAsJsonObject();
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+
                 if(jsonElementAsJsonObject.has("item")) {
                     boolean hasHasTag = jsonElementAsJsonObject.get("item").getAsString().startsWith("#");
                     if(jsonElementAsJsonObject.get("item").getAsString().contains(":")) {
@@ -90,12 +84,16 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                                     if(BuiltInRegistries.ITEM.getTag(excludeTagKey).isPresent() && item.getDefaultInstance().is(excludeTagKey)) return;
                                 }
                                 if(item.equals(ModItems.BROKEN_ITEM.get())) return;
-                                if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
+                                if(item instanceof IRangedWeapon) {
+                                    if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
 
-                                LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, BuiltInRegistries.ITEM.getKey(item));
-                                if(levelableItem != null) {
-                                    builder.remove(BuiltInRegistries.ITEM.getKey(item));
-                                    builder.put(BuiltInRegistries.ITEM.getKey(item), levelableItem);
+                                    RangedDamageEntry rangedDamageEntry = RangedDamageEntry.fromJson(jsonObject);
+                                    if(rangedDamageEntry != null) {
+                                        builder.remove(BuiltInRegistries.ITEM.getKey(item));
+                                        builder.put(BuiltInRegistries.ITEM.getKey(item), rangedDamageEntry);
+                                    }
+                                } else {
+                                    WeaponLevelingMod.LOGGER.error("{} is not a ranged weapon", () -> id);
                                 }
 
                             });
@@ -110,13 +108,18 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                                 if(BuiltInRegistries.ITEM.getTag(excludeTagKey).isPresent() && item.getDefaultInstance().is(excludeTagKey)) return;
                             }
                             if(item.equals(ModItems.BROKEN_ITEM.get())) return;
-                            if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering: " + id);
+                            if(item instanceof IRangedWeapon) {
+                                if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering: " + id);
 
-                            LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, id);
-                            if(levelableItem != null) {
-                                builder.remove(id);
-                                builder.put(id, levelableItem);
+                                RangedDamageEntry rangedDamageEntry = RangedDamageEntry.fromJson(jsonObject);
+                                if(rangedDamageEntry != null) {
+                                    builder.remove(id);
+                                    builder.put(id, rangedDamageEntry);
+                                }
+                            } else {
+                                WeaponLevelingMod.LOGGER.error("{} is not a ranged weapon", () -> id);
                             }
+
                         }
                         else {
                             WeaponLevelingMod.LOGGER.error("{} is not a valid Item or Item Tag", () -> id);
@@ -130,44 +133,23 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                 }
 
 
+
             } catch (IllegalArgumentException | JsonParseException jsonparseexception) {
-                WeaponLevelingMod.LOGGER.error("Parsing error loading Item Levels {}: {}", resourceLocation, jsonparseexception.getMessage());
+                WeaponLevelingMod.LOGGER.error("Parsing error loading Ranged Damage Levels {}: {}", resourceLocation, jsonparseexception.getMessage());
             }
         });
 
-        WeaponLevelingMod.LOGGER.info("Levelable Registry has finished!");
-        itemmap = builder;
-
-
-        //Event for addons adding data after the load
-        AfterLevelableLoadedEvent.POST.invoker().post(new HashMap<>(itemmap));
-
+        WeaponLevelingMod.LOGGER.info("Ranged Damage Registry has finished!");
+        rangedDamageMap = builder;
     }
 
 
-    public static LevelableItem get(ResourceLocation resourceLocation) {
-        return itemmap.get(resourceLocation);
+    public static RangedDamageEntry get(Item item) {
+        ResourceLocation resourceLocation = BuiltInRegistries.ITEM.getKey(item);
+        return rangedDamageMap.get(resourceLocation);
     }
 
     public static boolean isValid(Item item) {
-        return get(BuiltInRegistries.ITEM.getKey(item)) != null;
-    }
-
-
-    public static void sync(ServerPlayer player) {
-//        WeaponLevelingMod.LOGGER.info("Sending Levelable Item Data to " + player.getName());
-        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-        buf.writeInt(itemmap.size());
-        itemmap.forEach((resourceLocation, levelableItem) -> {
-           buf.writeResourceLocation(resourceLocation);
-           levelableItem.write(buf);
-
-        });
-
-
-
-
-        NetworkManager.sendToPlayer(player, SYNC_DATA, buf);
-//        WeaponLevelingMod.LOGGER.info("Sent "+ itemmap.size() + " Levelable Item Entries to " + player.getName());
+        return get(item) != null;
     }
 }

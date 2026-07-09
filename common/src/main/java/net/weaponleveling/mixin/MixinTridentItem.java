@@ -29,14 +29,5 @@ public abstract class MixinTridentItem extends Item implements Vanishable, IRang
         super(properties);
     }
 
-//    @Inject(
-//            method = "<init>",
-//            at = @At(value = "INVOKE",
-//                    target = "Lcom/google/common/collect/ImmutableMultimap$Builder;put(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;", ordinal = 1
-//            ), locals = LocalCapture.CAPTURE_FAILHARD)
-//    private void addAttribute(Properties properties, CallbackInfo ci, ImmutableMultimap.Builder<Attribute, AttributeModifier> builder) {
-//        builder.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(ModUtils.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 6.0, AttributeModifier.Operation.ADDITION));
-//
-//    }
 
 }

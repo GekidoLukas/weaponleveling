@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version 3.2.0
+### Added
+- Ranged Damage Registry via datapacks
+- Option to exclude tags from a levelable item json via `excludeTag` (Useful when the original tag might contain another weapon type and you don't want to overwrite it)
+
+
 ## Version 3.1.0
 ### Changed
 - Internal Refactoring to potentially improve performance for NBT Leveling

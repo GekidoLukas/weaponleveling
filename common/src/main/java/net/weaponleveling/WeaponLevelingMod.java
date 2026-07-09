@@ -16,6 +16,7 @@ import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
 import net.weaponleveling.data.levelable_item.function.LevelingFunctions;
 import net.weaponleveling.data.levelable_item.type.LevelingTypes;
 import net.weaponleveling.data.mob_xp.MobXPLoader;
+import net.weaponleveling.data.ranged_damage.RangedDamageLoader;
 import net.weaponleveling.item.ModItems;
 import net.weaponleveling.networking.Networking;
 import net.weaponleveling.server.command.ItemLevelCommand;
@@ -38,8 +39,9 @@ public class WeaponLevelingMod {
         CommandRegistrationEvent.EVENT.register(PrintTagListsCommand::register);
         Networking.registerC2SPackets();
         ModItems.register();
-        ReloadListenerRegistry.register(PackType.SERVER_DATA,LevelableItemsLoader.INSTANCE);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, LevelableItemsLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, MobXPLoader.INSTANCE);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, RangedDamageLoader.INSTANCE);
 
 
         PlayerEvent.PLAYER_JOIN.register((player -> {

@@ -28,7 +28,7 @@ public class MixinTridentItemForge  {
             at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableMultimap$Builder;build()Lcom/google/common/collect/ImmutableMultimap;"), remap = false)
     private ImmutableMultimap<Attribute, AttributeModifier> inject(ImmutableMultimap.Builder instance, Operation<ImmutableMultimap<Attribute, AttributeModifier>> original) {
         if(EarlyConfig.USE_WL_RANGED_ATTRIBUTE) {
-            instance.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 6.0, AttributeModifier.Operation.ADDITION));
+            instance.put(WLAttributes.RANGED_DAMAGE, new AttributeModifier(LevelingAPI.BASE_RANGED_DAMAGE_UUID, "Tool modifier", 0, AttributeModifier.Operation.ADDITION));
         }
             return original.call(instance);
     }
