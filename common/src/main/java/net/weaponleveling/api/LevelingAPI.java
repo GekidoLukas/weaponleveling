@@ -15,6 +15,7 @@ import net.weaponleveling.data.levelable_item.type.LevelingType;
 import net.weaponleveling.util.AbstractArrowAccessor;
 import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.LevelingLogic;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -78,6 +79,7 @@ public class LevelingAPI {
      * Only use that if you want to modify the NBT/Data Component directly. In all other cases use {@link LevelingAPI#applyXPToItem}
      * @param stack the ItemStack that is to be modified
      */
+    @ApiStatus.Internal
     public static void updateLevelProgress(ItemStack stack, long amount) {
         ModUtils.updateLevelProgress(stack,amount);
     }
@@ -86,6 +88,7 @@ public class LevelingAPI {
      * Only use that if you want to modify the NBT/Data Component directly. In all other cases use {@link LevelingAPI#applyXPToItem}
      * @param stack the ItemStack that is to be modified
      */
+    @ApiStatus.Internal
     public static void updateLevel(ItemStack stack, int amount) {
         ModUtils.updateLevel(stack,amount);
     }
