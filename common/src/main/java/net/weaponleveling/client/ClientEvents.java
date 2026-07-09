@@ -40,8 +40,8 @@ public class ClientEvents {
 
         if (ModUtils.isLevelableItem(stack)) {
             if (shouldExtendTooltip()) {
-                int level = stack.getOrCreateTag().getInt("level");
-                long levelprogress = stack.getOrCreateTag().getLong("levelprogress");
+                int level = LevelingAPI.getLevel(stack);
+                long levelprogress = LevelingAPI.getLevelProgress(stack);
                 long maxlevelprogress = LevelingAPI.getMaxProgress(stack);
 
 

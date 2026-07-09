@@ -43,7 +43,7 @@ public class LevelingAPI {
      * @return The amount of XP an Item needs to level up to the next Level
      */
     public static long getMaxProgress(ItemStack stack) {
-        return getMaxProgress(stack.getOrCreateTag().getInt("level"),stack);
+        return getMaxProgress(getLevel(stack),stack);
     }
 
     /**
@@ -56,6 +56,38 @@ public class LevelingAPI {
         LevelingFunction function = ModUtils.getLevelingFunction(stack);
 
         return function.calculateProgress(currentLevel,startingPoints);
+    }
+
+    /**
+     * @param stack the ItemStack that needs to be checked
+     * @return the current level of an item
+     */
+    public static long getLevelProgress(ItemStack stack) {
+        return ModUtils.getLevelProgress(stack);
+    }
+
+    /**
+     * @param stack the ItemStack that needs to be checked
+     * @return the current level progress of an item
+     */
+    public static int getLevel(ItemStack stack) {
+        return ModUtils.getLevel(stack);
+    }
+
+    /**
+     * Only use that if you want to modify the NBT/Data Component directly. In all other cases use {@link LevelingAPI#applyXPToItem}
+     * @param stack the ItemStack that is to be modified
+     */
+    public static void updateLevelProgress(ItemStack stack, long amount) {
+        ModUtils.updateLevelProgress(stack,amount);
+    }
+
+    /**
+     * Only use that if you want to modify the NBT/Data Component directly. In all other cases use {@link LevelingAPI#applyXPToItem}
+     * @param stack the ItemStack that is to be modified
+     */
+    public static void updateLevel(ItemStack stack, int amount) {
+        ModUtils.updateLevel(stack,amount);
     }
 
 

@@ -69,7 +69,7 @@ public class ItemLevelCommand {
         ItemStack stack = player.getMainHandItem();
         if (ModUtils.isLevelableItem(stack)) {
             if(level <= ModUtils.getMaxLevel(stack)) {
-                stack.getOrCreateTag().putInt("level", level);
+                LevelingAPI.updateLevel(stack,level);
                 source.sendSuccess(() -> {
                     return  Component.translatable("weaponleveling.command.setlevel",stack.getHoverName(),level);
                 },true);
@@ -87,9 +87,9 @@ public class ItemLevelCommand {
     private static int setPointCommand(CommandSourceStack source, ServerPlayer player, long points, CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ItemStack stack = player.getMainHandItem();
         if (ModUtils.isLevelableItem(stack)) {
-        long maxprogress = LevelingAPI.getMaxProgress(stack);
-            if(points <= maxprogress) {
-                stack.getOrCreateTag().putLong("levelprogress", points);
+        long maxProgress = LevelingAPI.getMaxProgress(stack);
+            if(points <= maxProgress) {
+                LevelingAPI.updateLevelProgress(stack,points);
                 source.sendSuccess(() -> {
                     return Component.translatable("weaponleveling.command.setpoints",stack.getHoverName(),points);
                 },true);
@@ -108,9 +108,8 @@ public class ItemLevelCommand {
         ItemStack stack = player.getMainHandItem();
         if (ModUtils.isLevelableItem(stack)) {
 
-            int currentlevel = stack.getOrCreateTag().getInt("level");
-
-            stack.getOrCreateTag().putInt("level", Math.min(currentlevel +level,ModUtils.getMaxLevel(stack)));
+            int currentLevel = LevelingAPI.getLevel(stack);
+            LevelingAPI.updateLevel(stack, Math.min(currentLevel +level,ModUtils.getMaxLevel(stack)));
             source.sendSuccess(() -> Component.translatable("weaponleveling.command.addlevel",stack.getHoverName(),level),true);
 
         }else {

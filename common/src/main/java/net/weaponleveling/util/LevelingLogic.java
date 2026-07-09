@@ -77,8 +77,8 @@ public class LevelingLogic {
         if(ItemLevelUpdateEvent.PRE.invoker().pre(attacker,stack,updateamount).isTrue()) return;
 
 
-        int currentlevel = stack.getOrCreateTag().getInt("level");
-        long currentprogress = stack.getOrCreateTag().getTagType("levelprogress") == Tag.TAG_LONG ? stack.getOrCreateTag().getLong("levelprogress") : (long) stack.getOrCreateTag().getInt("levelprogress");
+        int currentlevel = LevelingAPI.getLevel(stack);
+        long currentprogress = LevelingAPI.getLevelProgress(stack);
         currentprogress += updateamount;
         if (currentlevel < ModUtils.getMaxLevel(stack) ) {
             long maxprogress = LevelingAPI.getMaxProgress(currentlevel, stack);
@@ -101,8 +101,8 @@ public class LevelingLogic {
 
                 }
             }
-            stack.getOrCreateTag().putInt("level", currentlevel);
-            stack.getOrCreateTag().putLong("levelprogress", currentprogress);
+            LevelingAPI.updateLevel(stack,currentlevel);
+            LevelingAPI.updateLevelProgress(stack,currentprogress);
         }
     }
 

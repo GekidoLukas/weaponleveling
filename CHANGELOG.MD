@@ -5,7 +5,8 @@ All notable changes to this project will be documented in this file.
 ## Version 3.2.0
 ### Added
 - Ranged Damage Registry via datapacks
-- Option to exclude tags from a levelable item json via `excludeTag` (Useful when the original tag might contain another weapon type and you don't want to overwrite it)
+- Option to exclude tags from a levelable item JSON via `excludeTag` (Useful when the original tag might contain another weapon type and you don't want to overwrite it)
+- Added new item level related methods to Leveling API (`getLevelProgress`,`getLevel`,`updateLevelProgress`,`updateLevel`)
 
 
 ## Version 3.1.0

@@ -151,4 +151,24 @@ public class ModUtils {
         else if (isJSONLevelable(stack)) return levelableitem.getArmorXPRNGModifier();
         else return WeaponLevelingConfig.xp_apply_chance;
     }
+
+    public static long getLevelProgress(ItemStack stack) {
+        if(stack.hasTag()) {
+            return stack.getOrCreateTag().getTagType("levelprogress") == Tag.TAG_LONG ? stack.getOrCreateTag().getLong("levelprogress") : (long) stack.getOrCreateTag().getInt("levelprogress");
+        }
+        return 0;
+    }
+    public static int getLevel(ItemStack stack) {
+        if(stack.hasTag()) {
+            return stack.getOrCreateTag().getInt("level");
+        }
+        return 0;
+    }
+
+    public static void updateLevelProgress(ItemStack stack, long amount) {
+        stack.getOrCreateTag().putLong("levelprogress", amount);
+    }
+    public static void updateLevel(ItemStack stack, int amount) {
+        stack.getOrCreateTag().putInt("level", amount);
+    }
 }
