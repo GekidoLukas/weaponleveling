@@ -2,7 +2,6 @@ package net.weaponleveling.util;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
@@ -162,10 +161,9 @@ public class LevelingLogic {
     private static int armorXPAmount(int initialxp, boolean taxFree, ItemStack stack) {
         if (taxFree) return initialxp;
 
-        double minamount = ((double) ModUtils.getWornXPRNGModifier(stack))/100;
-        double randomValue = minamount + (1.0 - minamount)*Math.random();
+        double minAmount = ((double) ModUtils.getWornXPRNGModifier(stack))/100;
+        double randomValue = minAmount + (1.0 - minAmount)*Math.random();
 
-        if (randomValue < minamount) randomValue = minamount;
         return (int)(initialxp * randomValue);
     }
 

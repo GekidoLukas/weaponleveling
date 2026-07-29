@@ -1,19 +1,16 @@
 package net.weaponleveling.item;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.weaponleveling.WeaponLevelingMod;
-import org.jetbrains.annotations.NotNull;
+import net.weaponleveling.item.component.ContainedItemData;
+import net.weaponleveling.item.component.WLDataComponents;
 
 public class BrokenItem extends Item {
 
-    public static final String TAG_ITEM = "Item";
 
 
 
@@ -33,19 +30,15 @@ public class BrokenItem extends Item {
 
 
     public static void setContainedItem(ItemStack container , ItemStack containedItem) {
-        CompoundTag tag = container.getOrCreateTag();
-        if(!tag.contains(TAG_ITEM)) {
-            CompoundTag compoundTag = new CompoundTag();
-            containedItem.save(compoundTag);
-            tag.put(TAG_ITEM,compoundTag);
+        if(!container.has(WLDataComponents.CONTAINED_ITEM.get())) {
+            container.set(WLDataComponents.CONTAINED_ITEM.get(),new ContainedItemData(containedItem));
         }
     }
 
     public static ItemStack getContainedItem(ItemStack container) {
-        CompoundTag tag = container.getOrCreateTag();
 
-        if(tag.contains(TAG_ITEM)) {
-            return ItemStack.of(tag.getCompound(TAG_ITEM));
+        if(container.has(WLDataComponents.CONTAINED_ITEM.get())) {
+            return container.get(WLDataComponents.CONTAINED_ITEM.get()).stack();
         }
 
         return ItemStack.EMPTY;
@@ -59,8 +52,6 @@ public class BrokenItem extends Item {
 
 
     }
-
-
 
 
 }

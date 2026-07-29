@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerLoginConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -35,18 +36,18 @@ public class WeaponLevelingModFabric implements ModInitializer {
 
 
     private void registerEvents() {
-
+        
         CommonLifecycleEvents.TAGS_LOADED.register((phase, listener) -> {
 
             if(Platform.getEnv() == EnvType.SERVER) {
                 Map<ResourceLocation, JsonElement> itemMap = LevelableItemsLoader.MAP;
-                LevelableItemsLoader.applyNew(itemMap);
+                LevelableItemsLoader.applyNew(itemMap,phase);
                 Map<ResourceLocation, JsonElement> mobMap = MobXPLoader.MAP;
                 MobXPLoader.applyNew(mobMap);
                 Map<ResourceLocation, JsonElement> rangedDamageMap = RangedDamageLoader.MAP;
                 RangedDamageLoader.applyNew(rangedDamageMap);
             } else {
-                localServerLoad();
+                localServerLoad(phase);
             }
         });
 
@@ -55,9 +56,11 @@ public class WeaponLevelingModFabric implements ModInitializer {
             if(player.server.isDedicatedServer()) {
                 WLConfigReader.sync(player);
                 LevelableItemsLoader.sync(player);
+                RangedDamageLoader.sync(player);
             } else if(player.server.isSingleplayer() && !player.server.isSingleplayerOwner(player.getGameProfile())) {
                 WLConfigReader.sync(player);
                 LevelableItemsLoader.sync(player);
+                RangedDamageLoader.sync(player);
             }
         }));
 
@@ -96,10 +99,10 @@ public class WeaponLevelingModFabric implements ModInitializer {
     }
 
     @Environment(EnvType.CLIENT)
-    public static void localServerLoad() {
+    public static void localServerLoad(HolderLookup.Provider registries) {
         if(Minecraft.getInstance().isLocalServer()) {
             Map<ResourceLocation, JsonElement> itemMap = LevelableItemsLoader.MAP;
-            LevelableItemsLoader.applyNew(itemMap);
+            LevelableItemsLoader.applyNew(itemMap,registries);
             Map<ResourceLocation, JsonElement> mobMap = MobXPLoader.MAP;
             MobXPLoader.applyNew(mobMap);
             Map<ResourceLocation, JsonElement> rangedDamageMap = RangedDamageLoader.MAP;

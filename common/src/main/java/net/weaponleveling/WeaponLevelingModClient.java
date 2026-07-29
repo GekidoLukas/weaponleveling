@@ -1,11 +1,10 @@
 package net.weaponleveling;
 
-import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.event.events.client.ClientTooltipEvent;
 import net.weaponleveling.client.ClientEvents;
 import net.weaponleveling.data.levelable_item.LevelableItemsLoader;
-import net.weaponleveling.networking.Networking;
+import net.weaponleveling.networking.S2CRecievers;
 
 import java.util.HashMap;
 
@@ -17,6 +16,6 @@ public class WeaponLevelingModClient {
             LevelableItemsLoader.setMap(new HashMap<>());
         });
 
-        Networking.registerS2CPackets();
+        S2CRecievers.receive();
     }
 }

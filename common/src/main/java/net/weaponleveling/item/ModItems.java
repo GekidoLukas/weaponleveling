@@ -1,13 +1,8 @@
 package net.weaponleveling.item;
 
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
 import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.Registrar;
-import dev.architectury.registry.registries.RegistrarManager;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WeaponLevelingMod;
 

@@ -1,23 +1,20 @@
 package net.weaponleveling.util;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.api.event.ItemReplaceBrokenEvent;
-import net.weaponleveling.api.registry.LevelingFunctionRegistry;
 import net.weaponleveling.data.levelable_item.*;
 import net.weaponleveling.data.levelable_item.function.LevelingFunction;
 import net.weaponleveling.data.levelable_item.function.LevelingFunctions;
 import net.weaponleveling.data.levelable_item.type.LevelingType;
 import net.weaponleveling.data.levelable_item.type.LevelingTypes;
-import net.weaponleveling.api.registry.LevelingTypeRegistry;
 import net.weaponleveling.data.levelable_item.type.WornType;
+import net.weaponleveling.item.component.ItemLevelData;
+import net.weaponleveling.item.component.WLDataComponents;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ModUtils {
@@ -39,9 +36,8 @@ public class ModUtils {
 
 
     public static boolean isNBTDisabled(ItemStack stack) {
-        if(stack.getTag() == null) return false;
-        CompoundTag tag = stack.getTag().getCompound("levelable");
-        return tag.contains("disabled") && tag.getBoolean("disabled");
+        if(!stack.has(WLDataComponents.DISABLE_LEVELING.get())) return false;
+        return Boolean.TRUE.equals(stack.get(WLDataComponents.DISABLE_LEVELING.get()));
     }
 
     public static boolean shouldBeUnbreakable(ItemStack stack) {
@@ -80,7 +76,7 @@ public class ModUtils {
         LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
         if(nbtLevelable != null) {
             if(nbtLevelable.hasType(type)) {
-                for(var levelingType : nbtLevelable.getTypes()) {
+                for(var levelingType : nbtLevelable.types()) {
                     if(levelingType.equals(type) && extraCondition.test(levelingType)) {
                         return true;
                     }
@@ -90,7 +86,7 @@ public class ModUtils {
             LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
             if(levelableitem == null) return false;
             if(levelableitem.hasType(type)) {
-                for(var levelingType : levelableitem.getTypes()) {
+                for(var levelingType : levelableitem.types()) {
                     if(levelingType.equals(type) && extraCondition.test(levelingType)) {
                         return true;
                     }
@@ -108,8 +104,8 @@ public class ModUtils {
     public static int getMaxLevel(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
-        if (nbtLevelable != null) return nbtLevelable.getMaxLevel();
-        else if (isJSONLevelable(stack)) return levelableitem.getMaxLevel();
+        if (nbtLevelable != null) return nbtLevelable.maxLevel();
+        else if (isJSONLevelable(stack)) return levelableitem.maxLevel();
         else return WeaponLevelingConfig.max_item_level;
 
     }
@@ -118,57 +114,59 @@ public class ModUtils {
     public static int getLevelStartAmount(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
-        if (nbtLevelable != null) return nbtLevelable.getLevelStartAmount();
-        else if (isJSONLevelable(stack)) return levelableitem.getLevelStartAmount();
+        if (nbtLevelable != null) return nbtLevelable.levelStartAmount();
+        else if (isJSONLevelable(stack)) return levelableitem.levelStartAmount();
         else return WeaponLevelingConfig.starting_xp_amount;
     }
 
     public static LevelingFunction getLevelingFunction(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
-        if (nbtLevelable != null) return nbtLevelable.getFunction();
-        if (isJSONLevelable(stack)) return levelableitem.getFunction();
+        if (nbtLevelable != null) return nbtLevelable.function();
+        if (isJSONLevelable(stack)) return levelableitem.function();
         return LevelingFunctions.LINEAR;
     }
     public static int getHitXPAmount(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
-        if (nbtLevelable != null) return nbtLevelable.getHitXPAmount();
-        else if (isJSONLevelable(stack)) return levelableitem.getHitXPAmount();
+        if (nbtLevelable != null) return nbtLevelable.hitXPAmount();
+        else if (isJSONLevelable(stack)) return levelableitem.hitXPAmount();
         else return WeaponLevelingConfig.hit_xp_chance;
     }
     public static int getHitXPChance(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
-        if (nbtLevelable != null) return nbtLevelable.getHitXPChance();
-        else if (isJSONLevelable(stack)) return levelableitem.getHitXPChance();
+        if (nbtLevelable != null) return nbtLevelable.hitXPChance();
+        else if (isJSONLevelable(stack)) return levelableitem.hitXPChance();
         else return WeaponLevelingConfig.hit_xp_chance;
     }
     public static int getWornXPRNGModifier(ItemStack stack) {
         LevelableItem levelableitem = LevelableItemsLoader.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         LevelableItem nbtLevelable = LevelableItem.fromNBT(stack);
-        if (nbtLevelable != null) return nbtLevelable.getArmorXPRNGModifier();
-        else if (isJSONLevelable(stack)) return levelableitem.getArmorXPRNGModifier();
+        if (nbtLevelable != null) return nbtLevelable.wornMinXPPercentage();
+        else if (isJSONLevelable(stack)) return levelableitem.wornMinXPPercentage();
         else return WeaponLevelingConfig.xp_apply_chance;
     }
 
     public static long getLevelProgress(ItemStack stack) {
-        if(stack.hasTag()) {
-            return stack.getOrCreateTag().getTagType("levelprogress") == Tag.TAG_LONG ? stack.getOrCreateTag().getLong("levelprogress") : (long) stack.getOrCreateTag().getInt("levelprogress");
+        if(stack.has(WLDataComponents.ITEM_LEVEL_DATA.get())) {
+            return stack.get(WLDataComponents.ITEM_LEVEL_DATA.get()).levelprogress();
         }
         return 0;
     }
     public static int getLevel(ItemStack stack) {
-        if(stack.hasTag()) {
-            return stack.getOrCreateTag().getInt("level");
+        if(stack.has(WLDataComponents.ITEM_LEVEL_DATA.get())) {
+            return stack.get(WLDataComponents.ITEM_LEVEL_DATA.get()).level();
         }
         return 0;
     }
 
     public static void updateLevelProgress(ItemStack stack, long amount) {
-        stack.getOrCreateTag().putLong("levelprogress", amount);
+        int level = getLevel(stack);
+        stack.set(WLDataComponents.ITEM_LEVEL_DATA.get(),ItemLevelData.create(level,amount));
     }
     public static void updateLevel(ItemStack stack, int amount) {
-        stack.getOrCreateTag().putInt("level", amount);
+        long levelprogress = getLevelProgress(stack);
+        stack.set(WLDataComponents.ITEM_LEVEL_DATA.get(),ItemLevelData.create(amount,levelprogress));
     }
 }

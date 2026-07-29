@@ -1,6 +1,10 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
-    id 'maven-publish'
+    id 'com.gradleup.shadow'
+}
+
+architectury {
+    platformSetupLoomIde()
+    fabric()
 }
 loom {
     runs {
@@ -12,126 +16,51 @@ loom {
         }
     }
 }
-architectury {
-    platformSetupLoomIde()
-    fabric()
-}
-
-
-loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-}
-
 configurations {
-    common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
+
+    // Files in this configuration will be bundled into your mod using the Shadow plugin.
+    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
-    modImplementation "com.ptsmods:devlogin:3.5"
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
-    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${rootProject.mixinextras_version}")))
+    modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
 
 
-    modImplementation (include ("maven.modrinth:midnightlib:${rootProject.midnightlib_version_fabric}"))
-
-    modImplementation "maven.modrinth:modmenu:${rootProject.modmenu_fabric}" // Mod Menu
-
-//    modImplementation "maven.modrinth:better-combat:${rootProject.bettercombat_fabric_version}" // Better Combat
-//    modImplementation "maven.modrinth:cloth-config:${rootProject.clothconfig_fabric_version}" // Cloth Config
-//    modImplementation "maven.modrinth:playeranimator:${rootProject.playeranim_fabric_version}" // playerAnimator
+    modImplementation include ("eu.midnightdust:midnightlib:${project.midnightlib_version_fabric}")
 
 
-
-
-
+    common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
+    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property 'version', project.version
 
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
+    filesMatching('fabric.mod.json') {
+        expand version: inputs.properties.version
     }
 }
 
 shadowJar {
-    exclude "architectury.common.json"
-
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier = "dev-shadow"
-
-    mergeServiceFiles()
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
 }
 
 remapJar {
-
-
-    injectAccessWidener = true
-    input.set shadowJar.archiveFile
-    dependsOn shadowJar
-
-    archiveClassifier = "fabric"
+    inputFile.set shadowJar.archiveFile
 }
-
-jar {
-    archiveClassifier = "dev"
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
-}
-
-
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = project.group
-            artifactId = "fabric"
-            version = "${project.version}"
-
-            if (tasks.findByName("remapJar") != null) {
-                artifact(tasks.named("remapJar").get())
-            } else if (tasks.findByName("reobfJar") != null) {
-                artifact(tasks.named("reobfJar").get())
-            } else {
-                from components.java
-            }
-
-            if (tasks.findByName("remapSourcesJar") != null) {
-                artifact(tasks.named("remapSourcesJar").get()) { classifier = "sources" }
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/gekidolukas/weaponleveling")
-            credentials {
-                username = "GekidoLukas"
-                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
-}
-
-

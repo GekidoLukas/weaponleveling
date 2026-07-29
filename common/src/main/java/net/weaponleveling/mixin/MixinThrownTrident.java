@@ -1,6 +1,5 @@
 package net.weaponleveling.mixin;
 
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,25 +16,30 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ThrownTrident.class)
 public abstract class MixinThrownTrident  extends AbstractArrow {
+
+
     @Shadow
-    private ItemStack tridentItem;
+    public abstract ItemStack getWeaponItem();
 
     protected MixinThrownTrident(EntityType<? extends AbstractArrow> entityType, Level level) {
         super(entityType, level);
     }
 
     @Inject(
-            method = "onHitEntity",
-            at = @At(value = "INVOKE",  target = "Lnet/minecraft/world/entity/projectile/ThrownTrident;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void injectedLevel(EntityHitResult result, CallbackInfo ci, Entity entity, float f, Entity entity1, DamageSource source, SoundEvent soundevent, float f1) {
+            method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V",
+            at = @At(value = "TAIL"))
+    private void injectedLevel(EntityHitResult entityHitResult, CallbackInfo ci) {
+        Entity entity = entityHitResult.getEntity();
+        Entity entity2 = this.getOwner();
+        DamageSource source = this.damageSources().trident(this, entity2 == null ? this : entity2);
+
         if(entity instanceof LivingEntity living) {
-            LevelingLogic.updateForHit(living, source, false, tridentItem);
+            LevelingLogic.updateForHit(living, source, false, getWeaponItem());
             if(!living.isAlive()) {
-                LevelingLogic.updateForKill(living, source, tridentItem);
+                LevelingLogic.updateForKill(living, source, getWeaponItem());
             }
         }
     }

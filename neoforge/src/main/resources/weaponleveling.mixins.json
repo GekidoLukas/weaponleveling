@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.weaponleveling.neoforge.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+  ],
+  "mixins": [
+    "AttributeUtilMixin",
+    "MixinItemStackNeoForge",
+    "MixinPlayerNeoForge"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -32,10 +32,10 @@ public class DataGetter {
 
 
 
-    public static final TagKey<Item> blacklist_items = TagKey.create(Registries.ITEM,new ResourceLocation(WeaponLevelingMod.MODID,"blacklist_items"));
-    public static final TagKey<Item> non_vanish_items_whitelist = TagKey.create(Registries.ITEM,new ResourceLocation(WeaponLevelingMod.MODID,"non_vanish_items_whitelist"));
-    public static final TagKey<Item> non_vanish_items_blacklist = TagKey.create(Registries.ITEM,new ResourceLocation(WeaponLevelingMod.MODID,"non_vanish_items_blacklist"));
+    public static final TagKey<Item> blacklist_items = TagKey.create(Registries.ITEM,ResourceLocation.fromNamespaceAndPath(WeaponLevelingMod.MODID,"blacklist_items"));
+    public static final TagKey<Item> non_vanish_items_whitelist = TagKey.create(Registries.ITEM,ResourceLocation.fromNamespaceAndPath(WeaponLevelingMod.MODID,"non_vanish_items_whitelist"));
+    public static final TagKey<Item> non_vanish_items_blacklist = TagKey.create(Registries.ITEM,ResourceLocation.fromNamespaceAndPath(WeaponLevelingMod.MODID,"non_vanish_items_blacklist"));
 
-    public static final TagKey<EntityType<?>> entities_blacklist = TagKey.create(Registries.ENTITY_TYPE,new ResourceLocation(WeaponLevelingMod.MODID,"entities_blacklist"));
+    public static final TagKey<EntityType<?>> entities_blacklist = TagKey.create(Registries.ENTITY_TYPE,ResourceLocation.fromNamespaceAndPath(WeaponLevelingMod.MODID,"entities_blacklist"));
 
 }

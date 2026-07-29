@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Version 3.2.0 (1.21.1)
+### Changed
+- Updated to 1.21.1
+- Renamed all fields in datapacks and NBT to be consistent. Snake case is chosen. In datapacks, old values will still work for backwards compatibility
+- `armorXPRNGModifier` has been renamed to `worn_min_xp_percentage` to more accurately reflect its use 
+- The methods `modifyAttributeModifier` and `setAttributeModifierAmount` in the LevelingAPI are now deprecated
+
+## Removed 
+- `addIfNonExistent` and `slotsForNonExistent` from LevelableAttribute since item components make it easier
+
+
 ## Version 3.2.0
 ### Added
 - Ranged Damage Registry via datapacks

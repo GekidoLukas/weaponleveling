@@ -2,21 +2,21 @@ package net.weaponleveling.data.ranged_damage;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.attribute.IRangedWeapon;
-import net.weaponleveling.data.levelable_item.LevelableItem;
-import net.weaponleveling.data.mob_xp.MobXP;
 import net.weaponleveling.item.ModItems;
+import net.weaponleveling.networking.RangedDamageDataSyncPayload;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class RangedDamageLoader extends SimpleJsonResourceReloadListener {
 
 
 
-    public void setMap(Map<ResourceLocation, RangedDamageEntry> newmap) {
+    public static void setMap(Map<ResourceLocation, RangedDamageEntry> newmap) {
         rangedDamageMap = newmap;
     }
 
@@ -67,7 +67,7 @@ public class RangedDamageLoader extends SimpleJsonResourceReloadListener {
                     if(jsonElementAsJsonObject.get("item").getAsString().contains(":")) {
                         String namespace = jsonElementAsJsonObject.get("item").getAsString().split(":")[0].replace("#","");
                         String name = jsonElementAsJsonObject.get("item").getAsString().split(":")[1];
-                        ResourceLocation id = new ResourceLocation(namespace,name);
+                        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace,name);
                         TagKey<Item> itemTagKey = TagKey.create(Registries.ITEM, id);
 
                         if(hasHasTag && BuiltInRegistries.ITEM.getTag(itemTagKey).isPresent()) {
@@ -79,7 +79,7 @@ public class RangedDamageLoader extends SimpleJsonResourceReloadListener {
                                 if(jsonElementAsJsonObject.has("excludeTag")) {
                                     String excludeNamespace = jsonElementAsJsonObject.get("excludeTag").getAsString().split(":")[0].replace("#","");
                                     String excludeName = jsonElementAsJsonObject.get("excludeTag").getAsString().split(":")[1];
-                                    ResourceLocation excludeID = new ResourceLocation(excludeNamespace,excludeName);
+                                    ResourceLocation excludeID = ResourceLocation.fromNamespaceAndPath(excludeNamespace,excludeName);
                                     TagKey<Item> excludeTagKey = TagKey.create(Registries.ITEM, excludeID);
                                     if(BuiltInRegistries.ITEM.getTag(excludeTagKey).isPresent() && item.getDefaultInstance().is(excludeTagKey)) return;
                                 }
@@ -103,7 +103,7 @@ public class RangedDamageLoader extends SimpleJsonResourceReloadListener {
                             if(jsonElementAsJsonObject.has("excludeTag")) {
                                 String excludeNamespace = jsonElementAsJsonObject.get("excludeTag").getAsString().split(":")[0].replace("#","");
                                 String excludeName = jsonElementAsJsonObject.get("excludeTag").getAsString().split(":")[1];
-                                ResourceLocation excludeID = new ResourceLocation(excludeNamespace,excludeName);
+                                ResourceLocation excludeID = ResourceLocation.fromNamespaceAndPath(excludeNamespace,excludeName);
                                 TagKey<Item> excludeTagKey = TagKey.create(Registries.ITEM, excludeID);
                                 if(BuiltInRegistries.ITEM.getTag(excludeTagKey).isPresent() && item.getDefaultInstance().is(excludeTagKey)) return;
                             }
@@ -151,5 +151,9 @@ public class RangedDamageLoader extends SimpleJsonResourceReloadListener {
 
     public static boolean isValid(Item item) {
         return get(item) != null;
+    }
+
+    public static void sync(ServerPlayer player) {
+        NetworkManager.sendToPlayer(player, new RangedDamageDataSyncPayload(rangedDamageMap));
     }
 }

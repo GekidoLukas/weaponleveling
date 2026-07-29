@@ -1,11 +1,8 @@
 package net.weaponleveling.data.ranged_damage;
 
 import com.google.gson.JsonObject;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.weaponleveling.WeaponLevelingConfig;
-import net.weaponleveling.data.mob_xp.MobXP;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 
 public class RangedDamageEntry {
 
@@ -29,4 +26,17 @@ public class RangedDamageEntry {
     public double getAmount() {
         return amount;
     }
+
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, RangedDamageEntry> STREAM_CODEC = StreamCodec.of(
+            // Encoder
+            (buf,entry) -> {
+                buf.writeDouble(entry.amount);
+            },
+            //Decoder
+            buf -> {
+                double amount = buf.readDouble();
+                return new RangedDamageEntry(amount);
+            }
+    );
 }

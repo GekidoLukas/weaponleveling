@@ -1,79 +1,52 @@
 package net.weaponleveling.data.levelable_item.type;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.FriendlyByteBuf;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.weaponleveling.WeaponLevelingMod;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WornType extends LevelingType{
 
+    public static final StreamCodec<ByteBuf, EquipmentSlot> EQUIPMENT_SLOT_STREAM_CODEC =
+            ByteBufCodecs.fromCodecTrusted(EquipmentSlot.CODEC);
 
-    private List<EquipmentSlot> slots = new ArrayList<>();
+    public static final MapCodec<WornType> CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    EquipmentSlot.CODEC.listOf().optionalFieldOf("slots", List.of()).forGetter(WornType::getSlots)
+            ).apply(instance, WornType::new)
+    );
+
+    public static final StreamCodec<ByteBuf, WornType> STREAM_CODEC = StreamCodec.composite(
+            EQUIPMENT_SLOT_STREAM_CODEC.apply(ByteBufCodecs.list()), WornType::getSlots,
+            WornType::new
+    );
+
+
+
+    private List<EquipmentSlot> slots;
+
+    public WornType() {
+        this(new ArrayList<>());
+    }
+
+    public WornType(List<EquipmentSlot> slots) {
+        this.slots = slots;
+    }
 
 
     @Override
-    public void setData(JsonObject object) {
-        if(object.has("slots") && object.get("slots").isJsonArray()) {
-            for(var slot : object.get("slots").getAsJsonArray()) {
-                try {
-                    EquipmentSlot equipmentSlot = EquipmentSlot.byName(slot.getAsString().toLowerCase());
-                    slots.add(equipmentSlot);
-                }
-                catch (Exception e) {
-                    WeaponLevelingMod.LOGGER.error(slot.getAsString() + " is not a correct EquipmentSlot");
-                }
-
-            }
-        }
-
+    public MapCodec<? extends LevelingType> getCodec() {
+        return CODEC;
     }
 
     @Override
-    public void setData(CompoundTag tag) {
-        if(tag.contains("slots") && !tag.getList("slots", Tag.TAG_STRING).isEmpty()) {
-            for(var slot : tag.getList("slots", Tag.TAG_STRING)) {
-                if(slot instanceof StringTag stringTag) {
-
-                    try {
-                        EquipmentSlot equipmentSlot = EquipmentSlot.byName(stringTag.getAsString().toLowerCase());
-                        slots.add(equipmentSlot);
-                    }
-                    catch (Exception e) {
-                        WeaponLevelingMod.LOGGER.error(stringTag + " is not a correct EquipmentSlot");
-                    }
-                }
-
-            }
-        }
-    }
-
-    @Override
-    public void read(FriendlyByteBuf buf) {
-        List<EquipmentSlot> slotList = new ArrayList<>();
-        int count = buf.readInt();
-        for(int i = 0; i< count; i++) {
-            try {
-                slotList.add(buf.readEnum(EquipmentSlot.class));
-            } catch (Exception e) {
-                WeaponLevelingMod.LOGGER.error(e);
-            }
-        }
-        this.slots = slotList;
-    }
-
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeInt(slots.size());
-        for(var slot : slots) {
-            buf.writeEnum(slot);
-        }
+    public StreamCodec<ByteBuf, ? extends LevelingType> getStreamCodec() {
+        return STREAM_CODEC;
     }
 
     public List<EquipmentSlot> getSlots() {

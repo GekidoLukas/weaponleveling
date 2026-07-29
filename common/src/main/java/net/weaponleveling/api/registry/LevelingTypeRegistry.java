@@ -1,15 +1,26 @@
 package net.weaponleveling.api.registry;
 
 import com.google.gson.JsonElement;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.MapCodec;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.data.levelable_item.LevelableAttribute;
+import net.weaponleveling.data.levelable_item.function.LevelingFunction;
+import net.weaponleveling.data.levelable_item.function.LevelingFunctions;
+import net.weaponleveling.data.levelable_item.function.LinearFunction;
+import net.weaponleveling.data.levelable_item.type.EmptyType;
 import net.weaponleveling.data.levelable_item.type.LevelingType;
+import net.weaponleveling.data.levelable_item.type.LevelingTypes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +56,23 @@ public class LevelingTypeRegistry {
         return WeaponLevelingMod.id("empty");
     }
 
+
+    public static MapCodec<? extends LevelingType> getCodecByID(ResourceLocation id) {
+        LevelingType function = TYPE_MAP.get(id);
+        if (function != null) {
+            return function.getCodec();
+        }
+        return EmptyType.CODEC;
+    }
+
+    public static StreamCodec<ByteBuf, ? extends LevelingType> getStreamCodecByID(ResourceLocation id) {
+        LevelingType function = TYPE_MAP.get(id);
+        if (function != null) {
+            return function.getStreamCodec();
+        }
+        return EmptyType.STREAM_CODEC;
+    }
+
     public static boolean hasObject(LevelingType type) {
         for(var entry : TYPE_MAP.entrySet()) {
             if(entry.getValue().getClass() == type.getClass()) return true;
@@ -55,48 +83,18 @@ public class LevelingTypeRegistry {
 
 
     public static List<LevelingType> fromJson(JsonElement parentElement) {
-        List<LevelingType> types = new ArrayList<>();
-
-        if(parentElement.isJsonArray()) {
-            for(JsonElement element : parentElement.getAsJsonArray()) {
-                try {
-                    LevelingType jsonType = getByID(new ResourceLocation(element.getAsJsonObject().get("type").getAsString()));
-                    if(jsonType == null) continue;
-                    jsonType.setData(element.getAsJsonObject());
-                    types.add(jsonType);
-                } catch (Exception ignored){
-                    continue;
-                }
-            }
-        } else if(parentElement.isJsonObject()) {
-            try {
-                LevelingType jsonType = getByID(new ResourceLocation(parentElement.getAsJsonObject().get("type").getAsString()));
-                if(jsonType != null) {
-                    jsonType.setData(parentElement.getAsJsonObject());
-                    types.add(jsonType);
-                }
-            } catch (Exception ignored){}
-        }
-
-
-        return types;
+        return  LIST_CODEC.parse(JsonOps.INSTANCE,parentElement).result().orElse(List.of(LevelingTypes.EMPTY));
     }
 
-    public static LevelingType fromNBT(CompoundTag tag) {
-        LevelingType levelingType = getByID(new ResourceLocation(tag.getString("type")));
-        if(levelingType != null) levelingType.setData(tag);
 
-        return levelingType;
-    }
-
-    public static boolean hasValidInNBT(ListTag tag) {
-        int correctOnes = 0;
-        for (var item : tag) {
-            if(item instanceof CompoundTag compoundTag) {
-                LevelingType levelingType = fromNBT(compoundTag);
-                if(levelingType != null) correctOnes++;
-            }
-        }
-        return correctOnes > 0;
-    }
+    public static final Codec<List<LevelingType>> LIST_CODEC = Codec.either(
+            LevelingType.CODEC.listOf(),
+            LevelingType.CODEC
+    ).xmap(
+            either -> either.map(
+                    list -> list,
+                    List::of
+            ),
+            list -> list.size() == 1 ? Either.right(list.getFirst()) : Either.left(list)
+    );
 }

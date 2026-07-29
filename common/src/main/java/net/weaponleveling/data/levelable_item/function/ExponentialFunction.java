@@ -1,42 +1,52 @@
 package net.weaponleveling.data.levelable_item.function;
 
-import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 public class ExponentialFunction extends LevelingFunction{
 
 
-    private double coefficient = 0.4d;
+    public static final MapCodec<ExponentialFunction> CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    Codec.DOUBLE.optionalFieldOf("coefficient", 0.4d).forGetter(ExponentialFunction::getCoefficient)
+            ).apply(instance, ExponentialFunction::new)
+    );
+
+    public static final StreamCodec<ByteBuf, ExponentialFunction> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.DOUBLE, ExponentialFunction::getCoefficient,
+            ExponentialFunction::new
+    );
+
+    private double coefficient;
+
+    public ExponentialFunction() {
+        this(0.4d);
+    }
+
+    public ExponentialFunction(double coefficient) {
+        this.coefficient = coefficient;
+    }
 
     @Override
     public long calculateProgress(int level, int startingAmount) {
         return (long) (coefficient * Math.pow(1.03d,level)  + startingAmount);
     }
 
-
     @Override
-    public void setData(JsonObject object) {
-        if(object.has("coefficient")) {
-            coefficient = Math.min(0.01d,Math.max(Math.abs(object.get("coefficient").getAsDouble()),8));
-        }
+    public MapCodec<? extends LevelingFunction> getCodec() {
+        return null;
     }
 
     @Override
-    public void setData(CompoundTag tag) {
-        if(tag.contains("coefficient")) {
-            coefficient = Math.min(0.01d,Math.max(Math.abs(tag.getDouble("coefficient")),8));
-        }
+    public StreamCodec<ByteBuf, ? extends LevelingFunction> getStreamCodec() {
+        return STREAM_CODEC;
     }
 
-    @Override
-    public void read(FriendlyByteBuf buf) {
-        coefficient = buf.readDouble();
+    public double getCoefficient() {
+        return coefficient;
     }
-
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeDouble(coefficient);
-    }
-
 }

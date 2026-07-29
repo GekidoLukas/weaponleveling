@@ -3,6 +3,7 @@ package net.weaponleveling.client;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.weaponleveling.WeaponLevelingConfig;
@@ -25,7 +26,7 @@ public class ClientEvents {
         }
     }
 
-    public static void onTooltipRender(ItemStack stack, List<Component> full_tooltip, TooltipFlag tooltipFlag) {
+    public static void onTooltipRender(ItemStack stack, List<Component> full_tooltip, Item.TooltipContext tooltipContext, TooltipFlag tooltipFlag) {
         TooltipHelper.updateTooltipText(stack, full_tooltip);
 
         List<Component> tooltip = new ArrayList<>();

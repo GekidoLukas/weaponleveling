@@ -4,7 +4,7 @@ package net.weaponleveling.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.advancements.FrameType;
+import net.minecraft.advancements.AdvancementType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
@@ -23,7 +23,7 @@ import java.util.List;
 public class CustomToast implements Toast {
 
 
-    public static final ResourceLocation CUSTOM_TEXTURE = new ResourceLocation(WeaponLevelingMod.MODID +":textures/gui/toasts.png");
+    public static final ResourceLocation CUSTOM_TEXTURE = ResourceLocation.parse(WeaponLevelingMod.MODID +":textures/gui/toasts.png");
     ItemStack stack;
     int level;
     public CustomToast(ItemStack stack, int level) {
@@ -34,7 +34,7 @@ public class CustomToast implements Toast {
     @Override
     public Visibility render(GuiGraphics guiGraphics, ToastComponent component, long visibilityTime) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, new ResourceLocation(WeaponLevelingMod.MODID +":textures/gui/toasts.png"));
+        RenderSystem.setShaderTexture(0, ResourceLocation.parse(WeaponLevelingMod.MODID +":textures/gui/toasts.png"));
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         int ypos = 0;
@@ -60,7 +60,7 @@ public class CustomToast implements Toast {
             } else {
                 if (visibilityTime < 1500L) {
                     int k = Mth.floor(Mth.clamp((float)(1500L - visibilityTime) / 300.0F, 0.0F, 1.0F) * 255.0F) << 24 | 67108864;
-                    guiGraphics.drawString(component.getMinecraft().font, FrameType.GOAL.getDisplayName(), 30, 11, i | k);
+                    guiGraphics.drawString(component.getMinecraft().font, AdvancementType.GOAL.getDisplayName(), 30, 11, i | k);
                 } else {
                     int i1 = Mth.floor(Mth.clamp((float)(visibilityTime - 1500L) / 300.0F, 0.0F, 1.0F) * 252.0F) << 24 | 67108864;
                     int l = this.height() / 2 - subtitle.size() * 9 / 2;
@@ -75,9 +75,9 @@ public class CustomToast implements Toast {
 
 
             guiGraphics.renderFakeItem(stack, 6,ypos+ 7);
-            return visibilityTime >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
+            return visibilityTime >= 5000L ? Visibility.HIDE : Visibility.SHOW;
         } else {
-            return Toast.Visibility.HIDE;
+            return Visibility.HIDE;
         }
     }
 

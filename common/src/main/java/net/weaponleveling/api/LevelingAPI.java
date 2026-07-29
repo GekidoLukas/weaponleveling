@@ -1,12 +1,15 @@
 package net.weaponleveling.api;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.data.levelable_item.LevelableAttribute;
 import net.weaponleveling.data.levelable_item.LevelableItem;
@@ -17,14 +20,13 @@ import net.weaponleveling.util.ModUtils;
 import net.weaponleveling.util.LevelingLogic;
 import org.jetbrains.annotations.ApiStatus;
 
-import java.nio.charset.StandardCharsets;
-import java.util.UUID;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class LevelingAPI {
 
 
-    public static final UUID BASE_RANGED_DAMAGE_UUID = UUID.fromString("D52CA663-D6DA-4D85-9CA9-485E4F549499");
+    public static final ResourceLocation BASE_RANGED_DAMAGE_ID = ResourceLocation.withDefaultNamespace("base_ranged_damage");
 
 
     /**
@@ -100,37 +102,19 @@ public class LevelingAPI {
         WeaponLevelingMod.LOGGER.error("Cannot modify Attribute, deprecated API is used! Check Changelog!");
     }
 
-    public static void modifyAttributeModifier(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, int level, LevelableAttribute levelableAttribute, EquipmentSlot equipmentSlot) {
-        boolean addIfNonExistent = levelableAttribute.addIfNonExistent() && levelableAttribute.getSlotForNonExistent().contains(equipmentSlot);
-        if(multimap.get(attribute).stream().findFirst().isPresent()) {
-            AttributeModifier modifier = multimap.get(attribute).stream().findFirst().get();
-
-            if (modifier.getAmount() > 0) {
-                AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),modifier.getAmount() + calculateModifierAmount(modifier.getAmount(),level,levelableAttribute),modifier.getOperation());
-                multimap.remove(attribute,modifier);
-                multimap.put(attribute,newModifier);
-            }
-        } else if(addIfNonExistent && level > 0) {
-            String name = WeaponLevelingMod.MODID + "_temp_" + attribute.getDescriptionId();
-            AttributeModifier newModifier = new AttributeModifier(UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8)),name, calculateModifierAmount(1,level,levelableAttribute), AttributeModifier.Operation.ADDITION);
-            multimap.put(attribute,newModifier);
-        }
+    @Deprecated
+    public static void modifyAttributeModifier(List<ItemAttributeModifiers.Entry> entries, Holder<Attribute> attribute, int level, LevelableAttribute levelableAttribute, EquipmentSlotGroup equipmentSlot) {
+        WeaponLevelingMod.LOGGER.error("Cannot modify Attribute, deprecated API is used! Check Changelog!");
     }
 
     public static double calculateModifierAmount(double originalAmount, int level, LevelableAttribute levelableAttribute) {
-        double percentOfOriginal = originalAmount * levelableAttribute.getValuePerLevel();
-        return levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.getValuePerLevel() * level;
+        double percentOfOriginal = originalAmount * levelableAttribute.valuePerLevel();
+        return levelableAttribute.isPercent() ? percentOfOriginal * level: levelableAttribute.valuePerLevel() * level;
     }
 
-
-    public static void setAttributeModifierAmount(Multimap<Attribute, AttributeModifier> multimap, Attribute attribute, UUID modifierID, double amount) {
-        var opt = multimap.get(attribute).stream().filter(attributeModifier -> attributeModifier.getId().equals(modifierID)).findFirst();
-        if(opt.isPresent()) {
-            AttributeModifier modifier = opt.get();
-            AttributeModifier newModifier = new AttributeModifier(modifier.getId(),modifier.getName(),amount,modifier.getOperation());
-            multimap.remove(attribute,modifier);
-            multimap.put(attribute,newModifier);
-        }
+    @Deprecated
+    public static void setAttributeModifierAmount(List<ItemAttributeModifiers.Entry> entries, Holder<Attribute> attribute, ResourceLocation modifierID, double amount) {
+        WeaponLevelingMod.LOGGER.error("Cannot set Attribute, deprecated API is used! Check Changelog!");
     }
 
     public static void referenceItemStackOnArrowEntity(AbstractArrow arrow, ItemStack source) {

@@ -20,7 +20,7 @@
   "item.weaponleveling.broken": "Kaputter Gegendtand",
 
   "item.modifiers.both_hands": "In der Hand:",
-  "attribute.name.generic.ranged_damage" : "Fernkampfschaden",
+  "generic.ranged_damage" : "Fernkampfschaden",
 
   "weaponleveling.midnightconfig.client_title":"Client Konfiguration",
   "weaponleveling.midnightconfig.category.client":"Client",
@@ -44,7 +44,7 @@
   "weaponleveling.midnightconfig.starting_xp_amount":"Anfängliche XP-Menge",
   "weaponleveling.midnightconfig.level_modifier":"Leveling Modifikator",
   "weaponleveling.midnightconfig.value_per_level":"Wert pro Level",
-  "weaponleveling.midnightconfig.xp_apply_chance":"XP RNG-Modifikator",
+  "weaponleveling.midnightconfig.xp_apply_chance":"Chance für Getragenes XP zu verursachen",
   "weaponleveling.midnightconfig.level_up_type":"Level Up Typ",
   "weaponleveling.midnightconfig.enum.LevelUpType.TOAST":"In Toast",
   "weaponleveling.midnightconfig.enum.LevelUpType.ACTIONBAR":"In Aktionsleiste",

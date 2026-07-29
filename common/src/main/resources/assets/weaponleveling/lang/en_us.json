@@ -20,7 +20,7 @@
   "item.weaponleveling.broken": "Broken Item",
 
   "item.modifiers.both_hands": "When Held:",
-  "attribute.name.generic.ranged_damage" : "Ranged Damage",
+  "generic.ranged_damage" : "Ranged Damage",
 
   "weaponleveling.midnightconfig.client_title":"Client Configuration",
   "weaponleveling.midnightconfig.category.client":"Client",
@@ -44,7 +44,7 @@
   "weaponleveling.midnightconfig.starting_xp_amount":"Starting XP Amount",
   "weaponleveling.midnightconfig.level_modifier":"Leveling Modifier",
   "weaponleveling.midnightconfig.value_per_level":"Value per Level",
-  "weaponleveling.midnightconfig.xp_apply_chance":"XP RNG Modifier",
+  "weaponleveling.midnightconfig.xp_apply_chance":"Worn XP Apply Chance",
   "weaponleveling.midnightconfig.level_up_type":"Level Up Type",
   "weaponleveling.midnightconfig.enum.LevelUpType.TOAST":"In Toast",
   "weaponleveling.midnightconfig.enum.LevelUpType.ACTIONBAR":"In Actionbar",

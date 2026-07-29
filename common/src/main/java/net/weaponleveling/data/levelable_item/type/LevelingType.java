@@ -1,25 +1,33 @@
 package net.weaponleveling.data.levelable_item.type;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.weaponleveling.api.registry.LevelingTypeRegistry;
 
 public abstract class LevelingType {
 
 
+
+
+
+    public static final Codec<LevelingType> CODEC = ResourceLocation.CODEC.dispatch(
+            "type",
+            LevelingTypeRegistry::getID,
+            LevelingTypeRegistry::getCodecByID
+    );
+
+    public static final StreamCodec<ByteBuf, LevelingType> STREAM_CODEC = ResourceLocation.STREAM_CODEC.dispatch(
+            LevelingTypeRegistry::getID,
+            LevelingTypeRegistry::getStreamCodecByID
+    );
+
     protected LevelingType() {
 
     }
 
-
-
-    public abstract void setData(JsonObject object);
-    public abstract void setData(CompoundTag tag);
-
-    public abstract void read(FriendlyByteBuf buf);
-    public abstract void write(FriendlyByteBuf buf);
 
 
     @Override
@@ -30,4 +38,7 @@ public abstract class LevelingType {
             return false;
         }
     }
+
+    public abstract MapCodec<? extends LevelingType> getCodec();
+    public abstract StreamCodec<ByteBuf, ? extends LevelingType> getStreamCodec();
 }

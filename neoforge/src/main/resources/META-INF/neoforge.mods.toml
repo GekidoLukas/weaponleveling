@@ -1,0 +1,48 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All rights reserved"
+issueTrackerURL= "https://github.com/GekidoLukas/weaponleveling/issues"
+
+[[mods]]
+modId = "weaponleveling"
+version = "${version}"
+logoFile = "banner.png"
+displayName = "Lukas' Weapon Leveling"
+authors = "GekidoLukas"
+displayURL="https://www.gekidolukas.com"
+description = '''
+Leveling your items since 2022.
+Very customizable mod to make your equipment stronger over time.
+
+Issues: https://github.com/GekidoLukas/weaponleveling/issues
+'''
+
+[[dependencies.weaponleveling]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.weaponleveling]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.weaponleveling]]
+modId = "architectury"
+type = "required"
+versionRange = "[13.0.8,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "weaponleveling-common.mixins.json"
+[[mixins]]
+config = "weaponleveling.mixins.json"
+
+[modproperties.weaponleveling]
+catalogueImageIcon = "icon.png"
+catalogueBackground = "background.png"

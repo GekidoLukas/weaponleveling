@@ -62,7 +62,7 @@ public class MobXPLoader extends SimpleJsonResourceReloadListener {
                     if(jsonElementAsJsonObject.get("entity_type").getAsString().contains(":")) {
                         String namespace = jsonElementAsJsonObject.get("entity_type").getAsString().split(":")[0].replace("#","");
                         String name = jsonElementAsJsonObject.get("entity_type").getAsString().split(":")[1];
-                        ResourceLocation id = new ResourceLocation(namespace,name);
+                        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace,name);
                         TagKey<EntityType<?>> entityTagKey = TagKey.create(Registries.ENTITY_TYPE, id);
                         if(hasHasTag && BuiltInRegistries.ENTITY_TYPE.getTag(entityTagKey).isPresent()) {
                             if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Tagkey exists: #" + resourceLocation.toString() );

@@ -1,32 +1,28 @@
 package net.weaponleveling.data.levelable_item.type;
 
-import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import com.mojang.serialization.MapCodec;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 
 public class PassiveInventoryType extends LevelingType{
 
 
 
+    public static final MapCodec<PassiveInventoryType> CODEC = MapCodec.unit(PassiveInventoryType::new);
+
+    public static final StreamCodec<ByteBuf, PassiveInventoryType> STREAM_CODEC = StreamCodec.of(
+            (buf, value) -> {},
+            buf -> new PassiveInventoryType()
+    );
 
 
     @Override
-    public void setData(JsonObject object) {
-
+    public MapCodec<? extends LevelingType> getCodec() {
+        return CODEC;
     }
 
     @Override
-    public void setData(CompoundTag tag) {
-
-    }
-
-    @Override
-    public void read(FriendlyByteBuf buf) {
-
-    }
-
-    @Override
-    public void write(FriendlyByteBuf buf) {
-
+    public StreamCodec<ByteBuf, ? extends LevelingType> getStreamCodec() {
+        return STREAM_CODEC;
     }
 }

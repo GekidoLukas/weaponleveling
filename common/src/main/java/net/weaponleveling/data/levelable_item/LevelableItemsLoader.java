@@ -3,12 +3,9 @@ package net.weaponleveling.data.levelable_item;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
 import dev.architectury.networking.NetworkManager;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -19,14 +16,12 @@ import net.minecraft.world.item.Item;
 import net.weaponleveling.WeaponLevelingConfig;
 import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.api.event.AfterLevelableLoadedEvent;
-import net.weaponleveling.api.event.ItemReplaceBrokenEvent;
 import net.weaponleveling.item.ModItems;
+import net.weaponleveling.networking.LevelableDataSyncPayload;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.weaponleveling.networking.Networking.SYNC_CONFIG;
-import static net.weaponleveling.networking.Networking.SYNC_DATA;
 
 public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
 
@@ -56,7 +51,7 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
         MAP = jsonMap;
     }
 
-    public static void applyNew(Map<ResourceLocation, JsonElement> jsonMap) {
+    public static void applyNew(Map<ResourceLocation, JsonElement> jsonMap, HolderLookup.Provider registries) {
 
 
         WeaponLevelingMod.LOGGER.info("Starting Levelable Registry!");
@@ -73,7 +68,7 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                     if(jsonElementAsJsonObject.get("item").getAsString().contains(":")) {
                         String namespace = jsonElementAsJsonObject.get("item").getAsString().split(":")[0].replace("#","");
                         String name = jsonElementAsJsonObject.get("item").getAsString().split(":")[1];
-                        ResourceLocation id = new ResourceLocation(namespace,name);
+                        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace,name);
                         TagKey<Item> itemTagKey = TagKey.create(Registries.ITEM, id);
 
                         if(hasHasTag && BuiltInRegistries.ITEM.getTag(itemTagKey).isPresent()) {
@@ -85,14 +80,14 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                                 if(jsonElementAsJsonObject.has("excludeTag")) {
                                     String excludeNamespace = jsonElementAsJsonObject.get("excludeTag").getAsString().split(":")[0].replace("#","");
                                     String excludeName = jsonElementAsJsonObject.get("excludeTag").getAsString().split(":")[1];
-                                    ResourceLocation excludeID = new ResourceLocation(excludeNamespace,excludeName);
+                                    ResourceLocation excludeID = ResourceLocation.fromNamespaceAndPath(excludeNamespace,excludeName);
                                     TagKey<Item> excludeTagKey = TagKey.create(Registries.ITEM, excludeID);
                                     if(BuiltInRegistries.ITEM.getTag(excludeTagKey).isPresent() && item.getDefaultInstance().is(excludeTagKey)) return;
                                 }
                                 if(item.equals(ModItems.BROKEN_ITEM.get())) return;
                                 if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("#" + resourceLocation + " contains " + BuiltInRegistries.ITEM.getKey(item));
 
-                                LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, BuiltInRegistries.ITEM.getKey(item));
+                                LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, BuiltInRegistries.ITEM.getKey(item),registries);
                                 if(levelableItem != null) {
                                     builder.remove(BuiltInRegistries.ITEM.getKey(item));
                                     builder.put(BuiltInRegistries.ITEM.getKey(item), levelableItem);
@@ -105,14 +100,14 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
                             if(jsonElementAsJsonObject.has("excludeTag")) {
                                 String excludeNamespace = jsonElementAsJsonObject.get("excludeTag").getAsString().split(":")[0].replace("#","");
                                 String excludeName = jsonElementAsJsonObject.get("excludeTag").getAsString().split(":")[1];
-                                ResourceLocation excludeID = new ResourceLocation(excludeNamespace,excludeName);
+                                ResourceLocation excludeID = ResourceLocation.fromNamespaceAndPath(excludeNamespace,excludeName);
                                 TagKey<Item> excludeTagKey = TagKey.create(Registries.ITEM, excludeID);
                                 if(BuiltInRegistries.ITEM.getTag(excludeTagKey).isPresent() && item.getDefaultInstance().is(excludeTagKey)) return;
                             }
                             if(item.equals(ModItems.BROKEN_ITEM.get())) return;
                             if(WeaponLevelingConfig.send_registry_in_log) WeaponLevelingMod.LOGGER.info("Registering: " + id);
 
-                            LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, id);
+                            LevelableItem levelableItem = LevelableItem.fromJson(jsonObject, id,registries);
                             if(levelableItem != null) {
                                 builder.remove(id);
                                 builder.put(id, levelableItem);
@@ -155,19 +150,6 @@ public class LevelableItemsLoader extends SimpleJsonResourceReloadListener {
 
 
     public static void sync(ServerPlayer player) {
-//        WeaponLevelingMod.LOGGER.info("Sending Levelable Item Data to " + player.getName());
-        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-        buf.writeInt(itemmap.size());
-        itemmap.forEach((resourceLocation, levelableItem) -> {
-           buf.writeResourceLocation(resourceLocation);
-           levelableItem.write(buf);
-
-        });
-
-
-
-
-        NetworkManager.sendToPlayer(player, SYNC_DATA, buf);
-//        WeaponLevelingMod.LOGGER.info("Sent "+ itemmap.size() + " Levelable Item Entries to " + player.getName());
+        NetworkManager.sendToPlayer(player, new LevelableDataSyncPayload(itemmap));
     }
 }

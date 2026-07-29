@@ -1,28 +1,20 @@
 package net.weaponleveling.fabric.mixin;
 
-import net.minecraft.nbt.CompoundTag;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
-import net.weaponleveling.WLPlatformGetter;
-import net.weaponleveling.WeaponLevelingConfig;
-import net.weaponleveling.WeaponLevelingMod;
 import net.weaponleveling.item.BrokenItem;
 import net.weaponleveling.item.ModItems;
-import net.weaponleveling.util.DataGetter;
-import net.weaponleveling.util.ModUtils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.Map;
 
 @Mixin(AnvilMenu.class)
 public abstract class MixinAnvilMenuFabric extends ItemCombinerMenu {
@@ -36,8 +28,8 @@ public abstract class MixinAnvilMenuFabric extends ItemCombinerMenu {
 
     @Inject(
             method = "createResult",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void unBreakItem(CallbackInfo ci, ItemStack itemStack, int i, int j, int k, ItemStack left, ItemStack right, Map map) {
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0), cancellable = true)
+    private void unBreakItem(CallbackInfo ci, @Local(ordinal = 1) ItemStack left, @Local(ordinal = 2) ItemStack right) {
         ItemStack containedStack = BrokenItem.getContainedItem(left);
         if(left.is(ModItems.BROKEN_ITEM.get()) && containedStack.getItem().isValidRepairItem(containedStack,right)) {
             ItemStack output = containedStack;

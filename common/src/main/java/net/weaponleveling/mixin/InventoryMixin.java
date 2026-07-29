@@ -1,17 +1,13 @@
 package net.weaponleveling.mixin;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.component.CustomData;
 import net.weaponleveling.api.event.ItemReplaceBrokenEvent;
 import net.weaponleveling.item.BrokenItem;
-import net.weaponleveling.util.DataGetter;
-import net.weaponleveling.util.ModUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -41,8 +37,11 @@ public abstract class InventoryMixin {
 
         for(int i = 0; i < this.armor.size(); i++) {
             ItemStack stack = this.armor.get(i);
-            if(stack.getTag() != null && stack.getTag().getBoolean("isBroken")) {
-                stack.getTag().remove("isBroken");
+            CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+            CompoundTag tag = customData != null ? customData.copyTag() : new CompoundTag();
+            if(tag.getBoolean("weaponleveling:isBroken")) {
+                tag.remove("weaponleveling:isBroken");
+                stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
                 ItemStack brokenItem = BrokenItem.of(stack);
                 brokenItem.setCount(1);
 
@@ -54,8 +53,11 @@ public abstract class InventoryMixin {
 
         for(int i = 0; i < this.offhand.size(); i++) {
             ItemStack stack = this.offhand.get(i);
-            if(stack.getTag() != null && stack.getTag().getBoolean("isBroken")) {
-                stack.getTag().remove("isBroken");
+            CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+            CompoundTag tag = customData != null ? customData.copyTag() : new CompoundTag();
+            if(tag.getBoolean("weaponleveling:isBroken")) {
+                tag.remove("weaponleveling:isBroken");
+                stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
                 ItemStack brokenItem = BrokenItem.of(stack);
                 brokenItem.setCount(1);
 
@@ -70,8 +72,11 @@ public abstract class InventoryMixin {
         for(int i = 0; i < this.compartments.size(); i++) {
             for(int j = 0; j < this.compartments.get(i).size();j++) {
                 ItemStack stack = this.compartments.get(i).get(j);
-                if(stack.getTag() != null && stack.getTag().getBoolean("isBroken")) {
-                    stack.getTag().remove("isBroken");
+                CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
+                CompoundTag tag = customData != null ? customData.copyTag() : new CompoundTag();
+                if(tag.getBoolean("weaponleveling:isBroken")) {
+                    tag.remove("weaponleveling:isBroken");
+                    stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
                     ItemStack brokenItem = BrokenItem.of(stack);
                     brokenItem.setCount(1);
 

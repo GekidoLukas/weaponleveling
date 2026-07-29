@@ -1,36 +1,31 @@
 package net.weaponleveling.util;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
-import dev.architectury.platform.Platform;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
-import net.weaponleveling.api.LevelingAPI;
 import net.weaponleveling.attribute.IRangedWeapon;
 import net.weaponleveling.attribute.WLAttributes;
-import net.weaponleveling.data.levelable_item.LevelableAttribute;
-import net.weaponleveling.data.levelable_item.LevelableItem;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-import static net.minecraft.world.item.ItemStack.ATTRIBUTE_MODIFIER_FORMAT;
 
 public class TooltipHelper {
+
+    public static final DecimalFormat ATTRIBUTE_MODIFIER_FORMAT = Util.make(new DecimalFormat("#.##"), decimalFormat -> decimalFormat.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ROOT)));
+
 
     public static void updateTooltipText(ItemStack itemStack, List<Component> lines) {
         if (itemStack.getItem() instanceof IRangedWeapon) {
             mergeAttributeLines_MainHandOffHand(lines);
             replaceAttributeLines_BlueWithGreen(lines);
-        }
-
-        LevelableItem levelableItem = LevelingAPI.getLevelableItem(itemStack);
-        if(levelableItem != null && levelableItem.getAttributes().stream().anyMatch(LevelableAttribute::addIfNonExistent)) {
-            mergeAttributeLines_MainHandOffHand(lines);
         }
     }
 
@@ -81,7 +76,7 @@ public class TooltipHelper {
     }
 
     private static void replaceAttributeLines_BlueWithGreen(List<Component> tooltip) {
-        var attributeTranslationKey = WLAttributes.RANGED_DAMAGE.getDescriptionId();
+        var attributeTranslationKey = WLAttributes.RANGED_DAMAGE.getRegisteredName();
         for (int i = 0; i < tooltip.size(); i++)  {
             var line = tooltip.get(i);
             var content = line.getContents();
@@ -109,7 +104,7 @@ public class TooltipHelper {
                 if (isProjectileAttributeLine && attributeValue > 0) {
                     var greenAttributeLine = Component.literal(" ")
                             .append(
-                                    Component.translatable("attribute.modifier.equals." + AttributeModifier.Operation.ADDITION.toValue(),
+                                    Component.translatable("attribute.modifier.equals." + AttributeModifier.Operation.ADD_VALUE.id(),
                                             new Object[]{ ATTRIBUTE_MODIFIER_FORMAT.format(attributeValue), Component.translatable(attributeTranslationKey)})
                             )
                             .withStyle(ChatFormatting.DARK_GREEN);
