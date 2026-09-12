@@ -51,7 +51,9 @@ public abstract class MixinItemStackFabric {
                     tag.putBoolean("weaponleveling:isBroken", true);
                     stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
                     stack.setDamageValue(0);
-
+                    serverLevel.playSound(null,
+                            serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), stack.getBreakingSound(), serverPlayer.getSoundSource(), 0.8F, 0.8F + serverLevel.random.nextFloat() * 0.4F
+                            );
                     ci.cancel();
 
                 }

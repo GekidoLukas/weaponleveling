@@ -32,9 +32,9 @@ public abstract class MixinItemStackNeoForge {
     @Inject(
             method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Consumer;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;setDamageValue(I)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private <T extends LivingEntity> void preventBreak(int i, ServerLevel arg, LivingEntity livingEntity, Consumer<Item> consumer, CallbackInfo ci, int j) {
+    private <T extends LivingEntity> void preventBreak(int i, ServerLevel serverLevel, LivingEntity livingEntity, Consumer<Item> consumer, CallbackInfo ci, int j) {
         ItemStack stack = ((ItemStack) ((Object) this));
-        if(livingEntity instanceof ServerPlayer player) {
+        if(livingEntity instanceof ServerPlayer serverPlayer) {
             if(j >= this.getMaxDamage()) {
                 if(DataGetter.getBrokenItemsWontVanish() && ModUtils.shouldBeUnbreakable(stack)) {
                     CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
@@ -42,7 +42,9 @@ public abstract class MixinItemStackNeoForge {
                     tag.putBoolean("weaponleveling:isBroken", true);
                     stack.set(DataComponents.CUSTOM_DATA,CustomData.of(tag));
                     stack.setDamageValue(0);
-
+                    serverLevel.playSound(null,
+                            serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), stack.getBreakingSound(), serverPlayer.getSoundSource(), 0.8F, 0.8F + serverLevel.random.nextFloat() * 0.4F
+                    );
                     ci.cancel();
 
                 }
